@@ -84,6 +84,12 @@ public:
 		void LibreriaAngelDll::servicioVentaCLS::cambiarEstadoServicio(int idServicio, bool servicioActivo);
 	private:
 	};
+	class rangoCLS :public Win::Dialog
+	{
+	public:
+		void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, int longuitud, bool activo);
+	private:
+	};
 private:
 	
 };

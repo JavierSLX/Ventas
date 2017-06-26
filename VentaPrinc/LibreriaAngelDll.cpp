@@ -768,3 +768,38 @@ void LibreriaAngelDll::servicioVentaCLS::cambiarEstadoServicio(int idServicio, b
 	coneccion.CloseSession();
 }
 
+//Metodo para mostrar en un listview los rangos activo
+void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvRango.DeleteAllItems();
+	int rows = 0;
+	lvRango.SetRedraw(false);
+	lvRango.Cols.DeleteAll();
+	lvRango.Items.DeleteAll();
+	lvRango.SetRedraw(true);
+	lvRango.Cols.Add(0, LVCFMT_CENTER, 50, L"Mínimo");
+	lvRango.Cols.Add(1, LVCFMT_CENTER,50 , L"Máximo");
+	lvRango.Cols.Add(2, LVCFMT_CENTER, 50, L"Comisión");
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de articulos activos)
+		Sys::Format(consulta, L"SELECT id, minimo,maximo,comision\
+		FROM rango \
+		WHERE activo =%d \
+		ORDER BY id ASC;", activo);
+
+		coneccion.ExecuteSelect(consulta, longuitud, lvRango);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}

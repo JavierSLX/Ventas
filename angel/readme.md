@@ -1,5 +1,5 @@
 <h1>Proyecto Ventas</h1>
-<h3>Actividades Angel</h3>
+<h3>Actividades Ángel</h3>
 
 <P style="text-align:justify;">Al iniciar el Proyecto de Inventario,   se segmentan en ramas los elementos, comprendidos en el sistema.
 Determinadas con el fin de ser desarrolladas por José Ángel Campos Alejo, siendo de la siguiente manera:</P>
@@ -17,9 +17,11 @@ Actividades realizadas durante el día 26 de Junio del 2017:
 * Método que permite actualizar la información de un servicio.
 * Método que valida si un servicio ya existe en la base de datos.
 * Validación que no se capturen campos nulos en la base de datos.
-* Programación del evento doble <code>click</code> en la <code>listView</code><code> lvServicio</code> para mostrar los datos del servicio seleccionado en el formulario.
+* Programación del evento doble <code>click</code> en la <code>ListView</code><code> lvServicio</code> para mostrar los datos del servicio seleccionado en el formulario.
 * Creación del dialogo <code>EliminarRestaurarDlg</code>, dialogo que sirve para mostrar los servicios activos e inactivos según la opción que desee el usuario y eliminarlos o restaurarlos dependiendo de sus necesidades.
-* Método que controla el contenido de un <code>listView</code> dependiendo de  la <code>tab</code> seleccionada.
+* Método que controla el contenido de un <code>ListView</code> dependiendo de  la <code>tab</code> seleccionada.
 * Método que actualiza el estado del campo de activo dentro de la tabla <code>servicio_venta</code>.
-* Progrmación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>false</code>.
-* Progrmación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>true</code>.
+* Programación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>false</code>.
+* Programación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>true</code>.
+* Creación de la clase <code>rangoCLS</code>,clase que sirve para los movimientos que son necesarios para los rangos de comisiones.
+* Creación del dialogo <code>rangoDlg</code>, este dialogo nos permite visualizar los rangos activos, agregar un nuevo rango y actualizar sus datos.
