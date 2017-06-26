@@ -166,6 +166,7 @@
     <ClInclude Include="LibreriaJRDll.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="AboutDlg.h" />
+    <ClInclude Include="ServicioDlg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wintempla.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="LibreriaAngelDll.cpp" />
     <ClCompile Include="LibreriaFBDll.cpp" />
     <ClCompile Include="LibreriaJRDll.cpp" />
+    <ClCompile Include="ServicioDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

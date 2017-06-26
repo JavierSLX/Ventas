@@ -645,4 +645,106 @@ void LibreriaAngelDll::reportesCLS::llenarReporteMovimiento(Win::ListView lvRepo
 	coneccion.CloseSession();
 }
 
+//Método para mostrar todos los servicios activos con los que cuenta la empresa en un listview
+void LibreriaAngelDll::servicioVentaCLS::mostrarServiciosExistentes(Win::ListView lvServicio, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvServicio.DeleteAllItems();
+	int rows = 0;
+	lvServicio.SetRedraw(false);
+	lvServicio.Cols.DeleteAll();
+	lvServicio.Items.DeleteAll();
+	lvServicio.SetRedraw(true);
+	lvServicio.Cols.Add(0, LVCFMT_CENTER, 50,L"$");
+	lvServicio.Cols.Add(1, LVCFMT_CENTER, 100, L"Nombre");
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de articulos activos)
+		Sys::Format(consulta, L"SELECT id, precio,nombre\
+		FROM servicio_venta \
+		WHERE activo =%d \
+		ORDER BY nombre ASC;", activo);
+
+		coneccion.ExecuteSelect(consulta, longuitud, lvServicio);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+
+//Metodo para verificar si un servicio ya existe en la base de datos
+wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring servicioVenta)
+{
+	wstring consulta;
+	Sql::SqlConnection coneccion;
+	wstring existeServicioVenta;
+
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT nombre\
+			FROM servicio_venta\
+			WHERE nombre = '%s'", servicioVenta.c_str());
+		coneccion.GetString(consulta, existeServicioVenta, 50);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	coneccion.CloseSession();
+	return existeServicioVenta;
+}
+
+//Metodo que inserta un nuevo servicio
+void LibreriaAngelDll::servicioVentaCLS::insertarServicio(wstring servicio, int precio,bool servicioActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO servicio_venta(nombre,precio,activo)VALUES('%s',%d,%d)", servicio.c_str(),precio, servicioActivo);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+
+//Metodo que actualiza los datos de un servicio
+void LibreriaAngelDll::servicioVentaCLS::actualizarServicio(int id, wstring servicio,int precio, bool servicioActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	int rows = 0;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE servicio_venta \
+		SET nombre='%s',\
+		precio=%d\
+		WHERE id=%d;", servicio.c_str(),precio, id);
+		rows = coneccion.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error al actualizar el tipo de artículo", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
 

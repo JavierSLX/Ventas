@@ -128,6 +128,8 @@ void VentaPrinc::Cmd_Dellada(Win::Event& e)
 //Opción "Nuevo Servicio" del menú
 void VentaPrinc::Cmd_Newservicio(Win::Event& e)
 {
+	ServicioDlg servicioObj;
+	servicioObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar Servicio" del menú
