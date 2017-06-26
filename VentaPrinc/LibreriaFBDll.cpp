@@ -1403,3 +1403,123 @@ int LibreriaFBDll::Movimiento::sacarIDcolor(wstring color)
 	conn.CloseSession();
 	return modelo_id;
 }
+
+//--------------------------------------------VENTAS--------------------------------------//
+//Aqui empiezan los metodos para la parte  de ventas
+
+
+//Llena un LV con las ciudades activas
+void LibreriaFBDll::Ciudad::llenarLVCiudad(Win::ListView lvCiudad, int large) 
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCiudad.SetRedraw(false);
+	lvCiudad.Cols.DeleteAll();
+	lvCiudad.Items.DeleteAll();
+	lvCiudad.SetRedraw(true);
+	lvCiudad.Cols.Add(0, LVCFMT_CENTER, 300, L"Ciudad");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT c.id,c.nombre \
+			FROM ciudad c\
+			WHERE c.activo = true\
+			ORDER BY nombre ASC");
+		conn.ExecuteSelect(consulta, large, lvCiudad);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+//Inserta un ciudad en la base de datos
+
+void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO ciudad (nombre,activo) \
+				VALUES('%s',true);", ciudad.c_str());
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+
+//Verifica que no exista la ciudad
+
+wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	wstring valor;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT nombre\
+			FROM ciudad\
+			WHERE nombre = '%s' ",ciudad.c_str());
+		conn.GetString(consulta, valor, 100);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return valor;
+}
+
+// Saca un texto especifico
+wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna)
+{
+	int s = lvTabla.GetSelectedIndex();
+	wstring codigo = lvTabla.Items[s].GetText(columna);
+	return codigo;
+}
+
+//Actualiza una ciudad
+void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre,int ciudad_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE ciudad \
+		SET nombre = '%s'\
+		WHERE id = %d",nombre.c_str(),ciudad_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+

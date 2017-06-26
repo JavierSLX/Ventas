@@ -83,6 +83,8 @@ void VentaPrinc::Cmd_Preciocliente(Win::Event& e)
 //Opción "Nueva Ciudad" del menú
 void VentaPrinc::Cmd_Newciudad(Win::Event& e)
 {
+	agregarCiudadVentasDlg ciudadObj;
+	ciudadObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar ciudad" del menú
