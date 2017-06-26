@@ -51,6 +51,9 @@
     <ClInclude Include="agregarCiudadVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="agregarCiudadVentasDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

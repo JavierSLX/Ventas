@@ -1,6 +1,7 @@
 #pragma once  //______________________________________ VentaPrinc.h  
 #include "Resource.h"
 #include "agregarCiudadVentasDlg.h"
+#include "Eliminar_RestaurarCiudadVentasDlg.h"
 class VentaPrinc: public Win::Window
 {
 public:

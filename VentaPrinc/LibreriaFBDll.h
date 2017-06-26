@@ -123,10 +123,13 @@ public:
 
 		}
 		void LibreriaFBDll::Ciudad::llenarLVCiudad(Win::ListView lvCiudad,int large);
+		void LibreriaFBDll::Ciudad::llenarLVCiudadInactiva(Win::ListView lvCiudad, int large);
 		void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad);
 		wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad);
 		wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna);
 		void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre, int ciudad_id);
+		void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id, bool estado);
+		/*void LibreriaFBDll::Ciudad::llenarLVCiudadNombre(Win::ListView lvCiudad, wstring ciudad, int large);*/
 	private:
 
 	};

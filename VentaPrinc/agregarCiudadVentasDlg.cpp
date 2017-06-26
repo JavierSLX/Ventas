@@ -6,6 +6,18 @@ void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 	tbxNombre.SetFocus();
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadObj.llenarLVCiudad(lvCiudades, 100);
+	if (opcionSeleccionadaVP == L"Agregar")
+	{
+		btEditar.Visible = false;
+
+
+	}
+	else if (opcionSeleccionadaVP == L"Editar")
+		btAgregar.Visible = false;
+	{
+
+	}
+	
 
 }
 

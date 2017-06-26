@@ -404,119 +404,6 @@ wstring LibreriaFBDll::Modelo:: sacarMarcadelModelo(int modelo_id)
 	conn.CloseSession();
 	return ma;
 }
-//
-//wstring LibreriaFBDll::Movimiento::sacarPuntosVentaCodigo(wstring codigo)
-//{
-//	wstring consulta;
-//	Sql::SqlConnection conn;
-//	wstring ma;
-//
-//	try
-//	{
-//		conn.OpenSession(hWnd, CONNECTION_STRING);
-//		Sys::Format(consulta, L"SELECT  distinct  pv.tipo\
-//			FROM punto_venta pv, articulo a,cantidad ca\
-//			WHERE ca.articulo_id = a.id\
-//			AND  ca.puntoVenta_id = pv.id\
-//			AND a.codigo = \
-//			ORDER BY pv.tipo ASC limit 1 '%s'",codigo.c_str());
-//		conn.GetString(consulta, ma, 50);
-//	}
-//	catch (Sql::SqlException e)
-//	{
-//		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
-//	}
-//
-//	conn.CloseSession();
-//	return ma;
-//}
-//
-//
-//wstring LibreriaFBDll::Movimiento::sacarPuntosVentaMarca(wstring marca)
-//{
-//	wstring consulta;
-//	Sql::SqlConnection conn;
-//	wstring ma;
-//
-//	try
-//	{
-//		conn.OpenSession(hWnd, CONNECTION_STRING);
-//		Sys::Format(consulta, L"SELECT  distinct pv.id , pv.tipo\
-//			FROM punto_venta pv, articulo a, modelo mo, marca ma, cantidad ca\
-//			WHERE a.modelo_id = mo.id\
-//			AND mo.marca_id = ma.id\
-//			AND ca.articulo_id = a.id\
-//			AND pv.id = ca.puntoVenta_id\
-//			AND ma.nombre = \
-//			ORDER BY id ASC limit 1 '%s'", marca.c_str());
-//		conn.GetString(consulta, ma, 50);
-//	}
-//	catch (Sql::SqlException e)
-//	{
-//		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
-//	}
-//
-//	conn.CloseSession();
-//	return ma;
-//}
-//
-//wstring LibreriaFBDll::Movimiento::sacarPuntosVentaModelo(wstring modelo)
-//{
-//	wstring consulta;
-//	Sql::SqlConnection conn;
-//	wstring ma;
-//
-//	try
-//	{
-//		conn.OpenSession(hWnd, CONNECTION_STRING);
-//		Sys::Format(consulta, L"SELECT  distinct pv.id ,pv.tipo\
-//			FROM articulo a, modelo mo, punto_venta pv, cantidad ca\
-//			WHERE a.modelo_id = mo.id\
-//			AND ca.articulo_id = a.id\
-//			AND ca.puntoVenta_id = pv.id\
-//			AND mo.nombre =   \
-//			ORDER BY id ASC limit 1'%s'", modelo.c_str());
-//		conn.GetString(consulta, ma, 50);
-//	}
-//	catch (Sql::SqlException e)
-//	{
-//		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
-//	}
-//
-//	conn.CloseSession();
-//	return ma;
-//}
-//
-//wstring LibreriaFBDll::Movimiento::sacarPuntosVentatipoArt(wstring tipoArt)
-//{
-//	wstring consulta;
-//	Sql::SqlConnection conn;
-//	wstring ma;
-//
-//	try
-//	{
-//		conn.OpenSession(hWnd, CONNECTION_STRING);
-//		Sys::Format(consulta, L"SELECT  distinct pv.id,pv.tipo\
-//			FROM articulo a, modelo mo, punto_venta pv, cantidad ca, tipo_articulo ta\
-//			WHERE a.modelo_id = mo.id\
-//			AND a.tipoArticulo_id = ta.id\
-//			AND ca.articulo_id = a.id\
-//			AND ca.puntoVenta_id = pv.id\
-//			AND ta.nombre = \
-//			ORDER BY id ASC limit 1 '%s'", tipoArt.c_str());
-//		conn.GetString(consulta, ma, 50);
-//	}
-//	catch (Sql::SqlException e)
-//	{
-//		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
-//	}
-//
-//	conn.CloseSession();
-//	return ma;
-//}
-
-
-
 //Consulta para saber si el modelo ya existe
 wstring LibreriaFBDll::Modelo::sacarModeloSiExiste(wstring nombreModelo)
 {
@@ -582,7 +469,7 @@ wstring LibreriaFBDll::Modelo::sacarModeloSiExiste(wstring nombreModelo)
 //}
 
 
-// esta consukta devuelve el nombre del punto de venta dependiendo del id de este 
+// esta consulta devuelve el nombre del punto de venta dependiendo del id de este 
 wstring LibreriaFBDll::Busqueda::sacarDepartamento(int pv_id)
 {
 	wstring consulta;
@@ -1436,6 +1323,39 @@ void LibreriaFBDll::Ciudad::llenarLVCiudad(Win::ListView lvCiudad, int large)
 
 	conn.CloseSession();
 }
+// Llena un LV con las ciudades inactivas
+
+void LibreriaFBDll::Ciudad::llenarLVCiudadInactiva(Win::ListView lvCiudad, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCiudad.SetRedraw(false);
+	lvCiudad.Cols.DeleteAll();
+	lvCiudad.Items.DeleteAll();
+	lvCiudad.SetRedraw(true);
+	lvCiudad.Cols.Add(0, LVCFMT_CENTER, 300, L"Ciudad");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT c.id,c.nombre \
+			FROM ciudad c\
+			WHERE c.activo = false\
+			ORDER BY nombre ASC");
+		conn.ExecuteSelect(consulta, large, lvCiudad);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+
+
+
 
 //Inserta un ciudad en la base de datos
 
@@ -1523,3 +1443,29 @@ void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre,int ciudad_id)
 	conn.CloseSession();
 }
 
+//Elimina o recupera un usuario
+
+void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id,bool estado)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE ciudad \
+		SET activo = %d\
+		WHERE id = %d",estado, modelo_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
