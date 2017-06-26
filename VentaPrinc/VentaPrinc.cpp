@@ -23,6 +23,8 @@ void VentaPrinc::Cmd_About(Win::Event& e)
 //Opción "Nueva Orden" del menú
 void VentaPrinc::Cmd_Neworden(Win::Event& e)
 {
+	OrdenVentasDlg ventana;
+	ventana.BeginDialog(hWnd);
 }
 
 //Opción "Editar Orden" del menú
