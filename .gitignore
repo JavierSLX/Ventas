@@ -1,0 +1,12 @@
+Debug/
+Release/
+.vs/
+x64/
+ipch/
+VentaPrinc.VC.db
+VentaPrinc.VC.VC.opendb
+VentaPrinc/Debug/
+VentaPrinc/Release/
+VentaPrinc/x64/
+backup.cpp
+backup.h
