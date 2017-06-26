@@ -748,3 +748,23 @@ void LibreriaAngelDll::servicioVentaCLS::actualizarServicio(int id, wstring serv
 	coneccion.CloseSession();
 }
 
+//Metodo que cambia el estado de un servicio segun la opcion del usuario
+void LibreriaAngelDll::servicioVentaCLS::cambiarEstadoServicio(int idServicio, bool servicioActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE servicio_venta \
+		SET activo=%d\
+		WHERE id=%d", servicioActivo, idServicio);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+

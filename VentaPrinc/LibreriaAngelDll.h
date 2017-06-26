@@ -81,6 +81,7 @@ public:
 		wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring tipoArticulo);
 		void LibreriaAngelDll::servicioVentaCLS::insertarServicio(wstring servicio, int precio, bool servicioActivo);
 		void LibreriaAngelDll::servicioVentaCLS::actualizarServicio(int id, wstring servicio, int precio, bool servicioActivo);
+		void LibreriaAngelDll::servicioVentaCLS::cambiarEstadoServicio(int idServicio, bool servicioActivo);
 	private:
 	};
 private:

@@ -1,6 +1,7 @@
 #pragma once  //______________________________________ VentaPrinc.h  
 #include "Resource.h"
 #include "ServicioDlg.h"
+#include "EliminarRestaurarServicioDlg.h"
 class VentaPrinc: public Win::Window
 {
 public:

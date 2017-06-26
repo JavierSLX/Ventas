@@ -51,6 +51,9 @@
     <ClInclude Include="ServicioDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EliminarRestaurarServicioDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -81,6 +84,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ServicioDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EliminarRestaurarServicioDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
