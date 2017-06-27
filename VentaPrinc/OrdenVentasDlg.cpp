@@ -44,13 +44,14 @@ void OrdenVentasDlg::Window_Open(Win::Event& e)
 void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva consultasObj;
+	DetallesOrdenVentaDlg ventana;
 	wstring folio = tbxFolio.Text;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text);
 	consultasObj.insertOrden(folio, cliente_id, idPuntoVenta);
 	MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
-
+	ventana.BeginDialog(hWnd);
 }
 
 void OrdenVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)

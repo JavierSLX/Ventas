@@ -1,6 +1,7 @@
 #pragma once   //_____________________________________________ OrdenVentasDlg.h  
 #include "resource.h"
 # include "libreriaAdDll.h"
+#include "DetallesOrdenVentaDlg.h"
 
 class OrdenVentasDlg: public Win::Dialog
 {
