@@ -1356,7 +1356,7 @@ void LibreriaFBDll::Ciudad::llenarLVCiudadInactiva(Win::ListView lvCiudad, int l
 
 //Inserta un ciudad en la base de datos
 
-void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad)
+void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad,int lada_id)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -1364,8 +1364,8 @@ void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad)
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"INSERT INTO ciudad (nombre,activo) \
-				VALUES('%s',true);", ciudad.c_str());
+		Sys::Format(consulta, L"INSERT INTO ciudad (nombre,activo,lada_id) \
+				VALUES( '%s',true, %d );", ciudad.c_str(),lada_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -1440,7 +1440,7 @@ void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre,int ciudad_id)
 	conn.CloseSession();
 }
 
-//Elimina o recupera un usuario
+//Elimina o recupera una ciudad 
 
 void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id,bool estado)
 {
@@ -1468,8 +1468,31 @@ void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id,bool estado)
 }
 
 
+int LibreriaFBDll::Ciudad::sacarIDLada(wstring tipo)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int modelo_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM lada\
+			WHERE tipo = '%s';", tipo.c_str());
+		modelo_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return modelo_id;
+}
+
 //------------------------------BONO CREDITO------------------------------------//
-void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito, wstring claveCliente, int large)
+void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito, wstring claveCliente,int puntoVenta_id, int large)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -1496,7 +1519,8 @@ void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito
 			AND ccli.puntoVenta_id = pv.id\
 			AND ccli.numero = '%s'\
 			AND cli.activo = true\
-			AND cre.estado = true; ",claveCliente.c_str());
+			AND pv.id = %d\
+			AND cre.estado = true; ",claveCliente.c_str(),puntoVenta_id);
 		conn.ExecuteSelect(consulta, large, lvCredito);
 	}
 	catch (Sql::SqlException e)
@@ -1608,4 +1632,6 @@ void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large)
 
 	conn.CloseSession();
 }
+
+
 

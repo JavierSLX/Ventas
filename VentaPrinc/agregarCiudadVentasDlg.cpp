@@ -32,6 +32,7 @@ void agregarCiudadVentasDlg::btAgregar_Click(Win::Event& e)
 {
 	LibreriaFBDll::Ciudad ciudadObj;
 	wstring ciudadConsulta=ciudadObj.sacarCiudad(tbxNombre.Text);
+	int ladaId = ciudadObj.sacarIDLada(ddLadas.Text);
 	if (ciudadConsulta == tbxNombre.Text)
 	{
 		if (MessageBoxW(L"Ya existe este registro", L"ERROR", MB_OK | MB_ICONERROR) == IDYES)
@@ -46,7 +47,7 @@ void agregarCiudadVentasDlg::btAgregar_Click(Win::Event& e)
 	else
 	{
 		
-		ciudadObj.insertarCiudad(tbxNombre.Text);
+		ciudadObj.insertarCiudad(tbxNombre.Text,ladaId);
 		if (MessageBoxW(L"Se agrego correctamente", L"Registro exitoso", MB_OK | MB_ICONINFORMATION) == IDYES)
 		{
 
@@ -54,6 +55,7 @@ void agregarCiudadVentasDlg::btAgregar_Click(Win::Event& e)
 		tbxNombre.SetText(L"");
 		tbxNombre.SetFocus();
 		ciudadObj.llenarLVCiudad(lvCiudades, 100);
+		ddLadas.SetSelectedIndex(0);
 
 	}
 

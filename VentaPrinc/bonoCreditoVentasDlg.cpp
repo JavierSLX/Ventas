@@ -5,6 +5,7 @@ void bonoCreditoVentasDlg::Window_Open(Win::Event& e)
 {
 	radioFolio.Checked = true;
 	tbxOpcion.SetFocus();
+	ddPuntosVenta.Visible = false;
 }
 
 
@@ -12,10 +13,11 @@ void bonoCreditoVentasDlg::Window_Open(Win::Event& e)
 void bonoCreditoVentasDlg::btBuscar_Click(Win::Event& e)
 {
 	LibreriaFBDll::bonoCredito bonoObj;
+	LibreriaFBDll::Movimiento movimientoObj;
 	if (radioClave.IsChecked() == true)
 	{
-		
-		bonoObj.llenarLVCreditoCCliente(lvCredito, tbxOpcion.Text, 100);
+		int puntoVentaId=movimientoObj.sacarIDpuntoVenta(ddPuntosVenta.Text);
+		bonoObj.llenarLVCreditoCCliente(lvCredito, tbxOpcion.Text,puntoVentaId,100);
 		tbxOpcion.SetText(L"");
 		tbxOpcion.SetFocus();
 
@@ -50,5 +52,24 @@ void bonoCreditoVentasDlg::lvCredito_ItemActivate(Win::Event& e)
 	registrarAbonosVentasDlg abonoObj;
 	abonoObj.BeginDialog(hWnd);
 
+}
+
+void bonoCreditoVentasDlg::radioClave_Click(Win::Event& e)
+{
+	ddPuntosVenta.Visible = true;
+	LibreriaAdDll::articulo adObj;
+	adObj.llenarDDdepartamento(ddPuntosVenta, 100, true);
+	ddPuntosVenta.SetSelectedIndex(0);
+
+}
+
+void bonoCreditoVentasDlg::radioFolio_Click(Win::Event& e)
+{
+	ddPuntosVenta.Visible = false;
+}
+
+void bonoCreditoVentasDlg::radioNombre_Click(Win::Event& e)
+{
+	ddPuntosVenta.Visible = false;
 }
 
