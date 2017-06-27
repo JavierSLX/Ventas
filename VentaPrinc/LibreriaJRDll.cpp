@@ -669,6 +669,58 @@ int LibreriaJRDll::SqlCLS::sacarIDPuntoVentaColocacion(int puntoVenta_id, int co
 	return estandar_id;
 }
 
+//Saca el id de un registro de la tabla ciudad, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDCiudad(wstring nombre)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM ciudad\
+		WHERE nombre = '%s'", nombre.c_str());
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
+//Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	wstring clave = L"0";
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"cc.numero\
+		from clave_cliente cc, punto_venta pv\
+		where cc.puntoVenta_id = pv.id\
+		and pv.tipo = '%s'\
+		order by identificador desc limit 1;", punto_venta.c_str());
+		conn.GetString(consulta, clave, 50);
+	}
+	catch (Sql::SqlException e)
+	{
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		clave = L"0";
+	}
+
+	conn.CloseSession();
+	return Sys::Convert::ToInt(clave);
+}
+
 //Saca el tipo de un registro de la tabla colocacion
 wstring LibreriaJRDll::SqlCLS::sacarTipoColocacion(wstring punto_venta)
 {
@@ -840,6 +892,59 @@ void LibreriaJRDll::SqlCLS::insertarPuntoVentaColocacion(int puntoVenta_id, int 
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"INSERT INTO puntoVenta_colocacion (puntoVenta_id, colocacion_id) \
 		VALUES(%d, %d)", puntoVenta_id, colocacion_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of inserted rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que inserta un registro en la tabla cliente
+void LibreriaJRDll::SqlCLS::insertarCliente(wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO cliente (nombre, direccion, telefono, email, activo, ciudad_id) \
+		VALUES('%s', '%s', '%s', '%s', true, %d)", nombre.c_str(), direccion.c_str(), telefono.c_str(), email.c_str(),
+			ciudad_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of inserted rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que inserta un registro en la tabla ciudad
+void LibreriaJRDll::SqlCLS::insertarCiudad(wstring nombre, int lada_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO ciudad (nombre, activo, lada_id) \
+		VALUES('%s', true, %d)", nombre.c_str(), lada_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -1122,3 +1227,111 @@ void LibreriaJRDll::ColorCLS::obtenerColor(int index, int *R, int *G, int *B)
 		break;
 	}
 }
+
+//__________________________________________ CLASE STRINGCLS
+//Verifica que la posición que se le pasa al método es una letra, regresa TRUE si es así
+bool LibreriaJRDll::StringCLS::verificaLetra(wstring cadena, int posicion)
+{
+	if (isalpha(cadena.at(posicion)))
+		return true;
+
+	return false;
+}
+
+//Verifica que la posición que se le pasa al método es un número, regresa TRUE si es así
+bool LibreriaJRDll::StringCLS::verificaNumero(wstring cadena, int posicion)
+{
+	if (isdigit(cadena.at(posicion)))
+		return true;
+
+	return false;
+}
+
+//Verifica si el elemento que se busca existe en la posicion que se le pasa
+bool LibreriaJRDll::StringCLS::comparaElemento(wstring cadena, int posicion, char elemento)
+{
+	if (cadena.at(posicion) == elemento)
+		return true;
+	else
+		return false;
+}
+
+//Verifica si la cadena cumple con el estándar de una estructura de ruta (R1, R1-67, etc)
+bool LibreriaJRDll::StringCLS::verificaRuta(wstring cadena)
+{
+	int cont = 0;
+
+	//Verifica que el primer elemento de la cadena sea una R
+	if (comparaElemento(cadena, 0, 'r') == false && comparaElemento(cadena, 0, 'R') == false)
+		return false;
+
+	//Verifica que el segundo elemento de la cadena sea un numero
+	if (!verificaNumero(cadena, 1))
+		return false;
+
+	//Verifica que el resto de la cadena contenga solamente un signo de separacion '-' y numeros
+	for (int unsigned i = 2; i < cadena.length(); i++)
+	{
+		if (cont == 0 && comparaElemento(cadena, i, '-'))
+			cont++;
+		else
+		{
+			if (!verificaNumero(cadena, i))
+				return false;
+		}
+	}
+
+	return true;
+}
+
+//Convierte una cadena a Mayúsculas y regresa el resultado
+wstring LibreriaJRDll::StringCLS::convertirAMayusculas(wstring cadena)
+{
+	wstring resultado = cadena;
+
+	for (unsigned int k = 0; k < cadena.length(); k++)
+	{
+		if (isalpha(resultado.at(k)))
+			resultado.at(k) = toupper(cadena.at(k));
+	}
+
+	return resultado;
+}
+
+//Convierte una cadena a Mayúsculas y regresa el resultado
+wstring LibreriaJRDll::StringCLS::convertirAMinusculas(wstring cadena)
+{
+	wstring resultado = cadena;
+
+	for (unsigned int k = 0; k < cadena.length(); k++)
+	{
+		if (isalpha(resultado.at(k)))
+			resultado.at(k) = tolower(cadena.at(k));
+	}
+
+	return resultado;
+}
+
+//Convierte una cadena en la primera letra en mayúscula y las demás en minúsculas
+wstring LibreriaJRDll::StringCLS::convertirATextoEstandar(wstring cadena)
+{
+	wstring resultado = cadena;
+	bool inicial = false;
+
+	for (unsigned int k = 0; k < cadena.length(); k++)
+	{
+		if (isalpha(resultado.at(k)))
+		{
+			if (!inicial)
+			{
+				resultado.at(k) = toupper(cadena.at(k));
+				inicial = true;
+			}
+			else
+				resultado.at(k) = tolower(cadena.at(k));
+		}
+	}
+
+	return resultado;
+}
+

@@ -92,6 +92,12 @@ public:
 		//Saca el id de un registro de la tabla puntoVenta_colocacion, en caso de no existir regresa un 0
 		int sacarIDPuntoVentaColocacion(int puntoVenta_id, int colocacion_id);
 
+		//Saca el id de un registro de la tabla ciudad, en caso de no existir regresa un 0
+		int sacarIDCiudad(wstring nombre);
+
+		//Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
+		int sacarUltimoIDClaveCliente(wstring punto_venta);
+
 		//Saca el tipo de un registro de la tabla colocacion
 		wstring sacarTipoColocacion(wstring punto_venta);
 
@@ -112,6 +118,12 @@ public:
 
 		//Método que inserta un registro en la tabla puntoVenta_colocacion
 		void insertarPuntoVentaColocacion(int puntoVenta_id, int colocacion_id);
+
+		//Método que inserta un registro en la tabla cliente
+		void insertarCliente(wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id);
+
+		//Método que inserta un registro en la tabla ciudad
+		void insertarCiudad(wstring nombre, int lada_id);
 	};
 
 	//Clase que contiene todo lo referente a color
@@ -120,6 +132,32 @@ public:
 	public:
 		//Método que regreso valores RGB distintos
 		void obtenerColor(int index, int *R, int *G, int *B);
+	};
+
+	//Clase que contiene cualquier análisis de una cadena
+	class StringCLS : public Win::Dialog
+	{
+	public:
+		//Verifica que la posición que se le pasa al método es una letra, regresa TRUE si es así
+		bool verificaLetra(wstring cadena, int posicion);
+
+		//Verifica que la posición que se le pasa al método es un número, regresa TRUE si es así
+		bool verificaNumero(wstring cadena, int posicion);
+
+		//Verifica si el elemento que se busca existe en la posicion que se le pasa
+		bool comparaElemento(wstring cadena, int posicion, char elemento);
+
+		//Verifica si la cadena cumple con el estándar de una estructura de ruta (R1, R1-67, etc)
+		bool verificaRuta(wstring cadena);
+
+		//Convierte una cadena a Mayúsculas y regresa el resultado
+		wstring convertirAMayusculas(wstring cadena);
+
+		//Convierte una cadena a Mayúsculas y regresa el resultado
+		wstring convertirAMinusculas(wstring cadena);
+
+		//Convierte una cadena en la primera letra en mayúscula y las demás en minúsculas
+		wstring convertirATextoEstandar(wstring cadena);
 	};
 private:
 	
