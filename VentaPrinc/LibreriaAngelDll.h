@@ -88,6 +88,9 @@ public:
 	{
 	public:
 		void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, int longuitud, bool activo);
+		wstring LibreriaAngelDll::rangoCLS::sacarRangoSiExiste(double minimo, double maximo, double comision);
+		void LibreriaAngelDll::rangoCLS::insertaRango(double minimo, double maximo, double comision, bool rangoActivo);
+		void LibreriaAngelDll::rangoCLS::actualizarRango(int id, double minimo, double maximo, double comision, bool servicioActivo);
 	private:
 	};
 private:

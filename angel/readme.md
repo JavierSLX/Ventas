@@ -25,3 +25,8 @@ Actividades realizadas durante el día 26 de Junio del 2017:
 * Programación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>true</code>.
 * Creación de la clase <code>rangoCLS</code>,clase que sirve para los movimientos que son necesarios para los rangos de comisiones.
 * Creación del dialogo <code>rangoDlg</code>, este dialogo nos permite visualizar los rangos activos, agregar un nuevo rango y actualizar sus datos.
+* Método para insertar un nuevo rango.
+* Método para mostrar los rangos activos existentes.
+* Método para actualizar la información de un rango.
+* Validación para que no se capturen campos nulos en la base de datos
+* Validación para que no se capturen rangos repetidos en la base datos.

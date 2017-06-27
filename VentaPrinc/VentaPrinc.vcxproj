@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="ClienteVentasDlg.h" />
     <ClInclude Include="agregarCiudadVentasDlg.h" />
+    <ClInclude Include="EliminarRestaurarRango.h" />
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
     <ClInclude Include="EliminarRestaurarServicioDlg.h" />
     <ClInclude Include="LibreriaAdDll.h" />
@@ -185,6 +186,7 @@
     <ClCompile Include="AboutDlg.cpp" />
     <ClCompile Include="ClienteVentasDlg.cpp" />
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
+    <ClCompile Include="EliminarRestaurarRango.cpp" />
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />
     <ClCompile Include="EliminarRestaurarServicioDlg.cpp" />
     <ClCompile Include="LibreriaAdDll.cpp" />

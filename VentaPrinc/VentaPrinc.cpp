@@ -60,6 +60,8 @@ void VentaPrinc::Cmd_Regcomision(Win::Event& e)
 //Opción "Rango Comisión" del menú
 void VentaPrinc::Cmd_Rangocomision(Win::Event& e)
 {
+	RangoDlg rangoObj;
+	rangoObj.BeginDialog(hWnd);
 }
 
 //Opción "Nuevo Cliente" del menú

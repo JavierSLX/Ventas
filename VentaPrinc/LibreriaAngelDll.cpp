@@ -781,14 +781,14 @@ void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, in
 	lvRango.Cols.DeleteAll();
 	lvRango.Items.DeleteAll();
 	lvRango.SetRedraw(true);
-	lvRango.Cols.Add(0, LVCFMT_CENTER, 50, L"Mínimo");
-	lvRango.Cols.Add(1, LVCFMT_CENTER,50 , L"Máximo");
-	lvRango.Cols.Add(2, LVCFMT_CENTER, 50, L"Comisión");
+	lvRango.Cols.Add(0, LVCFMT_CENTER, 100, L"Mínimo");
+	lvRango.Cols.Add(1, LVCFMT_CENTER,100 , L"Máximo");
+	lvRango.Cols.Add(2, LVCFMT_CENTER, 100, L"Comisión");
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
-		//Ejecuta la consulta en el list view (Solo muestra los tipos de articulos activos)
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
 		Sys::Format(consulta, L"SELECT id, minimo,maximo,comision\
 		FROM rango \
 		WHERE activo =%d \
@@ -801,5 +801,76 @@ void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, in
 		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
 	}
 
+	coneccion.CloseSession();
+}
+
+//Metodo para verificar si un rango ya existe en la base de datos
+wstring LibreriaAngelDll::rangoCLS::sacarRangoSiExiste(double minimo,double maximo,double comision)
+{
+	wstring consulta;
+	Sql::SqlConnection coneccion;
+	wstring existeRango;
+
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT minimo\
+			FROM rango\
+			WHERE minimo = '%f'\
+			AND maximo='%f'\
+			AND comision='%f'",minimo,maximo,comision);
+		coneccion.GetString(consulta, existeRango,50);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	coneccion.CloseSession();
+	return existeRango;
+}
+
+//Metodo que inserta un nuevo rango
+void LibreriaAngelDll::rangoCLS::insertaRango(double minimo,double maximo,double comision, bool rangoActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO rango(minimo,maximo,comision,activo)VALUES('%f','%f','%f',%d)", minimo,maximo,comision,rangoActivo);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+
+//Metodo que actualiza los datos de un servicio
+void LibreriaAngelDll::rangoCLS::actualizarRango(int id, double minimo, double maximo,double comision, bool servicioActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	int rows = 0;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE rango \
+		SET minimo='%f',\
+		maximo='%f',\
+		comision='%f'\
+		WHERE id=%d;",minimo,maximo,comision,id);
+		rows = coneccion.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error al actualizar el tipo de artículo", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
 	coneccion.CloseSession();
 }
