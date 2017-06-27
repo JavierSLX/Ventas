@@ -64,6 +64,9 @@ public:
 		//Método que llena la drop down list con los tipos de artículos registrados en la base de datos
 		void llenarDdTipoArticulo(Win::DropDownList ddTipo, int size);
 
+		//Método que llena la drop down list con las ciudades registradas en la base de datos
+		void llenarDdCiudad(Win::DropDownList ddCiudad, bool activo, int size);
+
 		//Método que llena una gráfica de pastel con los datos correspondientes al inventario
 		void llenarPastelInventario(wstring opcion);
 	};

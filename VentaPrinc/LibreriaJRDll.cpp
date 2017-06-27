@@ -529,6 +529,36 @@ void LibreriaJRDll::WintemplaCLS::llenarDdTipoArticulo(Win::DropDownList ddTipo,
 	conn.CloseSession();
 }
 
+//Método que llena la drop down list con las ciudades registradas en la base de datos
+void LibreriaJRDll::WintemplaCLS::llenarDdCiudad(Win::DropDownList ddCiudad, bool activo, int size)
+{
+	Sql::SqlConnection conn;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddCiudad.DeleteAllItems();
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT id, nombre\
+		FROM ciudad \
+		WHERE activo = %d\
+		ORDER BY nombre ASC;", activo);
+
+		conn.ExecuteSelect(consulta, size, ddCiudad);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	ddCiudad.SetSelectedIndex(0);
+	conn.CloseSession();
+}
+
 //Método que llena una gráfica de pastel con los datos correspondientes al inventario
 void LibreriaJRDll::WintemplaCLS::llenarPastelInventario(wstring opcion)
 {

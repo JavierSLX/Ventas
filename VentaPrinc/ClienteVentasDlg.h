@@ -1,5 +1,7 @@
 #pragma once   //_____________________________________________ ClienteVentasDlg.h  
 #include "resource.h"
+#include "LibreriaAdDll.h"
+#include "LibreriaJRDll.h"
 
 class ClienteVentasDlg: public Win::Dialog
 {
