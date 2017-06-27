@@ -91,7 +91,11 @@ public:
 	public:
 		void  LibreriaAdDll::ordenNueva::llenarDDCliente(Win::DropDownList ddCliente, int large, bool activo);
 		void  LibreriaAdDll::ordenNueva::llenarDDPuntoVenta(Win::DropDownList ddPuntoVenta, int large, bool activo);
-
+		wstring LibreriaAdDll::ordenNueva::sacarNombreCliente(int pv, wstring claveCliente);
+		int LibreriaAdDll::ordenNueva::sacarIDpuntoVenta(wstring pv);
+		wstring LibreriaAdDll::ordenNueva::sacarUltimoFolio(void);
+		int LibreriaAdDll::ordenNueva::sacarIdentificadorFecha(wstring cadena);
+		int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena);
 		
 
 
