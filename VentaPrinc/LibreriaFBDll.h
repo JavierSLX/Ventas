@@ -129,6 +129,7 @@ public:
 		wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna);
 		void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre, int ciudad_id);
 		void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id, bool estado);
+		void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large);
 		/*void LibreriaFBDll::Ciudad::llenarLVCiudadNombre(Win::ListView lvCiudad, wstring ciudad, int large);*/
 	private:
 

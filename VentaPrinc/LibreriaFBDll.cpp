@@ -1584,3 +1584,28 @@ void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, 
 
 	conn.CloseSession();
 }
+
+void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddLada.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id, tipo \
+			FROM lada\
+			WHERE activo = true\
+			ORDER BY tipo ASC ");
+
+		conn.ExecuteSelect(consulta, large, ddLada);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+

@@ -6,6 +6,8 @@ void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 	tbxNombre.SetFocus();
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadObj.llenarLVCiudad(lvCiudades, 100);
+	ciudadObj.llenarDDLada(ddLadas, 100);
+	ddLadas.SetSelectedIndex(0);
 	if (opcionSeleccionadaVP == L"Agregar")
 	{
 		btEditar.Visible = false;
@@ -19,6 +21,9 @@ void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 	}
 	
 
+	//________________________________________________________ ddLadas
+	ddLadas.Items.Add(L"Item 0 with value 10", 10);
+	ddLadas.Items.Add(L"Item 1 with value 20", 20);
 }
 
 
@@ -87,5 +92,9 @@ void agregarCiudadVentasDlg::lvCiudades_ItemChanged(Win::Event& e)
 	nombreCiudadVP = ciudadObj.sacarTextoLV(lvCiudades, 0);
 	tbxNombre.SetText(nombreCiudadVP);
 
+}
+
+void agregarCiudadVentasDlg::btAgregarMarca_Click(Win::Event& e)
+{
 }
 
