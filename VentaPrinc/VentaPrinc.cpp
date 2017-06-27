@@ -50,6 +50,8 @@ void VentaPrinc::Cmd_Regcredito(Win::Event& e)
 //Opción "Abono Crédito" del menú
 void VentaPrinc::Cmd_Abonocredito(Win::Event& e)
 {
+	bonoCreditoVentasDlg bonoObj;
+	bonoObj.BeginDialog(hWnd);
 }
 
 //Opción "Registrar Comisión" del menú

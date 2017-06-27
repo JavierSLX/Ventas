@@ -133,7 +133,25 @@ public:
 	private:
 
 	};
+	class bonoCredito : public Win::Dialog
+	{
+	public:
+		bonoCredito()
+		{
 
+		}
+		~bonoCredito()
+		{
+
+		}
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito,wstring claveCliente,int large);
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoFolio(Win::ListView lvCredito, wstring folio, int large);
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, wstring nombre, int large);
+
+
+	private:
+
+	};
 
 
 private:

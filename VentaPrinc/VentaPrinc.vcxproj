@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bonoCreditoVentasDlg.h" />
     <ClInclude Include="ClienteVentasDlg.h" />
     <ClInclude Include="agregarCiudadVentasDlg.h" />
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
@@ -183,6 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutDlg.cpp" />
+    <ClCompile Include="bonoCreditoVentasDlg.cpp" />
     <ClCompile Include="ClienteVentasDlg.cpp" />
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />

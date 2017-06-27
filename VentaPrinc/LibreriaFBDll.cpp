@@ -1294,6 +1294,7 @@ int LibreriaFBDll::Movimiento::sacarIDcolor(wstring color)
 //--------------------------------------------VENTAS--------------------------------------//
 //Aqui empiezan los metodos para la parte  de ventas
 
+//-----------------------------------CIUDAD------------------------//
 
 //Llena un LV con las ciudades activas
 void LibreriaFBDll::Ciudad::llenarLVCiudad(Win::ListView lvCiudad, int large) 
@@ -1352,10 +1353,6 @@ void LibreriaFBDll::Ciudad::llenarLVCiudadInactiva(Win::ListView lvCiudad, int l
 
 	conn.CloseSession();
 }
-
-
-
-
 
 //Inserta un ciudad en la base de datos
 
@@ -1461,6 +1458,124 @@ void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id,bool estado)
 		{
 			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
 		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+
+//------------------------------BONO CREDITO------------------------------------//
+void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito, wstring claveCliente, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Total");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,cre.total,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND ccli.numero = '%s'\
+			AND cli.activo = true\
+			AND cre.estado = true; ",claveCliente.c_str());
+		conn.ExecuteSelect(consulta, large, lvCredito);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+//Este metodo llena el LV con los datos de un credito dependiendo del folio de la orden
+void LibreriaFBDll::bonoCredito::llenarLVCreditoFolio(Win::ListView lvCredito, wstring folio, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Total");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,cre.total,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND ord.folio = '%s'\
+			AND cli.activo = true\
+			AND cre.estado = true; ", folio.c_str());
+		conn.ExecuteSelect(consulta, large, lvCredito);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+
+void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, wstring nombre, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Total");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,cre.total,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND cli.nombre = '%s'\
+			AND cli.activo = true\
+			AND cre.estado = true; ", nombre.c_str());
+		conn.ExecuteSelect(consulta, large, lvCredito);
 	}
 	catch (Sql::SqlException e)
 	{
