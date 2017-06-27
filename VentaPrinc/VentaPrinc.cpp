@@ -161,6 +161,8 @@ void VentaPrinc::Cmd_Delservicio(Win::Event& e)
 //Opción "Reporte" del menú
 void VentaPrinc::Cmd_Reporteventa(Win::Event& e)
 {
+	reportesVentasDlg reportesObj;
+	reportesObj.BeginDialog(hWnd);
 }
 
 //Opción "Gráfica" del menú

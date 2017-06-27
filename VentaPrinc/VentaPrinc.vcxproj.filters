@@ -78,6 +78,9 @@
     <ClInclude Include="EliminarRestaurarRango.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="reportesVentasDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -135,6 +138,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EliminarRestaurarRango.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="reportesVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

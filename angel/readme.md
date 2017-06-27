@@ -37,4 +37,10 @@ Actividades realizadas durante el día 27 de Junio del 2017:
 * Creación del dialogo <code>eliminarRestaurarDlg</code>, este dialogo nos permite eliminar y restaurar rangos.
 * Método para cambiar el estado del rango ya sea true o false según la necesidad del usuario.
 * Programación del evento <code>selchange</code> del <code>tab</code> para mostrar en un ListView los rangos activos e inactivos según sean sus necesidades.
-* Validación para que si no hay ningún elemento seleccionado del <code>ListView</code> no se elimine ni se restaure. 
+* Validación para que si no hay ningún elemento seleccionado del <code>ListView</code> no se elimine ni se restaure.
+* Creación de la clase <code>reporteVentasCLS</code>, clase que aloja los métodos necesario para generar los reportes de ventas.
+* Creación del dialogo <code>reportesVentaDlg</code>, dialogo que permite visualizar los reportes de ventas según las necesidades del usuario.
+* Método que muestra los departamentos en un <code>DropDownList</code>.
+* Método que muestra las regiones en un <code>DropDownList</code>.
+* Método que muestra las ciudades en un <code>DropDownList</code> dependiendo de la opción seleccionada en el <code>DropDownList</code> de regiones.
+* Método que muestra los requerimientos en un <code>DropDownList</code>.

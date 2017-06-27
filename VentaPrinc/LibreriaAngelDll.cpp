@@ -659,7 +659,7 @@ void LibreriaAngelDll::servicioVentaCLS::mostrarServiciosExistentes(Win::ListVie
 	lvServicio.Items.DeleteAll();
 	lvServicio.SetRedraw(true);
 	lvServicio.Cols.Add(0, LVCFMT_CENTER, 50,L"$");
-	lvServicio.Cols.Add(1, LVCFMT_CENTER, 100, L"Nombre");
+	lvServicio.Cols.Add(1, LVCFMT_CENTER, 200, L"Nombre");
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
@@ -892,5 +892,152 @@ void LibreriaAngelDll::rangoCLS::cambiarEstadoRango(int idRango, bool rangoActiv
 	{
 		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
 	}
+	coneccion.CloseSession();
+}
+//Metodo que consulta en un drop downlist los puntos de venta de la empresa
+void LibreriaAngelDll::reporteVentasCLS::llenarDepartamento(Win::DropDownList ddColocacion, int longuitud)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddColocacion.DeleteAllItems();
+
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT id, tipo\
+		FROM punto_venta \
+		WHERE activo=true\
+		ORDER BY tipo ASC;");
+
+		coneccion.ExecuteSelect(consulta, longuitud, ddColocacion);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+//
+void LibreriaAngelDll::reporteVentasCLS::llenarRegion(Win::DropDownList ddRegion, int longuitud)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddRegion.DeleteAllItems();
+	ddRegion.Items.Add(L"Todas las regiones");
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT id, nombre\
+		FROM region \
+		WHERE activo=true\
+		ORDER BY nombre ASC;");
+
+		coneccion.ExecuteSelect(consulta, longuitud, ddRegion);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+
+void LibreriaAngelDll::reporteVentasCLS::llenarRequerimiento(Win::DropDownList ddRequerimiento, int longuitud)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddRequerimiento.DeleteAllItems();
+	ddRequerimiento.Items.Add(L"Todo");
+
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT id, tipo\
+		FROM requerimiento \
+		WHERE activo=true\
+		ORDER BY tipo ASC;");
+
+		coneccion.ExecuteSelect(consulta, longuitud, ddRequerimiento);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+//
+void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int longuitud)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddCiudad.DeleteAllItems();
+	ddCiudad.Items.Add(L"Todas las ciudades");
+
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT id, nombre\
+		FROM ciudad \
+		WHERE activo=true\
+		ORDER BY nombre ASC;");
+
+		coneccion.ExecuteSelect(consulta, longuitud, ddCiudad);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+
+//
+void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int regionId, int longuitud)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddCiudad.DeleteAllItems();
+	ddCiudad.Items.Add(L"Todas las ciudades");
+
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT ciu.id, ciu.nombre\
+		FROM ciudad ciu,lada la,region re \
+		WHERE ciu.lada_id=la.id\
+		AND la.region_id=re.id\
+		AND re.id=%d\
+		AND ciu.activo=true\
+		ORDER BY ciu.nombre ASC;",regionId);
+
+		coneccion.ExecuteSelect(consulta, longuitud, ddCiudad);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
 	coneccion.CloseSession();
 }

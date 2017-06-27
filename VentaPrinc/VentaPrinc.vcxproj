@@ -173,6 +173,7 @@
     <ClInclude Include="RegionDlg.h" />
     <ClInclude Include="OrdenVentasDlg.h" />
     <ClInclude Include="RangoDlg.h" />
+    <ClInclude Include="reportesVentasDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="ServicioDlg.h" />
@@ -197,6 +198,7 @@
     <ClCompile Include="RegionDlg.cpp" />
     <ClCompile Include="OrdenVentasDlg.cpp" />
     <ClCompile Include="RangoDlg.cpp" />
+    <ClCompile Include="reportesVentasDlg.cpp" />
     <ClCompile Include="ServicioDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

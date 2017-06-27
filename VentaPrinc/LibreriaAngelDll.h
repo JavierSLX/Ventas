@@ -94,6 +94,16 @@ public:
 		void LibreriaAngelDll::rangoCLS::cambiarEstadoRango(int idRango, bool rangoActivo);
 	private:
 	};
+	class reporteVentasCLS :public Win::Dialog
+	{
+	public:
+		void LibreriaAngelDll::reporteVentasCLS::llenarDepartamento(Win::DropDownList ddColocacion, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarRegion(Win::DropDownList ddRegion, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarRequerimiento(Win::DropDownList ddRequerimiento, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int regionId, int longuitud);
+	private:
+	};
 private:
 	
 };
