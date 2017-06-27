@@ -55,6 +55,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LibreriaJesusDll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegionDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -86,7 +92,6 @@
     <ClCompile Include="LibreriaJRDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-
     <ClCompile Include="ClienteVentasDlg.cpp">
 		<Filter>Source Files</Filter>
     </ClCompile>
@@ -94,6 +99,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LibreriaJesusDll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegionDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

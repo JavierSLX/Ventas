@@ -166,7 +166,9 @@
     <ClInclude Include="LibreriaAdDll.h" />
     <ClInclude Include="LibreriaAngelDll.h" />
     <ClInclude Include="LibreriaFBDll.h" />
+    <ClInclude Include="LibreriaJesusDll.h" />
     <ClInclude Include="LibreriaJRDll.h" />
+    <ClInclude Include="RegionDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="stdafx.h" />
@@ -183,7 +185,9 @@
     <ClCompile Include="LibreriaAdDll.cpp" />
     <ClCompile Include="LibreriaAngelDll.cpp" />
     <ClCompile Include="LibreriaFBDll.cpp" />
+    <ClCompile Include="LibreriaJesusDll.cpp" />
     <ClCompile Include="LibreriaJRDll.cpp" />
+    <ClCompile Include="RegionDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

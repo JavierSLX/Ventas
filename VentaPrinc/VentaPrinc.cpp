@@ -104,6 +104,8 @@ void VentaPrinc::Cmd_Delciudad(Win::Event& e)
 //Opción "Nueva Región" del menú
 void VentaPrinc::Cmd_Newregion(Win::Event& e)
 {
+	RegionDlg regionObj;
+	regionObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar Región" del menú

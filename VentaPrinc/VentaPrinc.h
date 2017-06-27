@@ -2,6 +2,8 @@
 #include "Resource.h"
 #include "agregarCiudadVentasDlg.h"
 #include "Eliminar_RestaurarCiudadVentasDlg.h"
+#include "RegionDlg.h"
+
 class VentaPrinc: public Win::Window
 {
 public:
