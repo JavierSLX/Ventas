@@ -65,6 +65,8 @@ void VentaPrinc::Cmd_Rangocomision(Win::Event& e)
 //Opción "Nuevo Cliente" del menú
 void VentaPrinc::Cmd_Newcliente(Win::Event& e)
 {
+	ClienteVentasDlg clienteObj;
+	clienteObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar Cliente" del menú

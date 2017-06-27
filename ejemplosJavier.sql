@@ -1,4 +1,4 @@
-USE atc;
+USE ventas;
 
 INSERT INTO credito (total, estado, orden_id) VALUES (11197, true, 1);
 INSERT INTO credito (total, estado, orden_id) VALUES (15770, true, 2);
