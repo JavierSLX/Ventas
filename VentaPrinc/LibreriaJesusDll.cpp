@@ -65,7 +65,7 @@ void LibreriaJesusDll::datosRegionCLS::ActualizarRegion(int idRegion, wstring no
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"UPDATE rango SET nombre='%s' WHERE id=%d", nombreRegion.c_str(), idRegion);
+		Sys::Format(consulta, L"UPDATE region SET nombre='%s' WHERE id=%d", nombreRegion.c_str(), idRegion);
 		coneccion.ExecuteNonQuery(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -73,6 +73,34 @@ void LibreriaJesusDll::datosRegionCLS::ActualizarRegion(int idRegion, wstring no
 		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
 	}
 }
+int LibreriaJesusDll::datosRegionCLS::obtenerIdOculto(Win::ListView lvRegion)
+{
+	int indice = lvRegion.GetSelectedIndex();
+	return lvRegion.Items[indice].Data;
+}
+
+wstring LibreriaJesusDll::datosRegionCLS::obtenerRegion(Win::ListView lvRegion, int columna)
+{
+	int indice = lvRegion.GetSelectedIndex();
+	return lvRegion.Items[indice].GetText(columna);
+}
+
+void LibreriaJesusDll::datosRegionCLS::CambiarEstadoRegion(int idRegion, bool regionActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE region SET activo=%d WHERE id=%d", regionActivo, idRegion);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
+	}
+}
+
 void LibreriaJesusDll::Window_Open(Win::Event& e)
 {
 }

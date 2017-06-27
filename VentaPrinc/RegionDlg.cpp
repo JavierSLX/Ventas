@@ -33,5 +33,18 @@ void RegionDlg::btAgregar_Click(Win::Event& e)
 
 void RegionDlg::btActualizar_Click(Win::Event& e)
 {
+	LibreriaJesusDll::datosRegionCLS regionObj;
+	regionObj.ActualizarRegion(_id, tbxRegion.Text);
+	//regionObj.ActualizarDireccion(_id, tbxDireccion.Text);
+	tbxRegion.Text = L"";
+	//tbxDireccion.Text = L"";
+	regionObj.MostrarRegion(lvRegion, 200, true);
+}
+
+void RegionDlg::lvRegion_DblClk(Win::Event& e)
+{
+	LibreriaJesusDll::datosRegionCLS regionObj;
+	_id = regionObj.obtenerIdOculto(lvRegion);
+	tbxRegion.Text = regionObj.obtenerRegion(lvRegion,0);
 }
 

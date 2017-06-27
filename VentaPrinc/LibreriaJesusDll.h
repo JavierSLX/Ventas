@@ -25,7 +25,10 @@ public:
 		void LibreriaJesusDll::datosRegionCLS::InsertarRegion(wstring nombre, bool activo);
 		int LibreriaJesusDll::datosRegionCLS::ObtenerIdUltimoRegistro();
 		wstring LibreriaJesusDll::datosRegionCLS::verificarSiExisteRegion(wstring region);
+		int LibreriaJesusDll::datosRegionCLS::obtenerIdOculto(Win::ListView lvRegion);
+		wstring LibreriaJesusDll::datosRegionCLS::obtenerRegion(Win::ListView lvRegion, int columna);
 		void LibreriaJesusDll::datosRegionCLS::ActualizarRegion(int idRegion, wstring nombreRegion);
+		void LibreriaJesusDll::datosRegionCLS::CambiarEstadoRegion(int idRegion, bool regionActivo);
 
 
 	private:

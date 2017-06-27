@@ -11,6 +11,7 @@ public:
 	~RegionDlg()
 	{
 	}
+	int _id;
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Label lb1;
@@ -47,12 +48,14 @@ protected:
 	//_________________________________________________
 	void btAgregar_Click(Win::Event& e);
 	void btActualizar_Click(Win::Event& e);
+	void lvRegion_DblClk(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
 		if (btAgregar.IsEvent(e, BN_CLICKED)) {btAgregar_Click(e); return true;}
 		if (btActualizar.IsEvent(e, BN_CLICKED)) {btActualizar_Click(e); return true;}
+		if (lvRegion.IsEvent(e, NM_DBLCLK)) {lvRegion_DblClk(e); return true;}
 		return false;
 	}
 };

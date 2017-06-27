@@ -6,6 +6,9 @@
 #include "OrdenVentasDlg.h"
 #include "ServicioDlg.h"
 #include "EliminarRestaurarServicioDlg.h"
+#include "EliminarRegionDlg.h"
+#include "LadaDlg.h"
+
 class VentaPrinc: public Win::Window
 {
 public:
