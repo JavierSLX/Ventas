@@ -36,7 +36,7 @@ protected:
 		lbFolio.CreateX(NULL, L"Folio", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 1.71979, 0.66146, 4.60375, 0.60854, hWnd, 1000);
 		tbxFolio.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 1.71979, 1.45521, 4.60375, 0.79375, hWnd, 1001);
 		lbCliente.CreateX(NULL, L"Cliente", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 1.71979, 4.49792, 4.60375, 0.60854, hWnd, 1002);
-		ddCliente.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 3.88937, 5.42396, 2.48708, 0.71437, hWnd, 1003);
+		ddCliente.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 3.88937, 5.42396, 2.48708, 0.60854, hWnd, 1003);
 		lbPuntoVenta.CreateX(NULL, L"Departamento", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 1.74625, 2.61938, 4.65667, 0.60854, hWnd, 1004);
 		ddPuntoVenta.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 1.69333, 3.57187, 4.73604, 0.60854, hWnd, 1005);
 		btAceptar.CreateX(NULL, L"Aceptar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 2.75167, 7.69937, 2.64583, 0.68792, hWnd, 1006);
@@ -54,12 +54,14 @@ protected:
 		tbxNombreCliente.Font = fontArial009A;
 	}
 	//_________________________________________________
+	void ddCliente_SelChange(Win::Event& e);
 	void ddPuntoVenta_SelChange(Win::Event& e);
 	void btAceptar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
+		if (ddCliente.IsEvent(e, CBN_SELCHANGE)) {ddCliente_SelChange(e); return true;}
 		if (ddPuntoVenta.IsEvent(e, CBN_SELCHANGE)) {ddPuntoVenta_SelChange(e); return true;}
 		if (btAceptar.IsEvent(e, BN_CLICKED)) {btAceptar_Click(e); return true;}
 		return false;

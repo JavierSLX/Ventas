@@ -1539,6 +1539,28 @@ int LibreriaAdDll::ordenNueva::sacarIDpuntoVenta(wstring pv)
 	conn.CloseSession();
 	return pv_id;
 }
+int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM cliente cli, clave_cliente cc\
+			WHERE cc.cliente_id = cli.id\
+			AND cc.numero = '%s';", clave_cliente.c_str());
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
 //Saca el último identificador registrado
 wstring LibreriaAdDll::ordenNueva::sacarUltimoFolio(void)
 {

@@ -96,6 +96,8 @@ public:
 		wstring LibreriaAdDll::ordenNueva::sacarUltimoFolio(void);
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorFecha(wstring cadena);
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena);
+		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv);
+		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente);
 		
 
 
