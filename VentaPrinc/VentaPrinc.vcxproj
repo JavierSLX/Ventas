@@ -161,6 +161,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ClienteVentasDlg.h" />
+    <ClInclude Include="agregarCiudadVentasDlg.h" />
+    <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
     <ClInclude Include="LibreriaAdDll.h" />
     <ClInclude Include="LibreriaAngelDll.h" />
     <ClInclude Include="LibreriaFBDll.h" />
@@ -176,6 +178,8 @@
   <ItemGroup>
     <ClCompile Include="AboutDlg.cpp" />
     <ClCompile Include="ClienteVentasDlg.cpp" />
+    <ClCompile Include="agregarCiudadVentasDlg.cpp" />
+    <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />
     <ClCompile Include="LibreriaAdDll.cpp" />
     <ClCompile Include="LibreriaAngelDll.cpp" />
     <ClCompile Include="LibreriaFBDll.cpp" />

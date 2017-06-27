@@ -83,16 +83,22 @@ void VentaPrinc::Cmd_Preciocliente(Win::Event& e)
 //Opción "Nueva Ciudad" del menú
 void VentaPrinc::Cmd_Newciudad(Win::Event& e)
 {
+	agregarCiudadVentasDlg ciudadObj(L"Agregar");
+	ciudadObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar ciudad" del menú
 void VentaPrinc::Cmd_Editciudad(Win::Event& e)
 {
+	agregarCiudadVentasDlg ciudadObj(L"Editar");
+	ciudadObj.BeginDialog(hWnd);
 }
 
 //Opción "Borrar Ciudad" del menú
 void VentaPrinc::Cmd_Delciudad(Win::Event& e)
 {
+	Eliminar_RestaurarCiudadVentasDlg eliminarObj;
+	eliminarObj.BeginDialog(hWnd);
 }
 
 //Opción "Nueva Región" del menú
