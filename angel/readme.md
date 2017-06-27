@@ -22,11 +22,19 @@ Actividades realizadas durante el día 26 de Junio del 2017:
 * Método que controla el contenido de un <code>ListView</code> dependiendo de  la <code>tab</code> seleccionada.
 * Método que actualiza el estado del campo de activo dentro de la tabla <code>servicio_venta</code>.
 * Programación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>false</code>.
-* Programación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>true</code>.
+* Programación del botón restaurar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>true</code>.
 * Creación de la clase <code>rangoCLS</code>,clase que sirve para los movimientos que son necesarios para los rangos de comisiones.
+
+<h5>27/06/2017</h5>
+Actividades realizadas durante el día 27 de Junio del 2017:
+
 * Creación del dialogo <code>rangoDlg</code>, este dialogo nos permite visualizar los rangos activos, agregar un nuevo rango y actualizar sus datos.
 * Método para insertar un nuevo rango.
 * Método para mostrar los rangos activos existentes.
 * Método para actualizar la información de un rango.
 * Validación para que no se capturen campos nulos en la base de datos
 * Validación para que no se capturen rangos repetidos en la base datos.
+* Creación del dialogo <code>eliminarRestaurarDlg</code>, este dialogo nos permite eliminar y restaurar rangos.
+* Método para cambiar el estado del rango ya sea true o false según la necesidad del usuario.
+* Programación del evento <code>selchange</code> del <code>tab</code> para mostrar en un ListView los rangos activos e inactivos según sean sus necesidades.
+* Validación para que si no hay ningún elemento seleccionado del <code>ListView</code> no se elimine ni se restaure. 

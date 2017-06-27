@@ -1,6 +1,7 @@
 #pragma once   //_____________________________________________ EliminarRestaurarRango.h  
 #include "resource.h"
-
+#include "LibreriaAngelDll.h"
+#include "RangoDlg.h"
 class EliminarRestaurarRango: public Win::Dialog
 {
 public:
@@ -39,12 +40,14 @@ protected:
 		btRestaurar.Font = fontArial009A;
 	}
 	//_________________________________________________
+	void tabRango_SelChange(Win::Event& e);
 	void btEliminar_Click(Win::Event& e);
 	void btRestaurar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
+		if (tabRango.IsEvent(e, TCN_SELCHANGE)) {tabRango_SelChange(e); return true;}
 		if (btEliminar.IsEvent(e, BN_CLICKED)) {btEliminar_Click(e); return true;}
 		if (btRestaurar.IsEvent(e, BN_CLICKED)) {btRestaurar_Click(e); return true;}
 		return false;

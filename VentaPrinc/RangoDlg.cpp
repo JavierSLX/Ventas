@@ -118,3 +118,10 @@ void RangoDlg::lvRango_DblClk(Win::Event& e)
 	tbxComision.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 2);
 }
 
+void RangoDlg::btEliminar_Click(Win::Event& e)
+{
+	EliminarRestaurarRango rangoObj;
+	rangoObj.BeginDialog(hWnd);
+}
+
+

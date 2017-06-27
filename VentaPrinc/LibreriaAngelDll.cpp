@@ -874,3 +874,23 @@ void LibreriaAngelDll::rangoCLS::actualizarRango(int id, double minimo, double m
 	}
 	coneccion.CloseSession();
 }
+
+//Metodo que cambia el estado de un rango segun la opcion del usuario
+void LibreriaAngelDll::rangoCLS::cambiarEstadoRango(int idRango, bool rangoActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE rango \
+		SET activo=%d\
+		WHERE id=%d", rangoActivo, idRango);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}

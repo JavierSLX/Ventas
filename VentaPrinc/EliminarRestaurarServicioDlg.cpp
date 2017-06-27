@@ -22,11 +22,11 @@ void EliminarRestaurarServicioDlg::btEliminar_Click(Win::Event& e)
 	{
 		servicioVentaObj.cambiarEstadoServicio(id, false);
 		servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, true);
-		MessageBoxW(L"Se eliminó correctamente", L"Eliminar tipo de artículo", MB_OK|MB_ICONINFORMATION);
+		MessageBoxW(L"Se eliminó correctamente", L"Eliminar servicio", MB_OK|MB_ICONINFORMATION);
 	}
 	else
 	{
-		MessageBoxW(L"No hay elementos seleccionados", L"Eliminar tipo de artículo", MB_OK |MB_ICONERROR);
+		MessageBoxW(L"No hay elementos seleccionados", L"Eliminar servicio", MB_OK |MB_ICONERROR);
 	}
 }
 
@@ -40,11 +40,11 @@ void EliminarRestaurarServicioDlg::btRestaurar_Click(Win::Event& e)
 	{
 		servicioVentaObj.cambiarEstadoServicio(id, true);
 		servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, false);
-		MessageBoxW(L"Se eliminó correctamente", L"Eliminar tipo de artículo", MB_OK | MB_ICONINFORMATION);
+		MessageBoxW(L"Se restauró correctamente", L"Eliminar servicio", MB_OK | MB_ICONINFORMATION);
 	}
 	else
 	{
-		MessageBoxW(L"No hay elementos seleccionados", L"Eliminar tipo de artículo", MB_OK | MB_ICONERROR);
+		MessageBoxW(L"No hay elementos seleccionados", L"Eliminar servicio", MB_OK | MB_ICONERROR);
 	}
 }
 

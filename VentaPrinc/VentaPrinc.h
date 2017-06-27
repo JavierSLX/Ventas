@@ -7,6 +7,7 @@
 #include "ServicioDlg.h"
 #include "EliminarRestaurarServicioDlg.h"
 #include "RangoDlg.h"
+#include "EliminarRestaurarRango.h"
 class VentaPrinc: public Win::Window
 {
 public:
