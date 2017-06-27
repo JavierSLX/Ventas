@@ -54,13 +54,11 @@ protected:
 		tbxNombreCliente.Font = fontArial009A;
 	}
 	//_________________________________________________
-	void ddCliente_SelChange(Win::Event& e);
 	void btAceptar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
-		if (ddCliente.IsEvent(e, CBN_SELCHANGE)) {ddCliente_SelChange(e); return true;}
 		if (btAceptar.IsEvent(e, BN_CLICKED)) {btAceptar_Click(e); return true;}
 		return false;
 	}
