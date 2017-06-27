@@ -53,7 +53,7 @@ INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( '
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JOSE LUIS COLÍN','20 NOV 90 B, SAN JUAN DEL RIO, QRO.','427 108 7027','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'EMMA','CERRO GORDO,SAN JUAN DEL RIO, QRO.','427 110 3690','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ANGEL TORRES','CAMINO RANCHO DE EN MEDIO, ANDADOR SANTA LUCIA','427 110 3690','S/R',true,66);
-INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JORGE RUIZ', 'S/R','S/R', 'S/R','S/R',true,66);
+INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JORGE RUIZ','S/R', 'S/R','S/R',true,66);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JORGE RODRÍGUEZ MIRANDA','RIVAPALACIO 53, SAN JUAN DEL RÍO, QRO.','442 133 1017','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JUAN RUÍZ MORENO','ADOLFO LOPEZ MATEOS 26, SAN JUAN DEL RIO,QRO.','442 155 9198','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( ' HUGO NIETO','FCO VILLA 64','427 134 5585','S/R',true,66);
@@ -423,16 +423,16 @@ INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( '
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'MARICELA GASCA','AV ARTEAGA #13 VALLE DE SANTIAGO','456 110 8024','S/R',true,62);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'RUBI SIERRA','AV ARTEAGA #13 VALLE DE SANTIAGO','456 651 2459','S/R',true,62);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'VIRGINIA VARGAS','AV ARTEAGA # 20 VALLE DE SANTIAGO','456 103 1442','S/R',true,62);
-INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ANGEL GARCIA','VICENTE GERRERO #108 JARAL DEL PROGRESO	','456 101 9078',true,22);
+INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ANGEL GARCIA','VICENTE GERRERO #108 JARAL DEL PROGRESO','456 101 9078','S/R',true,22);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JUNCARLOS LEZAMA','AV MENA #210, A VALLE DE SANTIAGO','456 651 8781','S/R',true,62);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'PAOLA ANDRADE TURBO CELL','IGNACIO COMONDORD ,#101 RINCON DE TAMAYO','461 151 7677','S/R',true,39);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ABRAHAM SALGADO	','AV EL SAUZ #223 COL. VALLE DE LOS NARANGOS CELAYA','461 120 9610','S/R',true,7);
-INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ABIGAIL','AV JUAN JOSE TORRES LANDA #503 , CELAYA GTO','461 615 5177',true,7);
+INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ABIGAIL','AV JUAN JOSE TORRES LANDA #503 , CELAYA GTO','461 615 5177','S/R',true,7);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ERIK TADEO','ANTONIO PLAZA #106 CELAYA GTO','461 139 2509','S/R',true,7);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'AMALIA GONZALEZ	','MARIANO JIMENEZ -#561 , CELAYA GT0','461 112 2609','S/R',true,7);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'AXEL CONTRERAS','FRANCISCO IMADERO #29 EMPALME ESCOBEDO','412 120 4090','S/R',true,18);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'HORTENCIA ROCHA','AV JUAREZ # 242 GUANAJUATO CAPITAL','473 110 9990','S/R',true,19);
-INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'OFELIA CARRILLO RAMIREZ	','AV JUAREZ #236 GUANAJUATO','473 101 2800','S/R',true,)19;
+INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'OFELIA CARRILLO RAMIREZ	','AV JUAREZ #236 GUANAJUATO','473 101 2800','S/R',true,19);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'MARY ','AV JUAREZ # 117 INT 1 GUANAJUATO','473 652 7330','S/R',true,19);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ANA CAMACHO	','AV JUAREZ ,# 182 GUANAJUATO	','473 122 9149','S/R',true,19);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ALFREDO FERNANDEZ ','AV JUAREZ #178 GUANAJUATO','473 114 0510','S/R',true,19);

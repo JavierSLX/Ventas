@@ -150,7 +150,47 @@ INSERT INTO articulo_marca (marca_id, TipoArticulo_id) VALUES (11,8);
 INSERT INTO articulo_marca (marca_id, TipoArticulo_id) VALUES (12,8);
 
 
+#Tabla color
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Rojo', 255, 0, 0, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Verde', 0, 255, 0, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Azul', 0, 0, 255, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Blanco', 255, 255, 255, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Negro', 0, 0, 0, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Amarillo', 255, 255, 0, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Rosa', 255, 192, 203, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Morado', 138, 43, 226, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Café', 165, 42, 42, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Plateado', 192, 192, 192, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Gris', 128, 128, 128, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Naranja', 255, 140, 0, true);
+INSERT INTO color (nombre, R, G, B, activo) VALUES ('Dorado', 255, 215, 0, true);
 
+#Tabla modelo
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Xperia', true, 1);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Estándar', true, 1);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Iphone', true, 2);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('J3', true, 3);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Galaxy S3 Mini', true, 3);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Prime', true, 3);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Core 3', true, 3);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('5010', true, 4);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('4013', true, 4);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('4005', true, 4);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Pixie 3', true, 4);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('4027', true, 4);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Estándar', true, 5);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Estándar', true, 6);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('F1810', true, 7);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('L2Z', true, 8);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('G3', true, 9);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Q10', true, 9);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Q7', true, 9);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('G4', true, 10);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('G3', true, 10);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Estándar', true, 11);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Telcel', true, 12);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Movistar', true, 12);
+INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Unefon', true, 11);
 
 
 
