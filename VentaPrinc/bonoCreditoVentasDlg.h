@@ -1,7 +1,7 @@
 #pragma once   //_____________________________________________ bonoCreditoVentasDlg.h  
 #include "resource.h"
 #include "LibreriaFBDll.h"
-
+#include "registrarAbonosVentasDlg.h"
 class bonoCreditoVentasDlg: public Win::Dialog
 {
 public:
@@ -12,6 +12,13 @@ public:
 	{
 	}
 private:
+	int idCreditoVP;
+	wstring folioOrdenVP;
+	double totalCreditoVP;
+	wstring nombreClienteVP;
+	wstring claveClienteVP;
+	wstring puntoVentaVP;
+
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Textbox tbxOpcion;
 	Win::Button radioFolio;

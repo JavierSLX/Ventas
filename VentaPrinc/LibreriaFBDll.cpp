@@ -1556,8 +1556,8 @@ void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, 
 	lvCredito.Cols.DeleteAll();
 	lvCredito.Items.DeleteAll();
 	lvCredito.SetRedraw(true);
-	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Total");
-	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Total");
 	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
 	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
 	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
@@ -1566,7 +1566,7 @@ void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, 
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT cre.id,cre.total,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
+		Sys::Format(consulta, L"SELECT cre.id,ord.folio,cre.total,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
 			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv\
 			WHERE cre.orden_id = ord.id\
 			AND ord.cliente_id = cli.id\

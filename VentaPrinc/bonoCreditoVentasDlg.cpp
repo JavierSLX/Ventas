@@ -38,5 +38,17 @@ void bonoCreditoVentasDlg::btBuscar_Click(Win::Event& e)
 
 void bonoCreditoVentasDlg::lvCredito_ItemActivate(Win::Event& e)
 {
+	LibreriaFBDll::Ciudad ciudadObj;
+	LibreriaFBDll::Modelo modeloObj;
+	idCreditoVP = modeloObj.sacarIDOculto(lvCredito);
+	folioOrdenVP = ciudadObj.sacarTextoLV(lvCredito, 0);
+	totalCreditoVP = Sys::Convert::ToDouble(ciudadObj.sacarTextoLV(lvCredito, 1));
+	nombreClienteVP = ciudadObj.sacarTextoLV(lvCredito, 2);
+	claveClienteVP = ciudadObj.sacarTextoLV(lvCredito, 3);
+	puntoVentaVP = ciudadObj.sacarTextoLV(lvCredito, 4);
+
+	registrarAbonosVentasDlg abonoObj;
+	abonoObj.BeginDialog(hWnd);
+
 }
 
