@@ -1440,3 +1440,54 @@ void LibreriaAdDll::articulo::updateArticuloRestaurar(int articulo_id)
 
 	conn.CloseSession();
 }
+
+
+
+//-------------------------------------ORDEN-------------------------------------
+//----------------------------------NUEVA ORDEN----------------------------------
+//-------------------------------LLENAR DROPDOWNlIST-----------------------------
+void  LibreriaAdDll::ordenNueva::llenarDDCliente(Win::DropDownList ddCliente, int large, bool activo) {
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddCliente.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id, numero\
+								FROM clave_cliente\
+								WHERE activo = %d\
+								ORDER BY numero ASC;", activo);
+
+		conn.ExecuteSelect(consulta, large, ddCliente);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+void  LibreriaAdDll::ordenNueva::llenarDDPuntoVenta(Win::DropDownList ddPuntoVenta, int large, bool activo) {
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddPuntoVenta.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id, tipo\
+								FROM punto_venta\
+								WHERE activo = %d\
+								ORDER BY tipo ASC;", activo);
+
+		conn.ExecuteSelect(consulta, large, ddPuntoVenta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}

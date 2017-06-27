@@ -84,6 +84,18 @@ public:
 
 
 	};
+
+	class ordenNueva : public Dialog
+	{
+
+	public:
+		void  LibreriaAdDll::ordenNueva::llenarDDCliente(Win::DropDownList ddCliente, int large, bool activo);
+		void  LibreriaAdDll::ordenNueva::llenarDDPuntoVenta(Win::DropDownList ddPuntoVenta, int large, bool activo);
+
+		
+
+
+	};
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	void Window_Open(Win::Event& e);
