@@ -138,16 +138,22 @@ void VentaPrinc::Cmd_Dellada(Win::Event& e)
 //Opción "Nuevo Servicio" del menú
 void VentaPrinc::Cmd_Newservicio(Win::Event& e)
 {
+	ServicioDlg servicioObj;
+	servicioObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar Servicio" del menú
 void VentaPrinc::Cmd_Editservicio(Win::Event& e)
 {
+	ServicioDlg servicioObj;
+	servicioObj.BeginDialog(hWnd);
 }
 
 //Opción "Borrar Servicio" del menú
 void VentaPrinc::Cmd_Delservicio(Win::Event& e)
 {
+	EliminarRestaurarServicioDlg eliminarRestaurarServicioObj;
+	eliminarRestaurarServicioObj.BeginDialog(hWnd);
 }
 
 //Opción "Reporte" del menú

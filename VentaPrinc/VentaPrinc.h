@@ -4,6 +4,8 @@
 #include "Eliminar_RestaurarCiudadVentasDlg.h"
 #include "RegionDlg.h"
 #include "OrdenVentasDlg.h"
+#include "ServicioDlg.h"
+#include "EliminarRestaurarServicioDlg.h"
 class VentaPrinc: public Win::Window
 {
 public:
