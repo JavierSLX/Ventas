@@ -48,6 +48,12 @@
     <ClInclude Include="LibreriaJRDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LibreriaJesusDll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegionDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -75,6 +81,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LibreriaJRDll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LibreriaJesusDll.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegionDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
