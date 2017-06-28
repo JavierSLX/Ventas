@@ -34,6 +34,7 @@ public:
 	private:
 
 	};
+
 	class datosLadaCLS :public Win::Dialog
 	{
 	public:
@@ -46,7 +47,9 @@ public:
 
 		}
 		void LibreriaJesusDll::datosLadaCLS::MostrarLada(Win::ListView lvLada, int longuitud, bool activo);
-
+		void LibreriaJesusDll::datosLadaCLS::llenarLadaDD(Win::DropDownList ddLada, int large);
+		void LibreriaJesusDll::datosLadaCLS::InsertarLada(wstring tipo, bool activo);
+		wstring LibreriaJesusDll::datosLadaCLS::verificarSiExisteLada(wstring lada);
 	private:
 
 	};

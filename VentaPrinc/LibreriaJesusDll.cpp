@@ -111,18 +111,72 @@ void LibreriaJesusDll::datosLadaCLS::MostrarLada(Win::ListView lvLada, int longu
 	lvLada.Cols.DeleteAll();
 	lvLada.Items.DeleteAll();
 	lvLada.SetRedraw(true);
-	lvLada.Cols.Add(0, LVCFMT_CENTER, 100, L"Region");
-	lvLada.Cols.Add(1, LVCFMT_CENTER, 100, L"Lada");
+	lvLada.Cols.Add(0, LVCFMT_CENTER, 80, L"lada");
+	lvLada.Cols.Add(1, LVCFMT_CENTER, 100, L"region");
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT la.id,re.nombre,la.tipo FROM lada la, region re WHERE la.activo=true ORDER BY la.id ASC;", activo);
+		Sys::Format(consulta, L"SELECT la.id,la.tipo,re.nombre FROM lada la, region re WHERE la.activo=true ORDER BY la.id ASC;", activo);
 		coneccion.ExecuteSelect(consulta, longuitud, lvLada);
 	}
 	catch (Sql::SqlException e)
 	{
 		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
 	}
+}
+void LibreriaJesusDll::datosLadaCLS::llenarLadaDD(Win::DropDownList ddRegion, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddRegion.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id,nombre FROM region WHERE activo=true ORDER BY nombre ASC ");
+		conn.ExecuteSelect(consulta, large, ddRegion);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+void LibreriaJesusDll::datosLadaCLS::InsertarLada(wstring tipo, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO lada(tipo,activo)VALUES('%s',%d)", tipo.c_str(), activo);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
+	}
+}
+wstring LibreriaJesusDll::datosLadaCLS::verificarSiExisteLada(wstring lada)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	wstring existeLada;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT tipo\
+		FROM lada\
+		WHERE tipo='%s'", lada.c_str());
+		coneccion.GetString(consulta, existeLada, 50);
+	}
+	catch (Sql::SqlException e)
+	{
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK);
+	}
+	coneccion.CloseSession();
+	return existeLada;
 }
 void LibreriaJesusDll::Window_Open(Win::Event& e)
 {
