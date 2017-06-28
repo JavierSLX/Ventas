@@ -42,7 +42,7 @@ protected:
 	//_________________________________________________
 	void InitializeGui()
 	{
-		tbxClave.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 0.21167, 0.87313, 3.49250, 0.60854, hWnd, 1000);
+		tbxClave.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 0.21167, 0.87313, 3.49250, 0.60854, hWnd, 1000);
 		tbxNombre.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 4.57729, 0.87313, 6.72042, 0.60854, hWnd, 1001);
 		tbxDireccion.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 12.06500, 0.87313, 6.29708, 0.60854, hWnd, 1002);
 		tbxTelefono.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 1.71979, 3.33375, 5.18583, 0.60854, hWnd, 1003);
@@ -80,12 +80,14 @@ protected:
 		btActualizar.Font = fontArial009A;
 	}
 	//_________________________________________________
+	void ddPuntoVenta_SelChange(Win::Event& e);
 	void btRegistrar_Click(Win::Event& e);
 	void btActualizar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
+		if (ddPuntoVenta.IsEvent(e, CBN_SELCHANGE)) {ddPuntoVenta_SelChange(e); return true;}
 		if (btRegistrar.IsEvent(e, BN_CLICKED)) {btRegistrar_Click(e); return true;}
 		if (btActualizar.IsEvent(e, BN_CLICKED)) {btActualizar_Click(e); return true;}
 		return false;

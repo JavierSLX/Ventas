@@ -10,21 +10,26 @@ void ClienteVentasDlg::Window_Open(Win::Event& e)
 	//Llena la ddlist de ciudad
 	YopObj.llenarDdCiudad(ddCiudad, true, 100);
 
-	//Ciclo que elimina todos los conceptos que no son de ruta de la dropdownlist
-	/*LibreriaJRDll::StringCLS stringObj;
-	for (int i = 0; i < ddPuntoVenta.GetItemCount(); i++)
-	{
-		if (!stringObj.verificaRuta(ddPuntoVenta.Items[i].Text))
-			ddPuntoVenta.DeleteItem(i);
-	}
-	ddPuntoVenta.SetSelectedIndex(0);*/
+	//Saca la última clave del cliente
+	LibreriaJRDll::SqlCLS sqlObj;
+	tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
 }
 
+//Botón Registrar
 void ClienteVentasDlg::btRegistrar_Click(Win::Event& e)
 {
 }
 
+//Botón Actualizar
 void ClienteVentasDlg::btActualizar_Click(Win::Event& e)
 {
+}
+
+//Cuando la dropdownlist cambia
+void ClienteVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
+{
+	//Saca la última clave del cliente
+	LibreriaJRDll::SqlCLS sqlObj;
+	tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
 }
 

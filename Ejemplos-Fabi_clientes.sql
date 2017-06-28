@@ -1,13 +1,5 @@
 use ventas;
 
-INSERT INTO punto_venta (tipo, activo) VALUES ('R0', true);
-INSERT INTO punto_venta (tipo, activo) VALUES ('R1', true);
-INSERT INTO punto_venta (tipo, activo) VALUES ('R2', true);
-INSERT INTO punto_venta (tipo, activo) VALUES ('R3', true);
-INSERT INTO punto_venta (tipo, activo) VALUES ('Oficina', true);
-INSERT INTO punto_venta (tipo, activo) VALUES ('Local Juárez', true);
-INSERT INTO punto_venta (tipo, activo) VALUES ('Local Zaragoza', true);
-
 #Tabla cliente
 #Ruta 0
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'GENERAL','S/R','S/R','S/R',true,66);

@@ -736,11 +736,11 @@ int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"cc.numero\
+		Sys::Format(consulta, L"select cc.numero\
 		from clave_cliente cc, punto_venta pv\
 		where cc.puntoVenta_id = pv.id\
 		and pv.tipo = '%s'\
-		order by identificador desc limit 1;", punto_venta.c_str());
+		order by cc.numero desc limit 1;", punto_venta.c_str());
 		conn.GetString(consulta, clave, 50);
 	}
 	catch (Sql::SqlException e)
