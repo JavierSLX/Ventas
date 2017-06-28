@@ -15,6 +15,7 @@ public:
 	int _idCiudad;
 	int _idRequerimiento;
 	void ponerVisibleElementos(bool activo);
+	void generarReporte(wstring tipoReporte);
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::DropDownList ddTipoReporte;
@@ -69,12 +70,14 @@ protected:
 	}
 	//_________________________________________________
 	void ddTipoReporte_SelChange(Win::Event& e);
+	void ddDepartamento_SelChange(Win::Event& e);
 	void ddRegion_SelChange(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
 		if (ddTipoReporte.IsEvent(e, CBN_SELCHANGE)) {ddTipoReporte_SelChange(e); return true;}
+		if (ddDepartamento.IsEvent(e, CBN_SELCHANGE)) {ddDepartamento_SelChange(e); return true;}
 		if (ddRegion.IsEvent(e, CBN_SELCHANGE)) {ddRegion_SelChange(e); return true;}
 		return false;
 	}
