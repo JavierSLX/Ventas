@@ -767,6 +767,31 @@ int LibreriaJRDll::SqlCLS::sacarIDCiudad(wstring nombre)
 	return estandar_id;
 }
 
+//Saca el id de un registro de la tabla cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDCliente(wstring nombre)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM cliente\
+		WHERE nombre = '%s'", nombre.c_str());
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
 //Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 {

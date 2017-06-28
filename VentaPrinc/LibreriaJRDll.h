@@ -101,6 +101,9 @@ public:
 		//Saca el id de un registro de la tabla ciudad, en caso de no existir regresa un 0
 		int sacarIDCiudad(wstring nombre);
 
+		//Saca el id de un registro de la tabla cliente, en caso de no existir regresa un 0
+		int sacarIDCliente(wstring nombre);
+
 		//Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 		int sacarUltimoIDClaveCliente(wstring punto_venta);
 
