@@ -14,6 +14,7 @@ void DetallesOrdenVentaDlg::Window_Open(Win::Event& e)
 	consultasArtObj.llenarDDarticulo(ddTipo, 100, true);
 	ddTipo.SetSelectedIndex(0);
 	radioArticulo.Checked = true;
+	tbxPrecioSugerido.Enabled = false;
 	
 	
 	//________________________________________________________ lvCaracteristicasOrden
@@ -130,5 +131,6 @@ void DetallesOrdenVentaDlg::ddTipo_SelChange(Win::Event& e)
 	int servicio_id = consultasObj.sacarIDServicio(ddTipo.Text);
 	double precio = consultasObj.sacarPrecio(servicio_id);
 	tbxPrecioSugerido.SetText(Sys::Convert::ToString(precio));
+	tbxPrecioFinal.SetText(Sys::Convert::ToString(precio));
 }
 

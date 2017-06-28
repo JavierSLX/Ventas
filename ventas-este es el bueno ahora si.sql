@@ -296,5 +296,34 @@ CREATE TABLE articulo
 	tipoArticulo_id INT UNSIGNED NOT NULL REFERENCES tipo_articulo.id ON UPDATE CASCADE,
 	modelo_id INT UNSIGNED NOT NULL REFERENCES modelo.id ON UPDATE CASCADE
 );
-
-select * from orden_descripcion;
+SELECT ar.id
+			FROM cantidad ca, punto_venta pv, articulo ar, color co, marca ma, modelo mo, tipo_articulo ta
+			WHERE ca.puntoVenta_id = pv.id
+			AND ar.tipoArticulo_id = ta.id
+			AND ca.articulo_id = ar.id
+            AND ca.color_id = co.id
+			AND mo.id = ar.modelo_id
+			AND mo.marca_id = ma.id
+			AND co.id = 3
+			AND pv.id = 2
+			AND ta.id = 2
+            AND mo.id = 21
+			AND ma.id = 10;
+            
+            
+            
+            
+            SELECT cli.nombre
+			FROM punto_venta pv, cliente cli, clave_cliente cc 
+			WHERE  pv.id= cc.puntoVenta_id
+			AND cli.id = cc.cliente_id
+			AND pv.id = 2
+			AND cc.numero = '001';
+            
+            select * from precio_cliente;
+            
+            select * from punto_venta;
+select * from articulo;
+select * from modelo;
+select * from marca;
+select * from cantidad;

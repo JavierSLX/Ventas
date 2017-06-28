@@ -193,6 +193,72 @@ INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Movistar', true, 12);
 INSERT INTO modelo (nombre, activo, marca_id) VALUES ('Unefon', true, 11);
 
 
+#Tabla articulo
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('123456789', 20, true, 1, 23);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('223456789', 10, true, 1, 24);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('224456789', 200, true, 2, 12);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('224466789', 400, true, 2, 15);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('224466889', 800, true, 2, 19);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('924456789', 1000, true, 2, 21);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('984456789', 500, true, 3, 7);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('987456789', 200, true, 3, 1);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('987656789', 1200, true, 3, 5);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('224756789', 50, true, 4, 2);
+#De Aqui en adelante
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('724456787', 30, true, 4, 20);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('624556757', 300, true, 5, 10);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('524556757', 700, true, 5, 13);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('524555757', 300, true, 5, 19);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('664566757', 150, true, 6, 3);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('664566756', 250, true, 6, 9);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('674766757', 150, true, 7, 7);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('777766757', 550, true, 7, 17);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('674767757', 650, true, 7, 14);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('874768757', 150, true, 8, 12);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('884768857', 120, true, 8, 16);
+#nuevos
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('884768826', 140, true, 6, 16);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('884111234', 290, true, 1, 20);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('886167289', 90, true, 2, 10);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('884768173', 230, true, 4, 14);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('882233227', 220, true, 6, 18);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('267812946', 370, true, 4, 14);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('345621789', 250, true, 8, 25);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('884768826', 120, true, 6, 16);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('863748292', 460, true, 1, 17);
+INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
+VALUES ('884781043', 140, true, 3,21);
+
 
 
 select * from punto_venta;
@@ -206,6 +272,11 @@ SELECT cli.nombre
 								FROM punto_venta
 								WHERE activo = true
 								ORDER BY tipo ASC;
-
+SELECT mo.id, mo.nombre
+								FROM modelo mo, marca ma
+								WHERE mo.marca_id = ma.id
+								AND ma.nombre = 'Alcatel'
+								AND mo.activo = true
+								ORDER BY mo.nombre ASC;
 
 
