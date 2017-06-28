@@ -67,6 +67,9 @@ public:
 		//Método que llena la drop down list con las ciudades registradas en la base de datos
 		void llenarDdCiudad(Win::DropDownList ddCiudad, bool activo, int size);
 
+		//Método que llena la drop down list exclusivamente de rutas registradas en la base de datos
+		void llenarDdRutasExclusiva(Win::DropDownList ddRutas, bool activo, int size);
+
 		//Método que llena una gráfica de pastel con los datos correspondientes al inventario
 		void llenarPastelInventario(wstring opcion);
 	};

@@ -559,6 +559,38 @@ void LibreriaJRDll::WintemplaCLS::llenarDdCiudad(Win::DropDownList ddCiudad, boo
 	conn.CloseSession();
 }
 
+//Método que llena la drop down list exclusivamente de rutas registradas en la base de datos
+void LibreriaJRDll::WintemplaCLS::llenarDdRutasExclusiva(Win::DropDownList ddRutas, bool activo, int size)
+{
+	Sql::SqlConnection conn;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddRutas.DeleteAllItems();
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT id, tipo\
+		FROM punto_venta\
+		WHERE activo = true\
+		AND tipo LIKE 'R%%'\
+		AND CHARACTER_LENGTH(tipo) <= 3\
+		ORDER BY tipo ASC;");
+
+		conn.ExecuteSelect(consulta, size, ddRutas);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	ddRutas.SetSelectedIndex(0);
+	conn.CloseSession();
+}
+
 //Método que llena una gráfica de pastel con los datos correspondientes al inventario
 void LibreriaJRDll::WintemplaCLS::llenarPastelInventario(wstring opcion)
 {
