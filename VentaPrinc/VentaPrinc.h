@@ -7,6 +7,8 @@
 #include "ServicioDlg.h"
 #include "EliminarRestaurarServicioDlg.h"
 #include "ClienteVentasDlg.h"
+#include "bonoCreditoVentasDlg.h"
+#include "registrarAbonosVentasDlg.h"
 class VentaPrinc: public Win::Window
 {
 public:

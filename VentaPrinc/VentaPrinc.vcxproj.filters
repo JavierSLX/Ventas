@@ -49,22 +49,22 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ClienteVentasDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="agregarCiudadVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LibreriaJesusDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RegionDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrdenVentasDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServicioDlg.h">
       <Filter>Header Files</Filter>
@@ -73,6 +73,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RangoDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bonoCreditoVentasDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="registrarAbonosVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -105,22 +111,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ClienteVentasDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="agregarCiudadVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LibreriaJesusDll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RegionDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OrdenVentasDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ServicioDlg.cpp">
       <Filter>Source Files</Filter>
@@ -129,6 +135,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RangoDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bonoCreditoVentasDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="registrarAbonosVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

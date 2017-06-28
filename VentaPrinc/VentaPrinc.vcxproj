@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bonoCreditoVentasDlg.h" />
     <ClInclude Include="ClienteVentasDlg.h" />
     <ClInclude Include="agregarCiudadVentasDlg.h" />
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="RegionDlg.h" />
     <ClInclude Include="OrdenVentasDlg.h" />
     <ClInclude Include="RangoDlg.h" />
+    <ClInclude Include="registrarAbonosVentasDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="ServicioDlg.h" />
@@ -183,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutDlg.cpp" />
+    <ClCompile Include="bonoCreditoVentasDlg.cpp" />
     <ClCompile Include="ClienteVentasDlg.cpp" />
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />
@@ -195,6 +198,7 @@
     <ClCompile Include="RegionDlg.cpp" />
     <ClCompile Include="OrdenVentasDlg.cpp" />
     <ClCompile Include="RangoDlg.cpp" />
+    <ClCompile Include="registrarAbonosVentasDlg.cpp" />
     <ClCompile Include="ServicioDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

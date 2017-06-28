@@ -124,16 +124,36 @@ public:
 		}
 		void LibreriaFBDll::Ciudad::llenarLVCiudad(Win::ListView lvCiudad,int large);
 		void LibreriaFBDll::Ciudad::llenarLVCiudadInactiva(Win::ListView lvCiudad, int large);
-		void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad);
+		void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad,int lada_id);
 		wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad);
 		wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna);
 		void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre, int ciudad_id);
 		void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id, bool estado);
+		void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large);
+		int LibreriaFBDll::Ciudad::sacarIDLada(wstring tipo);
 		/*void LibreriaFBDll::Ciudad::llenarLVCiudadNombre(Win::ListView lvCiudad, wstring ciudad, int large);*/
 	private:
 
 	};
+	class bonoCredito : public Win::Dialog
+	{
+	public:
+		bonoCredito()
+		{
 
+		}
+		~bonoCredito()
+		{
+
+		}
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito,wstring claveCliente,int puntoVenta_id,int large);
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoFolio(Win::ListView lvCredito, wstring folio, int large);
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, wstring nombre, int large);
+		
+
+	private:
+
+	};
 
 
 private:
