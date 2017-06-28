@@ -99,6 +99,9 @@ public:
 		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv);
 		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente);
 		void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, int large, bool activo);
+		void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int cantidad, double precioSugerido, double precioFinal, int orden, int requerimiento);
+		int LibreriaAdDll::ordenNueva::sacarIDRequerimiento(wstring requerimiento);
+		int LibreriaAdDll::ordenNueva::sacarUltIDOrden();
 		
 
 

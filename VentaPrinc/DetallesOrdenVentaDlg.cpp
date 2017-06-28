@@ -28,6 +28,38 @@ void DetallesOrdenVentaDlg::Window_Open(Win::Event& e)
 
 void DetallesOrdenVentaDlg::btAgregar_Click(Win::Event& e)
 {
+	LibreriaAdDll::articulo consultasArObj;
+	LibreriaAdDll::ordenNueva consultasObj;
+	int marca_id = consultasArObj.sacarIDMarca(ddMarca.Text);
+	int modelo_id = consultasArObj.sacarIDModelo(ddModelo.Text);
+	int color_id = consultasArObj.sacarIDcolor(ddColor.Text);
+	int puntoVenta_id = consultasArObj.sacarIDPuntoVenta(_puntoVenta);
+	int tipo_articulo = consultasObj.sacarIDTipoArticulo(ddTipo.Text);
+	int articulo_id = consultasObj.sacarIDArticulo(color_id,puntoVenta_id,modelo_id,marca_id, tipo_articulo);
+	if (radioArticulo.IsChecked() == true)
+	{
+		int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+		double precioSugerido = Sys::Convert::ToDouble(tbxPrecioSugerido.Text);
+		double precioFinal = Sys::Convert::ToDouble(tbxPrecioFinal.Text);
+		int requerimienti_id = consultasObj.sacarIDRequerimiento(L"Articulo");
+		int orden_id = consultasObj.sacarUltIDOrden();
+		consultasObj.insertOrdenDescripcion(articulo_id, cantidad, precioSugerido, precioFinal, orden_id, requerimienti_id);
+		MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
+	}
+	else if(radioServicio.IsChecked() == true)
+	{
+		int servicio_id = consultasObj.sacarIDServicio(ddTipo.Text);
+		int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+		double precioSugerido = Sys::Convert::ToDouble(tbxPrecioSugerido.Text);
+		double precioFinal = Sys::Convert::ToDouble(tbxPrecioFinal.Text);
+		int requerimienti_id = consultasObj.sacarIDRequerimiento(L"Servicio");
+		int orden_id = consultasObj.sacarUltIDOrden();
+		consultasObj.insertOrdenDescripcion(servicio_id, cantidad, precioSugerido, precioFinal, orden_id, requerimienti_id);
+		MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
+	}
+
+	
+
 }
 
 void DetallesOrdenVentaDlg::btLimpiar_Click(Win::Event& e)
@@ -36,6 +68,12 @@ void DetallesOrdenVentaDlg::btLimpiar_Click(Win::Event& e)
 
 void DetallesOrdenVentaDlg::btTerminar_Click(Win::Event& e)
 {
+	if (MessageBoxW(L"La compra es al CONTADO", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
+	{
+	}
+	else {
+
+	}
 }
 
 void DetallesOrdenVentaDlg::ddMarca_SelChange(Win::Event& e)

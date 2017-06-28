@@ -131,6 +131,7 @@ CREATE TABLE cantidad
 CREATE TABLE orden_descripcion
 (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    tipoVentaId INT NOT NULL,
     cantidad INT UNSIGNED NOT NULL,
     precio_sugerido DOUBLE UNSIGNED NOT NULL,
     precio_final DOUBLE UNSIGNED NOT NULL,
@@ -157,7 +158,7 @@ CREATE TABLE credito(
 
 CREATE TABLE bono_credito(
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    cantidad INT UNSIGNED NOT NULL,
+    cantidad DOUBLE UNSIGNED NOT NULL,
     estado BOOL,
     fecha DATETIME NOT NULL,
     credito_id  INT UNSIGNED NOT NULL REFERENCES credito.id	 ON UPDATE CASCADE
@@ -286,3 +287,14 @@ CREATE TABLE color
     B INT NOT NULL,
     activo BOOL NOT NULL
 );
+CREATE TABLE articulo
+(
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	codigo VARCHAR (20) NOT NULL,
+	precio DOUBLE NOT NULL,
+	activo BOOL NOT NULL,
+	tipoArticulo_id INT UNSIGNED NOT NULL REFERENCES tipo_articulo.id ON UPDATE CASCADE,
+	modelo_id INT UNSIGNED NOT NULL REFERENCES modelo.id ON UPDATE CASCADE
+);
+
+select * from orden_descripcion;

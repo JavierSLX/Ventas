@@ -1678,3 +1678,72 @@ void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, 
 
 	conn.CloseSession();
 }
+
+void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int cantidad, double precioSugerido, double precioFinal, int orden, int requerimiento)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO orden_descripcion (cantidad, precio_sugerido, precio_final, orden_id, requerimiento_id) \
+				VALUES(%d,%lf, %lf,%d,%d);", cantidad, precioSugerido, precioFinal, orden, requerimiento);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+
+
+}
+int LibreriaAdDll::ordenNueva::sacarIDRequerimiento(wstring requerimiento)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM requerimiento\
+			WHERE tipo = '%s';",requerimiento.c_str());
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
+int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int orden_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM orden\
+			ORDER BY id DESC limit 1;");
+		orden_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return orden_id;
+}
