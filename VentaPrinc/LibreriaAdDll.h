@@ -98,6 +98,7 @@ public:
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena);
 		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv);
 		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente);
+		void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, int large, bool activo);
 		
 
 

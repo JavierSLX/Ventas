@@ -1655,3 +1655,26 @@ void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv)
 
 
 }
+void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, int large, bool activo)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddServicio.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id, nombre\
+								FROM servicio_venta\
+								WHERE activo = %d\
+								ORDER BY nombre ASC;", activo);
+
+		conn.ExecuteSelect(consulta, large, ddServicio);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
