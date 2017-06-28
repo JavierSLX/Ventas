@@ -11,8 +11,10 @@ AND CHARACTER_LENGTH(tipo) <= 3
 AND activo = true
 ORDER BY tipo ASC;
 
-cc.numero\
-		from clave_cliente cc, punto_venta pv\
-		where cc.puntoVenta_id = pv.id\
-		and pv.tipo = '%s'\
-		order by cc.numero desc limit 1;
+SELECT cc.id, CONCAT('R0-', cc.numero), c.nombre, c.direccion, c.telefono, cd.nombre
+FROM clave_cliente cc, cliente c, punto_venta pv, ciudad cd
+WHERE cc.cliente_id = c.id
+AND  pv.id = cc.puntoVenta_id
+AND c.ciudad_id = cd.id
+AND c.activo = true
+AND pv.tipo = 'R0';

@@ -55,6 +55,9 @@ public:
 		//Método que llena todos los punto de venta según una búsqueda
 		void llenarLVPuntoVentaBusqueda(Win::ListView lvTabla, wstring texto, bool activo, int size);
 
+		//Método que llena todos los clientes de un determinado punto de venta
+		void llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size);
+
 		//Método que llena la drop down list con los tipos de punto de venta registrados
 		void llenarDdPuntoVenta(Win::DropDownList ddVenta, int size);
 

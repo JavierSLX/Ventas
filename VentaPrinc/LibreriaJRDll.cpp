@@ -440,6 +440,47 @@ void LibreriaJRDll::WintemplaCLS::llenarLVPuntoVentaBusqueda(Win::ListView lvTab
 	conn.CloseSession();
 }
 
+//Método que llena todos los clientes de un determinado punto de venta
+void LibreriaJRDll::WintemplaCLS::llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Se define los nombres de las columnas
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 70, L"Clave");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 200, L"Nombre");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 260, L"Dirección");
+		lvTabla.Cols.Add(3, LVCFMT_LEFT, 100, L"Teléfono");
+		lvTabla.Cols.Add(4, LVCFMT_LEFT, 150, L"Ciudad");
+
+		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
+		Sys::Format(consulta, L"SELECT cc.id, CONCAT('%s-', cc.numero), c.nombre, c.direccion, c.telefono, cd.nombre\
+		FROM clave_cliente cc, cliente c, punto_venta pv, ciudad cd\
+		WHERE cc.cliente_id = c.id\
+		AND  pv.id = cc.puntoVenta_id\
+		AND c.ciudad_id = cd.id\
+		AND c.activo = %d\
+		AND pv.tipo = '%s';", punto_venta.c_str(), activo, punto_venta.c_str());
+		conn.ExecuteSelect(consulta, size, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
 //Método que llena la drop down list con los tipos de punto de venta registrados
 void LibreriaJRDll::WintemplaCLS::llenarDdPuntoVenta(Win::DropDownList ddVenta, int size)
 {

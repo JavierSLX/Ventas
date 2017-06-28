@@ -13,6 +13,9 @@ void ClienteVentasDlg::Window_Open(Win::Event& e)
 	//Saca la última clave del cliente
 	LibreriaJRDll::SqlCLS sqlObj;
 	tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
+
+	//Llena la listview
+	YopObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, 200);
 }
 
 //Botón Registrar
@@ -30,6 +33,10 @@ void ClienteVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
 {
 	//Saca la última clave del cliente
 	LibreriaJRDll::SqlCLS sqlObj;
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
 	tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
+
+	//Llena la listview
+	wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, 200);
 }
 
