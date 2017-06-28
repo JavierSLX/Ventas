@@ -54,7 +54,7 @@ protected:
 	void btRegion_Click(Win::Event& e);
 	void btAgregar_Click(Win::Event& e);
 	void btActualizar_Click(Win::Event& e);
-	void lvLada_RdblClk (Win::Event& e);
+	void lvLada_DblClk(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -62,7 +62,7 @@ protected:
 		if (btRegion.IsEvent(e, BN_CLICKED)) {btRegion_Click(e); return true;}
 		if (btAgregar.IsEvent(e, BN_CLICKED)) {btAgregar_Click(e); return true;}
 		if (btActualizar.IsEvent(e, BN_CLICKED)) {btActualizar_Click(e); return true;}
-		if (lvLada.IsEvent(e, NM_RDBLCLK )) {lvLada_RdblClk (e); return true;}
+		if (lvLada.IsEvent(e, NM_DBLCLK)) {lvLada_DblClk(e); return true;}
 		return false;
 	}
 };

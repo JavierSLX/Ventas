@@ -127,6 +127,8 @@ void VentaPrinc::Cmd_Delregion(Win::Event& e)
 //Opción "Registrar Lada" del menú
 void VentaPrinc::Cmd_Reglada(Win::Event& e)
 {
+	LadaDlg ladaObj;
+	ladaObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar Lada" del menú

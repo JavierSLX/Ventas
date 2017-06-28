@@ -34,6 +34,22 @@ public:
 	private:
 
 	};
+	class datosLadaCLS :public Win::Dialog
+	{
+	public:
+		datosLadaCLS()
+		{
+
+		}
+		~datosLadaCLS()
+		{
+
+		}
+		void LibreriaJesusDll::datosLadaCLS::MostrarLada(Win::ListView lvLada, int longuitud, bool activo);
+
+	private:
+
+	};
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	void Window_Open(Win::Event& e);
