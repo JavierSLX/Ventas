@@ -65,8 +65,59 @@ void LibreriaJesusDll::datosRegionCLS::ActualizarRegion(int idRegion, wstring no
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"UPDATE rango SET nombre='%s' WHERE id=%d", nombreRegion.c_str(), idRegion);
+		Sys::Format(consulta, L"UPDATE region SET nombre='%s' WHERE id=%d", nombreRegion.c_str(), idRegion);
 		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
+	}
+}
+int LibreriaJesusDll::datosRegionCLS::obtenerIdOculto(Win::ListView lvRegion)
+{
+	int indice = lvRegion.GetSelectedIndex();
+	return lvRegion.Items[indice].Data;
+}
+
+wstring LibreriaJesusDll::datosRegionCLS::obtenerRegion(Win::ListView lvRegion, int columna)
+{
+	int indice = lvRegion.GetSelectedIndex();
+	return lvRegion.Items[indice].GetText(columna);
+}
+
+void LibreriaJesusDll::datosRegionCLS::CambiarEstadoRegion(int idRegion, bool regionActivo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE region SET activo=%d WHERE id=%d", regionActivo, idRegion);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
+	}
+}
+
+void LibreriaJesusDll::datosLadaCLS::MostrarLada(Win::ListView lvLada, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//borrar el contenido del listview
+	lvLada.SetRedraw(false);
+	lvLada.Cols.DeleteAll();
+	lvLada.Items.DeleteAll();
+	lvLada.SetRedraw(true);
+	lvLada.Cols.Add(0, LVCFMT_CENTER, 100, L"Region");
+	lvLada.Cols.Add(1, LVCFMT_CENTER, 100, L"Lada");
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT la.id,re.nombre,la.tipo FROM lada la, region re WHERE la.activo=true ORDER BY la.id ASC;", activo);
+		coneccion.ExecuteSelect(consulta, longuitud, lvLada);
 	}
 	catch (Sql::SqlException e)
 	{

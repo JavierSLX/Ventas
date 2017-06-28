@@ -165,8 +165,10 @@
     <ClInclude Include="agregarCiudadVentasDlg.h" />
     <ClInclude Include="DetallesOrdenVentaDlg.h" />
     <ClInclude Include="EliminarRestaurarRango.h" />
+    <ClInclude Include="EliminarRegionDlg.h" />
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
     <ClInclude Include="EliminarRestaurarServicioDlg.h" />
+    <ClInclude Include="LadaDlg.h" />
     <ClInclude Include="LibreriaAdDll.h" />
     <ClInclude Include="LibreriaAngelDll.h" />
     <ClInclude Include="LibreriaFBDll.h" />
@@ -193,8 +195,10 @@
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
     <ClCompile Include="DetallesOrdenVentaDlg.cpp" />
     <ClCompile Include="EliminarRestaurarRango.cpp" />
+    <ClCompile Include="EliminarRegionDlg.cpp" />
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />
     <ClCompile Include="EliminarRestaurarServicioDlg.cpp" />
+    <ClCompile Include="LadaDlg.cpp" />
     <ClCompile Include="LibreriaAdDll.cpp" />
     <ClCompile Include="LibreriaAngelDll.cpp" />
     <ClCompile Include="LibreriaFBDll.cpp" />

@@ -12,6 +12,8 @@
 #include "RangoDlg.h"
 #include "EliminarRestaurarRango.h"
 #include "reportesVentasDlg.h"
+#include "EliminarRegionDlg.h"
+#include "LadaDlg.h"
 class VentaPrinc: public Win::Window
 {
 public:

@@ -88,6 +88,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="reportesVentasDlg.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EliminarRegionDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LadaDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -159,6 +165,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="reportesVentasDlg.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EliminarRegionDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LadaDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

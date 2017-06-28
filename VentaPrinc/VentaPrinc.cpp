@@ -119,16 +119,22 @@ void VentaPrinc::Cmd_Newregion(Win::Event& e)
 //Opción "Editar Región" del menú
 void VentaPrinc::Cmd_Editregion(Win::Event& e)
 {
+	RegionDlg regionObj;
+	regionObj.BeginDialog(hWnd);
 }
 
 //Opción "Borrar Región" del menú
 void VentaPrinc::Cmd_Delregion(Win::Event& e)
 {
+	EliminarRegionDlg regionObj;
+	regionObj.BeginDialog(hWnd);
 }
 
 //Opción "Registrar Lada" del menú
 void VentaPrinc::Cmd_Reglada(Win::Event& e)
 {
+	LadaDlg ladaObj;
+	ladaObj.BeginDialog(hWnd);
 }
 
 //Opción "Editar Lada" del menú
