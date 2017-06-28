@@ -9,6 +9,9 @@
 #include "ClienteVentasDlg.h"
 #include "bonoCreditoVentasDlg.h"
 #include "registrarAbonosVentasDlg.h"
+#include "RangoDlg.h"
+#include "EliminarRestaurarRango.h"
+#include "reportesVentasDlg.h"
 class VentaPrinc: public Win::Window
 {
 public:

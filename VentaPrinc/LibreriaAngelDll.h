@@ -88,6 +88,20 @@ public:
 	{
 	public:
 		void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, int longuitud, bool activo);
+		wstring LibreriaAngelDll::rangoCLS::sacarRangoSiExiste(double minimo, double maximo, double comision);
+		void LibreriaAngelDll::rangoCLS::insertaRango(double minimo, double maximo, double comision, bool rangoActivo);
+		void LibreriaAngelDll::rangoCLS::actualizarRango(int id, double minimo, double maximo, double comision, bool servicioActivo);
+		void LibreriaAngelDll::rangoCLS::cambiarEstadoRango(int idRango, bool rangoActivo);
+	private:
+	};
+	class reporteVentasCLS :public Win::Dialog
+	{
+	public:
+		void LibreriaAngelDll::reporteVentasCLS::llenarDepartamento(Win::DropDownList ddColocacion, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarRegion(Win::DropDownList ddRegion, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarRequerimiento(Win::DropDownList ddRequerimiento, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int longuitud);
+		void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int regionId, int longuitud);
 	private:
 	};
 private:

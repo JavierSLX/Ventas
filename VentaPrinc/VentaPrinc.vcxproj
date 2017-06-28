@@ -164,6 +164,7 @@
     <ClInclude Include="ClienteVentasDlg.h" />
     <ClInclude Include="agregarCiudadVentasDlg.h" />
     <ClInclude Include="DetallesOrdenVentaDlg.h" />
+    <ClInclude Include="EliminarRestaurarRango.h" />
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
     <ClInclude Include="EliminarRestaurarServicioDlg.h" />
     <ClInclude Include="LibreriaAdDll.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="OrdenVentasDlg.h" />
     <ClInclude Include="RangoDlg.h" />
     <ClInclude Include="registrarAbonosVentasDlg.h" />
+    <ClInclude Include="reportesVentasDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="AboutDlg.h" />
     <ClInclude Include="ServicioDlg.h" />
@@ -190,6 +192,7 @@
     <ClCompile Include="ClienteVentasDlg.cpp" />
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
     <ClCompile Include="DetallesOrdenVentaDlg.cpp" />
+    <ClCompile Include="EliminarRestaurarRango.cpp" />
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />
     <ClCompile Include="EliminarRestaurarServicioDlg.cpp" />
     <ClCompile Include="LibreriaAdDll.cpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="OrdenVentasDlg.cpp" />
     <ClCompile Include="RangoDlg.cpp" />
     <ClCompile Include="registrarAbonosVentasDlg.cpp" />
+    <ClCompile Include="reportesVentasDlg.cpp" />
     <ClCompile Include="ServicioDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
