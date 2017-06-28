@@ -1491,3 +1491,167 @@ void  LibreriaAdDll::ordenNueva::llenarDDPuntoVenta(Win::DropDownList ddPuntoVen
 
 	conn.CloseSession();
 }
+wstring LibreriaAdDll::ordenNueva::sacarNombreCliente(int pv,wstring claveCliente)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	wstring valor;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cli.nombre\
+			FROM punto_venta pv, cliente cli, clave_cliente cc \
+			WHERE  pv.id= cc.puntoVenta_id\
+			AND cli.id = cc.cliente_id\
+			AND pv.id = %d\
+			AND cc.numero = '%s'", pv, claveCliente.c_str());
+		conn.GetString(consulta, valor, 100);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+	return valor;
+}
+
+int LibreriaAdDll::ordenNueva::sacarIDpuntoVenta(wstring pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM punto_venta\
+			WHERE tipo = '%s';", pv.c_str());
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
+int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM cliente cli, clave_cliente cc\
+			WHERE cc.cliente_id = cli.id\
+			AND cc.numero = '%s';", clave_cliente.c_str());
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
+//Saca el último identificador registrado
+wstring LibreriaAdDll::ordenNueva::sacarUltimoFolio(void)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	wstring folio = L"";
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT folio\
+		from orden\
+		order by folio desc LIMIT 1;");
+		conn.GetString(consulta, folio, 50);
+	}
+	catch (Sql::SqlException e)
+	{
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		folio = L"";
+	}
+
+	conn.CloseSession();
+	return folio;
+}
+//Saca la parte de la fecha del identificador
+int LibreriaAdDll::ordenNueva::sacarIdentificadorFecha(wstring cadena)
+{
+	int guion = -1;
+
+	if (cadena.length() == 0)
+		return -1;
+
+	for (int unsigned i = 0; i < cadena.length(); i++)
+		if (cadena.at(i) == '/')
+		{
+			guion = i;
+			break;
+		}
+
+	//Si no existe el guion
+	if (guion == -1)
+		return -1;
+
+	//Saca la parte numerica del identificador
+	return Sys::Convert::ToInt(cadena.substr(guion + 1));
+}
+//Saca la parte numérica del identificador
+int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena)
+{
+	int guion = -1;
+
+	if (cadena.length() == 0)
+		return -1;
+
+	for (int unsigned i = 0; i < cadena.length(); i++)
+		if (cadena.at(i) == '/')
+		{
+			guion = i;
+			break;
+		}
+
+	//Si no existe el guion
+	if (guion == -1)
+		return -1;
+
+	//Saca la parte numerica del identificador
+	return Sys::Convert::ToInt(cadena.substr(0, guion));
+}
+//insertar orden
+void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO orden (folio, fecha, cliente_id, puntoVenta_id) \
+				VALUES('%s',now(),%d, %d);", folio.c_str(), cliente, pv);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+
+
+}

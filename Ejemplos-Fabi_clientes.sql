@@ -1,5 +1,14 @@
-#Tabla cliente
 use ventas;
+
+INSERT INTO punto_venta (tipo, activo) VALUES ('R0', true);
+INSERT INTO punto_venta (tipo, activo) VALUES ('R1', true);
+INSERT INTO punto_venta (tipo, activo) VALUES ('R2', true);
+INSERT INTO punto_venta (tipo, activo) VALUES ('R3', true);
+INSERT INTO punto_venta (tipo, activo) VALUES ('Oficina', true);
+INSERT INTO punto_venta (tipo, activo) VALUES ('Local Juárez', true);
+INSERT INTO punto_venta (tipo, activo) VALUES ('Local Zaragoza', true);
+
+#Tabla cliente
 #Ruta 0
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'GENERAL','S/R','S/R','S/R',true,66);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'OFICINA','JUÁREZ 212','S/R','S/R',true,54);
@@ -46,7 +55,7 @@ INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( '
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JOSE LUIS COLÍN','20 NOV 90 B, SAN JUAN DEL RIO, QRO.','427 108 7027','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'EMMA','CERRO GORDO,SAN JUAN DEL RIO, QRO.','427 110 3690','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'ANGEL TORRES','CAMINO RANCHO DE EN MEDIO, ANDADOR SANTA LUCIA','427 110 3690','S/R',true,66);
-INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JORGE RUIZ', 'S/R','S/R', 'S/R',true,66);
+INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JORGE RUIZ','S/R', 'S/R','S/R',true,66);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JORGE RODRÍGUEZ MIRANDA','RIVAPALACIO 53, SAN JUAN DEL RÍO, QRO.','442 133 1017','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( 'JUAN RUÍZ MORENO','ADOLFO LOPEZ MATEOS 26, SAN JUAN DEL RIO,QRO.','442 155 9198','S/R',true,48);
 INSERT INTO cliente(nombre,direccion,telefono,email,activo,ciudad_id) VALUES ( ' HUGO NIETO','FCO VILLA 64','427 134 5585','S/R',true,66);
