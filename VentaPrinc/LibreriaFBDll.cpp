@@ -1633,5 +1633,94 @@ void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large)
 	conn.CloseSession();
 }
 
+void LibreriaFBDll::bonoCredito::updateCantidadCredito(double valor, int creditoId)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE credito \
+		SET total = %lf \
+		WHERE id = %d ", valor, creditoId);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+void LibreriaFBDll::bonoCredito::llenarLVCreditoAbonos(Win::ListView lvCredito, int creditoId,wstring folio, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Abono");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,bono.cantidad,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(bono.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv,bono_credito bono\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND bono.credito_id= cre.id\
+			AND cre.id = %d \
+			AND cli.activo = true\
+			AND ord.folio = '%s'\
+			AND cre.estado = true; ", creditoId,folio.c_str());
+		conn.ExecuteSelect(consulta, large, lvCredito);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+void LibreriaFBDll::bonoCredito::insertarbonoCredito(double cantidad,int creditoId)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO bono_credito (cantidad,fecha,credito_id) \
+				VALUES(%lf,now(),%d);",cantidad,creditoId);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
 
 
+}

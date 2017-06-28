@@ -149,7 +149,9 @@ public:
 		void LibreriaFBDll::bonoCredito::llenarLVCreditoCCliente(Win::ListView lvCredito,wstring claveCliente,int puntoVenta_id,int large);
 		void LibreriaFBDll::bonoCredito::llenarLVCreditoFolio(Win::ListView lvCredito, wstring folio, int large);
 		void LibreriaFBDll::bonoCredito::llenarLVCreditoNombre(Win::ListView lvCredito, wstring nombre, int large);
-		
+		void LibreriaFBDll::bonoCredito::updateCantidadCredito(double valor, int creditoId);
+		void LibreriaFBDll::bonoCredito::llenarLVCreditoAbonos(Win::ListView lvCredito, int creditoId, wstring folio, int large);
+		void LibreriaFBDll::bonoCredito::insertarbonoCredito(double cantidad, int creditoId);
 
 	private:
 
