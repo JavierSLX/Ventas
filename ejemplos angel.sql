@@ -1,3 +1,4 @@
+use ventas;
 INSERT INTO orden(folio,fecha,cliente_id,puntoVenta_id)VALUES
 ('100001/2017','2017-06-19',1,1);
 INSERT INTO orden(folio,fecha,cliente_id,puntoVenta_id)VALUES

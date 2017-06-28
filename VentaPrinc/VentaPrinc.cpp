@@ -40,6 +40,8 @@ void VentaPrinc::Cmd_Consorden(Win::Event& e)
 //Opción "Busqueda Orden" del menú
 void VentaPrinc::Cmd_Busqorden(Win::Event& e)
 {
+	busquedaVentasDlg busquedaObj;
+	busquedaObj.BeginDialog(hWnd);
 }
 
 //Opción "Registrar Crédito" del menú

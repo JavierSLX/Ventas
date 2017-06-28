@@ -79,21 +79,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="registrarAbonosVentasDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DetallesOrdenVentaDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EliminarRestaurarRango.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="reportesVentasDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EliminarRegionDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LadaDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="busquedaVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -156,21 +159,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="registrarAbonosVentasDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DetallesOrdenVentaDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EliminarRestaurarRango.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="reportesVentasDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EliminarRegionDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LadaDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="busquedaVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

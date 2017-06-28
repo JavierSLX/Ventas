@@ -31,8 +31,9 @@ void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 void agregarCiudadVentasDlg::btAgregar_Click(Win::Event& e)
 {
 	LibreriaFBDll::Ciudad ciudadObj;
-	wstring ciudadConsulta=ciudadObj.sacarCiudad(tbxNombre.Text);
 	int ladaId = ciudadObj.sacarIDLada(ddLadas.Text);
+	wstring ciudadConsulta=ciudadObj.sacarCiudad(tbxNombre.Text,ladaId);
+	
 	if (ciudadConsulta == tbxNombre.Text)
 	{
 		if (MessageBoxW(L"Ya existe este registro", L"ERROR", MB_OK | MB_ICONERROR) == IDYES)

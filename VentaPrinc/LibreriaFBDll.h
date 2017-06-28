@@ -125,7 +125,7 @@ public:
 		void LibreriaFBDll::Ciudad::llenarLVCiudad(Win::ListView lvCiudad,int large);
 		void LibreriaFBDll::Ciudad::llenarLVCiudadInactiva(Win::ListView lvCiudad, int large);
 		void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad,int lada_id);
-		wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad);
+		wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad, int lada);
 		wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna);
 		void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre, int ciudad_id);
 		void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id, bool estado);
@@ -152,7 +152,10 @@ public:
 		void LibreriaFBDll::bonoCredito::updateCantidadCredito(double valor, int creditoId);
 		void LibreriaFBDll::bonoCredito::llenarLVCreditoAbonos(Win::ListView lvCredito, int creditoId, wstring folio, int large);
 		void LibreriaFBDll::bonoCredito::insertarbonoCredito(double cantidad, int creditoId);
-
+		int LibreriaFBDll::bonoCredito::sacaridCreditoSiFolio(wstring folio);
+		int LibreriaFBDll::bonoCredito::sacarTotalCompletaSiFolio(wstring folio);
+		void LibreriaFBDll::bonoCredito::llenarLVOrdenCredito(Win::ListView lvCredito, wstring folio, int creditoId, int large);
+		void LibreriaFBDll::bonoCredito::llenarLVOrdenCompleta(Win::ListView lvCredito, wstring folio, int orcomId, int large);
 	private:
 
 	};
