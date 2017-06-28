@@ -48,6 +48,7 @@ void DetallesOrdenVentaDlg::btAgregar_Click(Win::Event& e)
 	}
 	else if(radioServicio.IsChecked() == true)
 	{
+
 		int servicio_id = consultasObj.sacarIDServicio(ddTipo.Text);
 		int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 		double precioSugerido = Sys::Convert::ToDouble(tbxPrecioSugerido.Text);
@@ -121,5 +122,13 @@ void DetallesOrdenVentaDlg::radioServicio_Click(Win::Event& e)
 	lbModelo.Visible = false;
 	lbColor.Visible = false;
 
+}
+
+void DetallesOrdenVentaDlg::ddTipo_SelChange(Win::Event& e)
+{
+	LibreriaAdDll::ordenNueva consultasObj;
+	int servicio_id = consultasObj.sacarIDServicio(ddTipo.Text);
+	double precio = consultasObj.sacarPrecio(servicio_id);
+	tbxPrecioSugerido.SetText(Sys::Convert::ToString(precio));
 }
 

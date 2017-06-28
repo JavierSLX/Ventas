@@ -89,7 +89,7 @@ public:
 	{
 
 	public:
-		void  LibreriaAdDll::ordenNueva::llenarDDCliente(Win::DropDownList ddCliente, int large, bool activo);
+		void  LibreriaAdDll::ordenNueva::llenarDDCliente(Win::DropDownList ddCliente, int id_pv, int large, bool activo);
 		void  LibreriaAdDll::ordenNueva::llenarDDPuntoVenta(Win::DropDownList ddPuntoVenta, int large, bool activo);
 		wstring LibreriaAdDll::ordenNueva::sacarNombreCliente(int pv, wstring claveCliente);
 		int LibreriaAdDll::ordenNueva::sacarIDpuntoVenta(wstring pv);
@@ -99,9 +99,14 @@ public:
 		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv);
 		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente);
 		void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, int large, bool activo);
-		void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int cantidad, double precioSugerido, double precioFinal, int orden, int requerimiento);
+		void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int tipoVentaId, int cantidad, double precioSugerido, double precioFinal, int orden, int requerimiento);
+		int LibreriaAdDll::ordenNueva::sacarIDArticulo(int color, int departamento_id, int modelo, int marca, int ta);
 		int LibreriaAdDll::ordenNueva::sacarIDRequerimiento(wstring requerimiento);
 		int LibreriaAdDll::ordenNueva::sacarUltIDOrden();
+		int LibreriaAdDll::ordenNueva::sacarIDTipoArticulo(wstring tipoArticulo);
+		int LibreriaAdDll::ordenNueva::sacarIDServicio(wstring Servicio);
+		double LibreriaAdDll::ordenNueva::sacarPrecio(int servicio_id);
+		
 		
 
 

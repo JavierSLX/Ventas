@@ -5,14 +5,17 @@
 class DetallesOrdenVentaDlg: public Win::Dialog
 {
 public:
-	DetallesOrdenVentaDlg()
+	DetallesOrdenVentaDlg(wstring puntoVenta)
 	{
+		this->_puntoVenta = puntoVenta;
 	}
 	~DetallesOrdenVentaDlg()
 	{
 	}
+	wstring _puntoVenta;
 private:
 	wstring marcaWsPV;
+	
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Button gboxOrden;
 	Win::Button radioArticulo;
@@ -98,6 +101,7 @@ protected:
 	void radioArticulo_Click(Win::Event& e);
 	void radioServicio_Click(Win::Event& e);
 	void ddMarca_SelChange(Win::Event& e);
+	void ddTipo_SelChange(Win::Event& e);
 	void btAgregar_Click(Win::Event& e);
 	void btLimpiar_Click(Win::Event& e);
 	void btTerminar_Click(Win::Event& e);
@@ -108,6 +112,7 @@ protected:
 		if (radioArticulo.IsEvent(e, BN_CLICKED)) {radioArticulo_Click(e); return true;}
 		if (radioServicio.IsEvent(e, BN_CLICKED)) {radioServicio_Click(e); return true;}
 		if (ddMarca.IsEvent(e, CBN_SELCHANGE)) {ddMarca_SelChange(e); return true;}
+		if (ddTipo.IsEvent(e, CBN_SELCHANGE)) {ddTipo_SelChange(e); return true;}
 		if (btAgregar.IsEvent(e, BN_CLICKED)) {btAgregar_Click(e); return true;}
 		if (btLimpiar.IsEvent(e, BN_CLICKED)) {btLimpiar_Click(e); return true;}
 		if (btTerminar.IsEvent(e, BN_CLICKED)) {btTerminar_Click(e); return true;}
