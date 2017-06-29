@@ -1607,3 +1607,506 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 
 	coneccion.CloseSession();
 }
+
+//Método que llena el reporte por ciudad
+void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView lvReporte,int idRegion, int idCiudad, int idRequerimiento, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvReporte.DeleteAllItems();
+	int rows = 0;
+	lvReporte.SetRedraw(false);
+	lvReporte.Cols.DeleteAll();
+	lvReporte.Items.DeleteAll();
+	lvReporte.SetRedraw(true);
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
+	lvReporte.Cols.Add(1, LVCFMT_CENTER, 100, L"Cliente");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 100, L"S/A");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 100, L"Requerimiento");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 100, L"Cantidad");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Precio Final");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 100, L"Fecha");
+	//Todas las regiones
+	if (idRegion == 0)
+	{
+		//Todas la ciudades de todas las regiones
+		if (idCiudad == 0)
+		{
+			//Todos los requerimientos de todas las ciudades de todas las regiones
+			if (idRequerimiento == 0)
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId;");
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+			//Un requerimiento especifico de todas las ciudades de todas las regiones
+			else
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId;", idRequerimiento,idRequerimiento);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+		}
+		//Una ciudad específica
+		else
+		{
+			//Todo los requerimientos de una ciudad de todas las regiones 
+			if (idRequerimiento == 0)
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv,region re,lada la,ciudad ciu \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.id = '%d'\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma,region re,lada la,ciudad ciu\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.id = '%d';",idCiudad,idCiudad);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+			//Un requerimirno especifico de una ciudad especifica de todas las regiones
+			else
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv,region re,lada la,ciudad ciu \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.id = '%d'\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma,region re,lada la,ciudad ciu\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.id = '%d';", idRequerimiento, idCiudad,idRequerimiento, idCiudad);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+		}
+	}
+	//Region especifica
+	else
+	{
+		//Todas las ciudades de un region
+		if (idCiudad == 0)
+		{
+			//Todos los requerimiento de todas las ciudades de una region
+			if (idRequerimiento == 0)
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv,region re,lada la,ciudad ciu \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d'\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma,region re,lada la,ciudad ciu\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d';",idRegion,idRegion);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+			//un requerimiento especifico de todas las ciudades de una region
+			else
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv,region re,lada la,ciudad ciu \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d'\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma,region re,lada la,ciudad ciu\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d';", idRequerimiento, idRegion, idRequerimiento, idRegion);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+		}
+		//Ciudad especifica de una region
+		else
+		{
+			//Todos los requerimiento de un ciudad especifica de una region
+			if (idRequerimiento == 0)
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv,region re,lada la,ciudad ciu \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d'\
+						AND ciu.id='%d'\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma,region re,lada la,ciudad ciu\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d'\
+						AND ciu.id='%d';", idRegion, idCiudad, idRegion, idCiudad);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+			//Unrequerimiento especifoc de una ciudad especifica de una region
+			else
+			{
+				try
+				{
+					coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+						od.cantidad,od.precio_final,o.fecha\
+					FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+						servicio_requerimiento sr, servicio_venta sv,region re,lada la,ciudad ciu \
+					WHERE od.orden_id=o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND sr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND sr.servicioVenta_id = sv.id\
+						AND sv.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d'\
+						AND ciu.id='%d'\
+					UNION\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+						od.cantidad, od.precio_final, o.fecha\
+					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+						cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma,region re,lada la,ciudad ciu\
+					WHERE od.orden_id = o.id\
+						AND o.cliente_id = c.id\
+						AND cc.cliente_id = c.id\
+						AND o.puntoVenta_id = pv.id\
+						AND od.requerimiento_id = r.id\
+						AND cr.requerimiento_id = r.id\
+						AND r.id=%d\
+						AND cr.cantidad_id = can.id\
+						AND can.articulo_id = a.id\
+						AND a.modelo_id = mo.id\
+						AND a.id = od.tipoVentaId\
+						AND c.ciudad_id=ciu.id\
+						AND ciu.lada_id=la.id\
+						AND la.region_id=re.id\
+						AND re.id = '%d'\
+						AND ciu.id='%d';", idRequerimiento, idRegion, idCiudad, idRequerimiento, idRegion, idCiudad);
+					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+				}
+				catch (Sql::SqlException e)
+				{
+					this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+				}
+			}
+		}
+
+	}
+
+
+	coneccion.CloseSession();
+}
+
+//LLenar reporte general
+void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, wstring folio, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvReporte.DeleteAllItems();
+	int rows = 0;
+	lvReporte.SetRedraw(false);
+	lvReporte.Cols.DeleteAll();
+	lvReporte.Items.DeleteAll();
+	lvReporte.SetRedraw(true);
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
+	lvReporte.Cols.Add(1, LVCFMT_CENTER, 100, L"Cliente");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 100, L"S/A");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 100, L"Requerimiento");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 100, L"Cantidad");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Precio Final");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 100, L"Fecha");
+	//reporte general de todos los requerimientos
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+		Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
+			od.cantidad,od.precio_final,o.fecha\
+		FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
+			servicio_requerimiento sr, servicio_venta sv \
+		WHERE od.orden_id=o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND sr.requerimiento_id = r.id\
+			AND sr.servicioVenta_id = sv.id\
+			AND sv.id = od.tipoVentaId\
+			AND o.folio LIKE '%s'\
+		UNION\
+		SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
+			od.cantidad, od.precio_final, o.fecha\
+		FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma\
+		WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND cr.requerimiento_id = r.id\
+			AND cr.cantidad_id = can.id\
+			AND can.articulo_id = a.id\
+			AND a.modelo_id = mo.id\
+			AND a.id = od.tipoVentaId\
+			AND o.folio LIKE '%s';",folio.c_str(),folio.c_str());
+
+		coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}

@@ -8,6 +8,7 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	//________________________________________________________ ddTipoReporte
 	ddTipoReporte.Items.Add(L"Ventas General");
 	ddTipoReporte.Items.Add(L"Departamento");
+	ddTipoReporte.Items.Add(L"Ciudad");
 	ddTipoReporte.Items.Add(L"Orden de Compra");
 	ddTipoReporte.SetSelectedIndex(0);
 	ponerVisibleElementos(false);
@@ -37,6 +38,20 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 		{
 			reporteVentasObj.llenarReporteVentasDepartamento(lvReporte, _idDepartamento, _idRegion, _idCiudad, _idRequerimiento, 300, true);
 		}
+		else
+		{
+			if (tipoReporte == L"Ciudad")
+			{
+				reporteVentasObj.llenarReporteVentasCiudad(lvReporte, _idRegion, _idCiudad, _idRequerimiento, 300, true);
+			}
+			else
+			{
+				if (tipoReporte == L"Orden de Compra")
+				{
+					reporteVentasObj.llenarReporteVentasOrdenCompra(lvReporte, tbxFolio.Text, 300, true);
+				}
+			}
+		}
 	}
 }
 void reportesVentasDlg::ponerVisibleElementos(bool activo)
@@ -47,6 +62,8 @@ void reportesVentasDlg::ponerVisibleElementos(bool activo)
 	ddRegion.Visible = activo;
 	lbCiudad.Visible = activo;
 	ddCiudad.Visible = activo;
+	lbFolio.Visible = activo;
+	tbxFolio.Visible = activo;
 }
 
 
@@ -65,6 +82,8 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 		if (ddTipoReporte.Text == L"Departamento")
 		{
 			ponerVisibleElementos(true);
+			lbFolio.Visible = false;
+			tbxFolio.Visible = false;
 			reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
 			ddDepartamento.SetSelectedIndex(0);
 			_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
@@ -78,6 +97,40 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 			ddRequerimiento.SetSelectedIndex(0);
 			_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 			generarReporte(ddTipoReporte.Text);
+		}
+		else
+		{
+			if (ddTipoReporte.Text == L"Ciudad")
+			{
+				ponerVisibleElementos(true);
+				lbDepartamento.Visible = false;
+				ddDepartamento.Visible = false;
+				lbFolio.Visible = false;
+				tbxFolio.Visible = false;
+				reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
+				ddDepartamento.SetSelectedIndex(0);
+				_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
+				reporteVentasObj.llenarRegion(ddRegion, 10);
+				ddRegion.SetSelectedIndex(0);
+				_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+				reporteVentasObj.llenarCiudad(ddCiudad, 200);
+				ddCiudad.SetSelectedIndex(0);
+				_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+				reporteVentasObj.llenarRequerimiento(ddRequerimiento, 10);
+				ddRequerimiento.SetSelectedIndex(0);
+				_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+				generarReporte(ddTipoReporte.Text);
+			}
+			else
+			{
+				ponerVisibleElementos(false);
+				lbRequerimiento.Visible = false;
+				ddRequerimiento.Visible = false;
+				lbFolio.Visible = true;
+				tbxFolio.Visible = true;
+				generarReporte(ddTipoReporte.Text);
+			}
+			
 		}
 		
 	}
@@ -123,6 +176,11 @@ void reportesVentasDlg::ddRequerimiento_SelChange(Win::Event& e)
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+	generarReporte(ddTipoReporte.Text);
+}
+
+void reportesVentasDlg::tbxFolio_Change(Win::Event& e)
+{
 	generarReporte(ddTipoReporte.Text);
 }
 

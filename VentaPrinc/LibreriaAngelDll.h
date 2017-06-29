@@ -104,6 +104,8 @@ public:
 		void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad, int regionId, int longuitud);
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListView lvReporte, int idRequerimiento,int longuitud, bool activo);
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::ListView lvReporte, int idPuntoVenta, int idRegion, int idCiudad,int idRequerimiento, int longuitud, bool activo);
+		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView lvReporte, int idRegion, int idCiudad, int idRequerimiento, int longuitud, bool activo);
+		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, wstring folio, int longuitud, bool activo);
 	private:
 	};
 private:
