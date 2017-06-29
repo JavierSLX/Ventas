@@ -4,16 +4,47 @@
 
 void registrarAbonosVentasDlg::Window_Open(Win::Event& e)
 {
-	//________________________________________________________ lvAbonos
-	lvAbonos.Cols.Add(0, LVCFMT_LEFT, 100, L"Day");
-	lvAbonos.Cols.Add(1, LVCFMT_RIGHT, 200, L"Activity");
-	lvAbonos.Items.Add(0, L"Monday");
-	lvAbonos.Items[0][1].Text = L"Math Class";
+	LibreriaFBDll::bonoCredito bonoObj;
+	bonoObj.llenarLVCreditoAbonos(lvAbonos, idCreditoVP, folioOrdenVP, 100);
+	tbxFolio.SetText(folioOrdenVP);
+	tbxClavecliente.SetText(puntoVentaVP + L"-"+claveClientevP);
+	tbxNombre.SetText(nombreClienteVP);
+	tbxTotal.SetText(L"$"+Sys::Convert::ToString(totalCreditoVP));
+	tbxFolio.Enabled = false;
+	tbxClavecliente.Enabled =false;
+	tbxNombre.Enabled = false;
+	tbxTotal.Enabled = false;
+
 }
 
 
 
 void registrarAbonosVentasDlg::btAgregar_Click(Win::Event& e)
 {
+	LibreriaFBDll::bonoCredito bonoObj;
+	if (this->tbxCantidadAbono.Text == L"")
+	{
+		this->tbxCantidadAbono.ShowBalloonTip(L"Cantidad", L"Ingrese una cantidad", TTI_ERROR);
+
+		return;
+	}
+	else
+	{
+		double abono = Sys::Convert::ToDouble(tbxCantidadAbono.Text);
+		double cantidadAbonoActualizar = totalCreditoVP - abono;
+		bonoObj.insertarbonoCredito(abono, idCreditoVP);
+		bonoObj.updateCantidadCredito(cantidadAbonoActualizar, idCreditoVP);
+		MessageBoxW(L"Se agrego el abono", L"", MB_OK | MB_ICONINFORMATION);
+
+		bonoObj.llenarLVCreditoAbonos(lvAbonos, idCreditoVP, folioOrdenVP, 100);
+		tbxTotal.SetText(L"$"+Sys::Convert::ToString(cantidadAbonoActualizar));
+		tbxCantidadAbono.SetText(L"");
+
+	}
+	
+
+
+
+
 }
 

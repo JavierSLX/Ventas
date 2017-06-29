@@ -3,3 +3,7 @@
 
 ### 27/06/2017 Se diseñaron los dialogos para agregar un abono o para buscarlo, asi como los metodos para estos respectivos dialogos, ademas de que se corrigio un problema con la base de datos
 
+### 28/06/2017
+se termino de diseñar las ventanas correspondientes a la parte de agregar un abono, asi como los metodos correspondientes para actualizar la cantidad y descontar el abono al credito.
+Ademas se comenzo con la ventana de busquedas.
+

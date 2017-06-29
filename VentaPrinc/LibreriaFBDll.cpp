@@ -1384,7 +1384,7 @@ void LibreriaFBDll::Ciudad::insertarCiudad(wstring ciudad,int lada_id)
 
 //Verifica que no exista la ciudad
 
-wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad)
+wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad,int lada)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -1394,7 +1394,8 @@ wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad)
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT nombre\
 			FROM ciudad\
-			WHERE nombre = '%s' ",ciudad.c_str());
+			WHERE nombre = '%s'\
+			AND lada_id = %d ",ciudad.c_str(),lada);
 		conn.GetString(consulta, valor, 100);
 	}
 	catch (Sql::SqlException e)
@@ -1633,5 +1634,281 @@ void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large)
 	conn.CloseSession();
 }
 
+void LibreriaFBDll::bonoCredito::updateCantidadCredito(double valor, int creditoId)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE credito \
+		SET total = %lf \
+		WHERE id = %d ", valor, creditoId);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+void LibreriaFBDll::bonoCredito::llenarLVCreditoAbonos(Win::ListView lvCredito, int creditoId,wstring folio, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Abono");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,bono.cantidad,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(bono.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv,bono_credito bono\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND bono.credito_id= cre.id\
+			AND cre.id = %d \
+			AND cli.activo = true\
+			AND ord.folio = '%s'\
+			AND cre.estado = true; ", creditoId,folio.c_str());
+		conn.ExecuteSelect(consulta, large, lvCredito);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+void LibreriaFBDll::bonoCredito::insertarbonoCredito(double cantidad,int creditoId)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO bono_credito (cantidad,fecha,credito_id) \
+				VALUES(%lf,now(),%d);",cantidad,creditoId);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
 
 
+}
+//PENDIENTE
+
+//
+void LibreriaFBDll::bonoCredito::llenarLVOrdenCredito(Win::ListView lvCredito, wstring folio,int creditoId,int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Total");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,cre.total,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND ord.folio = '%s'\
+			AND cli.activo = true\
+			AND cre.id = %d\
+			AND cre.estado = true; ", folio.c_str(),creditoId);
+		conn.ExecuteSelect(consulta, large, lvCredito);
+	}
+
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+} 
+
+void LibreriaFBDll::bonoCredito::llenarLVOrdenCompleta(Win::ListView lvCredito, wstring folio, int orcomId, int large)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	lvCredito.Cols.Add(0, LVCFMT_CENTER, 100, L"Total");
+	lvCredito.Cols.Add(1, LVCFMT_CENTER, 100, L"Folio");
+	lvCredito.Cols.Add(2, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvCredito.Cols.Add(3, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvCredito.Cols.Add(4, LVCFMT_CENTER, 100, L"Departamento");
+	lvCredito.Cols.Add(5, LVCFMT_CENTER, 130, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id,orcom.total,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y')\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, punto_venta pv,orden_completa orcom\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND orcom.orden_id = ord.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND ord.folio = '%s'\
+			AND cli.activo = true\
+			AND orcom.id = %d\
+			AND cre.estado = true; ", folio.c_str(), orcomId);
+		conn.ExecuteSelect(consulta, large, lvCredito);
+	}
+
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+
+
+
+int LibreriaFBDll::bonoCredito::sacaridCreditoSiFolio(wstring folio)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int total = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT c.id\
+			FROM credito c,orden ord\
+			WHERE c.orden_id = ord.id\
+			AND ord.folio = '%s'", folio.c_str());
+			total = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return total;
+}
+
+
+int LibreriaFBDll::bonoCredito::sacarTotalCompletaSiFolio(wstring folio)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int total = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT orcom.id\
+			FROM orden_completa orcom,orden ord\
+			WHERE orcom.orden_id = ord.id\
+			AND ord.folio = '%s'", folio.c_str());
+		total = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return total;
+}
+
+
+
+//Subconsultas
+//void LibreriaFBDll::Busqueda::llenarArticulosCodigo(Win::ListView lvTabla, int puntoVenta, wstring codigo, int large)
+//{
+//	Sql::SqlConnection conn;
+//
+//	wstring consulta;
+//	lvTabla.DeleteAllItems();
+//	lvTabla.SetRedraw(false);
+//	lvTabla.Cols.DeleteAll();
+//	lvTabla.Items.DeleteAll();
+//	lvTabla.SetRedraw(true);
+//
+//	lvTabla.Cols.Add(0, LVCFMT_LEFT, 120, L"Código");
+//	lvTabla.Cols.Add(1, LVCFMT_LEFT, 120, L"Tipo de articulo");
+//	lvTabla.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
+//	lvTabla.Cols.Add(3, LVCFMT_LEFT, 120, L"Marca");
+//	lvTabla.Cols.Add(4, LVCFMT_LEFT, 120, L"Precio");
+//	lvTabla.Cols.Add(6, LVCFMT_LEFT, 120, L"Departamento");
+//	lvTabla.Cols.Add(7, LVCFMT_LEFT, 120, L"Cantidad");
+//
+//	try
+//	{
+//		conn.OpenSession(hWnd, CONNECTION_STRING);
+//		Sys::Format(consulta, L"SELECT  DISTINCT a.id,a.codigo,ta.nombre,mo.nombre, ma.nombre, a.precio,pv.tipo,\
+//			(SELECT SUM(ca.valor)\
+//				FROM articulo art, punto_venta pva, cantidad ca\
+//				WHERE ca.articulo_id = a.id\
+//				AND pva.id = pv.id\
+//				AND ca.puntoVenta_id = pva.id\
+//				AND art.id = a.id)\
+//				FROM articulo a, modelo mo, marca ma, punto_venta pv, cantidad can, tipo_articulo ta\
+//				WHERE a.modelo_id = mo.id\
+//				AND mo.marca_id = ma.id\
+//				AND a.tipoArticulo_id = ta.id\
+//				AND can.articulo_id = a.id\
+//				AND can.puntoVenta_id = pv.id\
+//				AND can.valor > 0\
+//				AND pv.id = %d \
+//				AND a.codigo = '%s'", puntoVenta, codigo.c_str());
+//
+//		conn.ExecuteSelect(consulta, large, lvTabla);
+//	}
+//	catch (Sql::SqlException e)
+//	{
+//		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+//	}
+//
+//	conn.CloseSession();
+//}

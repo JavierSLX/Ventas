@@ -42,15 +42,39 @@ void bonoCreditoVentasDlg::lvCredito_ItemActivate(Win::Event& e)
 {
 	LibreriaFBDll::Ciudad ciudadObj;
 	LibreriaFBDll::Modelo modeloObj;
+	LibreriaFBDll::bonoCredito bonoObj;
+	LibreriaFBDll::Movimiento movimientoObj;
 	idCreditoVP = modeloObj.sacarIDOculto(lvCredito);
-	folioOrdenVP = ciudadObj.sacarTextoLV(lvCredito, 0);
-	totalCreditoVP = Sys::Convert::ToDouble(ciudadObj.sacarTextoLV(lvCredito, 1));
+	folioOrdenVP = ciudadObj.sacarTextoLV(lvCredito, 1);
+	totalCreditoVP = Sys::Convert::ToDouble(ciudadObj.sacarTextoLV(lvCredito, 0));
 	nombreClienteVP = ciudadObj.sacarTextoLV(lvCredito, 2);
 	claveClienteVP = ciudadObj.sacarTextoLV(lvCredito, 3);
 	puntoVentaVP = ciudadObj.sacarTextoLV(lvCredito, 4);
 
-	registrarAbonosVentasDlg abonoObj;
+	registrarAbonosVentasDlg abonoObj(idCreditoVP,folioOrdenVP, totalCreditoVP, nombreClienteVP, claveClienteVP, puntoVentaVP);;
 	abonoObj.BeginDialog(hWnd);
+	if (radioClave.IsChecked() == true)
+	{
+		int puntoVentaId = movimientoObj.sacarIDpuntoVenta(ddPuntosVenta.Text);
+		bonoObj.llenarLVCreditoCCliente(lvCredito, claveClienteVP, puntoVentaId, 100);
+		tbxOpcion.SetText(L"");
+		tbxOpcion.SetFocus();
+
+	}
+	else if (radioFolio.IsChecked() == true)
+	{
+		bonoObj.llenarLVCreditoFolio(lvCredito,folioOrdenVP, 100);
+		tbxOpcion.SetText(L"");
+		tbxOpcion.SetFocus();
+	}
+	else if (radioNombre.IsChecked() == true)
+	{
+		bonoObj.llenarLVCreditoNombre(lvCredito,nombreClienteVP, 100);
+		tbxOpcion.SetText(L"");
+		tbxOpcion.SetFocus();
+	}
+
+
 
 }
 
