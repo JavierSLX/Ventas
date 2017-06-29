@@ -15,6 +15,8 @@
 #include "EliminarRegionDlg.h"
 #include "LadaDlg.h"
 #include "busquedaVentasDlg.h"
+#include "EliminarLadaDlg.h"
+
 class VentaPrinc: public Win::Window
 {
 public:

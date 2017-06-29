@@ -165,6 +165,7 @@
     <ClInclude Include="ClienteVentasDlg.h" />
     <ClInclude Include="agregarCiudadVentasDlg.h" />
     <ClInclude Include="DetallesOrdenVentaDlg.h" />
+    <ClInclude Include="EliminarLadaDlg.h" />
     <ClInclude Include="EliminarRestaurarRango.h" />
     <ClInclude Include="EliminarRegionDlg.h" />
     <ClInclude Include="Eliminar_RestaurarCiudadVentasDlg.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="ClienteVentasDlg.cpp" />
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
     <ClCompile Include="DetallesOrdenVentaDlg.cpp" />
+    <ClCompile Include="EliminarLadaDlg.cpp" />
     <ClCompile Include="EliminarRestaurarRango.cpp" />
     <ClCompile Include="EliminarRegionDlg.cpp" />
     <ClCompile Include="Eliminar_RestaurarCiudadVentasDlg.cpp" />

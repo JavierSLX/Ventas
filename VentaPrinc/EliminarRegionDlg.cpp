@@ -1,6 +1,6 @@
 #include "stdafx.h"  //_____________________________________________ EliminarRegionDlg.cpp
 #include "EliminarRegionDlg.h"
-
+////Metodo que nos permite mostrar todos los valores declarados en el wintemplad con sus valores
 void EliminarRegionDlg::Window_Open(Win::Event& e)
 {
 	tabRegion.Items.Add(0, L"Activos");
@@ -10,7 +10,7 @@ void EliminarRegionDlg::Window_Open(Win::Event& e)
 	btEliminar.Visible = true;
 	btRestaurar.Visible = false;
 }
-
+//Permite cambiar de tabla de inactivos y activos
 void EliminarRegionDlg::tabRegion_SelChange(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;
@@ -28,7 +28,7 @@ void EliminarRegionDlg::tabRegion_SelChange(Win::Event& e)
 		break;
 	}
 }
-
+//Metodo que permite eliminar los elemento dentro de region
 void EliminarRegionDlg::btEliminar_Click(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;
@@ -45,7 +45,7 @@ void EliminarRegionDlg::btEliminar_Click(Win::Event& e)
 		MessageBox(L"No hay elementos seleccionados", L"Eliminar region", MB_OK || MB_ICONERROR);
 	}
 }
-
+//Permite restaurar los valores que fueron eliminados o viceversa
 void EliminarRegionDlg::btRestaurar_Click(Win::Event& e)
 {
 

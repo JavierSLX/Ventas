@@ -11,6 +11,7 @@ public:
 	~LadaDlg()
 	{
 	}
+	int _id;
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Label lb1;
