@@ -92,6 +92,29 @@ void ClienteVentasDlg::btRegistrar_Click(Win::Event& e)
 //Botón Actualizar
 void ClienteVentasDlg::btActualizar_Click(Win::Event& e)
 {
+	LibreriaJRDll::SqlCLS sqlObj;
+	LibreriaJRDll::StringCLS stringObj;
+	tbxEmail.Text = Sys::Convert::ToString(stringObj.sacarIdentificadorNumerico(tbxClave.Text, '-'));
+
+	//Checa si hubo un cambio en la ruta
+	if (ddPuntoVenta.Text != rutaVP)
+	{
+		//Verifica si el cliente no existe ya en esa ruta
+		int puntoVenta_id;
+		int cliente_id = sqlObj.sacarIDCliente(tbxNombre.Text);
+		if (cliente_id > 0)
+		{
+			//Si existe, hace un nuevo registro en la tabla clave_cliente y cambia de estado el anterior
+		}
+		else
+		{
+
+		}
+	}
+	else
+	{
+
+	}
 }
 
 //Cuando la dropdownlist cambia
@@ -114,3 +137,29 @@ void ClienteVentasDlg::limpiarCampos(void)
 	tbxTelefono.Text = L"";
 	tbxEmail.Text = L"";
 }
+
+//Cuando se elige una celda de la tabla
+void ClienteVentasDlg::lvTabla_ItemChanged(Win::Event& e)
+{
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	LibreriaJRDll::SqlCLS sqlObj;
+
+	claveClienteIDVP = wintemplaObj.sacarIDOcultoLV(lvTabla);
+	if (claveClienteIDVP > 0)
+	{
+		rutaVP = ddPuntoVenta.Text;
+		claveVP = wintemplaObj.sacarTextoLV(lvTabla, 0);
+		tbxClave.Text = claveVP;
+		nombreVP = wintemplaObj.sacarTextoLV(lvTabla, 1);
+		tbxNombre.Text = nombreVP;
+		direccionVP = wintemplaObj.sacarTextoLV(lvTabla, 2);
+		tbxDireccion.Text = direccionVP;
+		telefonoVP = wintemplaObj.sacarTextoLV(lvTabla, 3);
+		tbxTelefono.Text = telefonoVP;
+		ciudadVP = wintemplaObj.sacarTextoLV(lvTabla, 4);
+		ddCiudad.SetSelected(ciudadVP);
+		emailVP = sqlObj.sacarEmailCliente(claveClienteIDVP);
+		tbxEmail.Text = emailVP;
+	}
+}
+

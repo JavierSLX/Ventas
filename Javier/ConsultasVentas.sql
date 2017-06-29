@@ -1,7 +1,7 @@
 
 
-SELECT id, tipo
-FROM punto_venta
+SELECT *
+FROM cliente
 WHERE activo = true;
 
 SELECT id, tipo
@@ -18,3 +18,8 @@ AND  pv.id = cc.puntoVenta_id
 AND c.ciudad_id = cd.id
 AND c.activo = true
 AND pv.tipo = 'R0';
+
+SELECT c.email
+FROM cliente c, clave_cliente cc
+WHERE cc.cliente_id = c.id
+AND cc.id = 19;

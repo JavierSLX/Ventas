@@ -777,9 +777,9 @@ int LibreriaJRDll::SqlCLS::sacarIDCliente(wstring nombre)
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT id \
-		FROM cliente\
-		WHERE nombre = '%s'", nombre.c_str());
+		Sys::Format(consulta, L"SELECT c.id \
+		FROM cliente c\
+		WHERE c.nombre = '%s';", nombre.c_str());
 		estandar_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -834,6 +834,31 @@ wstring LibreriaJRDll::SqlCLS::sacarTipoColocacion(wstring punto_venta)
 		WHERE p.id = pc.puntoVenta_id \
 		AND c.id = pc.colocacion_id\
 		AND p.tipo = '%s'", punto_venta.c_str());
+		conn.GetString(consulta, colocacion, 100);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return colocacion;
+}
+
+//Saca el email de un cliente determinado dado por su clave_cliente
+wstring LibreriaJRDll::SqlCLS::sacarEmailCliente(int claveCliente_id)
+{
+	wstring colocacion;
+	wstring consulta;
+	Sql::SqlConnection conn;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT c.email\
+		FROM cliente c, clave_cliente cc\
+		WHERE cc.cliente_id = c.id\
+		AND cc.id = %d;", claveCliente_id);
 		conn.GetString(consulta, colocacion, 100);
 	}
 	catch (Sql::SqlException e)
@@ -1457,5 +1482,28 @@ wstring LibreriaJRDll::StringCLS::convertirATextoEstandar(wstring cadena)
 	}
 
 	return resultado;
+}
+
+//Saca la parte numérica del identificador
+int LibreriaJRDll::StringCLS::sacarIdentificadorNumerico(wstring cadena, char simbolo)
+{
+	int guion = -1;
+
+	if (cadena.length() == 0)
+		return -1;
+
+	for (int unsigned i = 0; i < cadena.length(); i++)
+		if (cadena.at(i) == simbolo)
+		{
+			guion = i;
+			break;
+		}
+
+	//Si no existe el guion
+	if (guion == -1)
+		return -1;
+
+	//Saca la parte numerica del identificador
+	return Sys::Convert::ToInt(cadena.substr(guion+1));
 }
 

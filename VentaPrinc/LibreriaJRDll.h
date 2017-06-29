@@ -110,6 +110,9 @@ public:
 		//Saca el tipo de un registro de la tabla colocacion
 		wstring sacarTipoColocacion(wstring punto_venta);
 
+		//Saca el email de un cliente determinado dado por su clave_cliente
+		wstring sacarEmailCliente(int claveCliente_id);
+
 		//Método que actualiza un registro de la tabla punto_venta dado por su id
 		void actualizarPuntoVenta(int categoria_id, wstring nombre);
 
@@ -170,6 +173,9 @@ public:
 
 		//Convierte una cadena en la primera letra en mayúscula y las demás en minúsculas
 		wstring convertirATextoEstandar(wstring cadena);
+
+		//Saca la parte numérica del identificador
+		int sacarIdentificadorNumerico(wstring cadena, char simbolo);
 	};
 private:
 	
