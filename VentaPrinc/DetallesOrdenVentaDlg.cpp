@@ -48,14 +48,15 @@ void DetallesOrdenVentaDlg::btAgregar_Click(Win::Event& e)
 {
 	LibreriaAdDll::articulo consultasArObj;
 	LibreriaAdDll::ordenNueva consultasObj;
-	int marca_id = consultasArObj.sacarIDMarca(ddMarca.Text);
-	int modelo_id = consultasArObj.sacarIDModelo(ddModelo.Text);
-	int color_id = consultasArObj.sacarIDcolor(ddColor.Text);
-	int puntoVenta_id = consultasArObj.sacarIDPuntoVenta(_puntoVenta);
-	int tipo_articulo = consultasObj.sacarIDTipoArticulo(ddTipo.Text);
-	int articulo_id = consultasObj.sacarIDArticulo(color_id,puntoVenta_id,modelo_id,marca_id, tipo_articulo);
+	
 	if (radioArticulo.IsChecked() == true)
 	{
+		int marca_id = consultasArObj.sacarIDMarca(ddMarca.Text);
+		int modelo_id = consultasArObj.sacarIDModelo(ddModelo.Text);
+		int color_id = consultasArObj.sacarIDcolor(ddColor.Text);
+		int puntoVenta_id = consultasArObj.sacarIDPuntoVenta(_puntoVenta);
+		int tipo_articulo = consultasObj.sacarIDTipoArticulo(ddTipo.Text);
+		int articulo_id = consultasObj.sacarIDArticulo(color_id, puntoVenta_id, modelo_id, marca_id, tipo_articulo);
 		int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 		double precioSugerido = Sys::Convert::ToDouble(tbxPrecioSugerido.Text);
 		double precioFinal = Sys::Convert::ToDouble(tbxPrecioFinal.Text);
@@ -163,6 +164,8 @@ void DetallesOrdenVentaDlg::radioServicio_Click(Win::Event& e)
 	lbMarca.Visible = false;
 	lbModelo.Visible = false;
 	lbColor.Visible = false;
+	tbxCantidad.SetText(L"");
+	tbxPrecioFinal.SetText(L"");
 
 }
 
