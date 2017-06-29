@@ -1057,6 +1057,32 @@ void LibreriaJRDll::SqlCLS::insertarCiudad(wstring nombre, int lada_id)
 	conn.CloseSession();
 }
 
+//Método que inserta un registro en la tabla clave_cliente
+void LibreriaJRDll::SqlCLS::insertarClaveCliente(wstring numero, int cliente_id, int puntoVenta_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO clave_cliente (numero, activo, cliente_id, puntoVenta_id) \
+		VALUES('%s', true, %d, %d)", numero.c_str(), cliente_id, puntoVenta_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of inserted rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
 //__________________________________________ CLASE COLORCLS
 //Método que regreso valores RGB distintos
 void LibreriaJRDll::ColorCLS::obtenerColor(int index, int *R, int *G, int *B)

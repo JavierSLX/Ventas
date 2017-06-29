@@ -13,6 +13,7 @@ public:
 	{
 	}
 private:
+	void limpiarCampos(void);
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Textbox tbxClave;
 	Win::Textbox tbxNombre;

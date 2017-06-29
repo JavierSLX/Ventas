@@ -23,6 +23,7 @@ void ClienteVentasDlg::Window_Open(Win::Event& e)
 void ClienteVentasDlg::btRegistrar_Click(Win::Event& e)
 {
 	LibreriaJRDll::SqlCLS sqlObj;
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
 
 	//Verifica si no hay espacios vacíos
 	if (tbxNombre.GetTextLength() == 0)
@@ -46,7 +47,7 @@ void ClienteVentasDlg::btRegistrar_Click(Win::Event& e)
 	//Checa que la opción de ciudad no sea "S/R"
 	if (ddCiudad.Text == L"S/R")
 	{
-		MessageBoxW(L"Agregue una opción válida de ciudad", L"Ciudad", MB_OK | MB_ICONINFORMATION);
+		MessageBoxW(L"Agregue una opción válida de ciudad", L"Ciudad", MB_OK | MB_ICONERROR);
 		return;
 	}
 
@@ -54,7 +55,7 @@ void ClienteVentasDlg::btRegistrar_Click(Win::Event& e)
 	int cliente_id = sqlObj.sacarIDCliente(tbxNombre.Text);
 	if (cliente_id > 0)
 	{
-		MessageBoxW(L"Ya existe ese cliente en la BD", L"Cliente", MB_OK | MB_ICONINFORMATION);
+		MessageBoxW(L"Ya existe ese cliente en la BD", L"Cliente", MB_OK | MB_ICONERROR);
 		return;
 	}
 
@@ -64,10 +65,28 @@ void ClienteVentasDlg::btRegistrar_Click(Win::Event& e)
 
 	//Checa si hay un correo y en caso de no existir en la celda se coloca un "S/R"
 	wstring correo;
-	tbxEmail.GetTextLength() == 0 ? correo = tbxEmail.Text : correo = L"S/R";
+	if (tbxEmail.GetTextLength() == 0)
+		correo = tbxEmail.Text; 
+	else
+		correo = L"S/R";
 
 	//Ingresa el nuevo registro a la base de datos en la tabla cliente
 	sqlObj.insertarCliente(tbxNombre.Text, tbxDireccion.Text, tbxTelefono.Text, correo, ciudad_id);
+
+	//Inserta una nueva clave de cliente
+	cliente_id = sqlObj.sacarIDCliente(tbxNombre.Text);
+	wstring numero;
+	int n = sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1;
+	Sys::Format(numero, L"%03d", n);
+	sqlObj.insertarClaveCliente(numero, cliente_id, puntoVenta_id);
+
+	//Avisa y actualiza que se hizo el registro de manera correcta
+	MessageBoxW(L"Registro hecho de manera correcta", L"Cliente", MB_OK | MB_ICONINFORMATION);
+	wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, 200);
+
+	//Actualiza la casilla de clave
+	tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
+	limpiarCampos();
 }
 
 //Botón Actualizar
@@ -87,3 +106,11 @@ void ClienteVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
 	wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, 200);
 }
 
+//Limpia todos los campos de la ventana para poder registrar un nuevo registro
+void ClienteVentasDlg::limpiarCampos(void)
+{
+	tbxNombre.Text = L"";
+	tbxDireccion.Text = L"";
+	tbxTelefono.Text = L"";
+	tbxEmail.Text = L"";
+}

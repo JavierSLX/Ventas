@@ -133,6 +133,9 @@ public:
 
 		//Método que inserta un registro en la tabla ciudad
 		void insertarCiudad(wstring nombre, int lada_id);
+
+		//Método que inserta un registro en la tabla clave_cliente
+		void insertarClaveCliente(wstring numero, int cliente_id, int puntoVenta_id);
 	};
 
 	//Clase que contiene todo lo referente a color
