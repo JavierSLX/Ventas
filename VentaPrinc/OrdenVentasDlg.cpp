@@ -4,6 +4,7 @@
 void OrdenVentasDlg::Window_Open(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva consultasObj;
+	LibreriaAdDll::articulo consultasArtObj;
 
 	//Llena la celda de folio
 	wstring folio = consultasObj.sacarUltimoFolio();
@@ -28,14 +29,19 @@ void OrdenVentasDlg::Window_Open(Win::Event& e)
 			tbxFolio.Text = cadena + L"/" + Sys::Convert::ToString(fecha.wYear);
 		}
 	}
-	//llenar dropdawn
-
-	consultasObj.llenarDDCliente(ddCliente, 100, true);
-	ddCliente.SetSelectedIndex(0);
+	//llenar dropdown
 	consultasObj.llenarDDPuntoVenta(ddPuntoVenta, 100, true);
 	ddPuntoVenta.SetSelectedIndex(3);
+	wstring puntoVenta = ddPuntoVenta.Text;
+	int puntoVenta_id = consultasObj.sacarIDpuntoVenta(puntoVenta);
+	wstring clave_cliente = ddCliente.Text;
+	consultasObj.llenarDDCliente(ddCliente, puntoVenta_id, 100, true);
+	ddCliente.SetSelectedIndex(0);
 	tbxFolio.Enabled = false;
+	tbxNombreCliente.Enabled = false;
+	tbxIdentificador.Enabled = false;
 	tbxIdentificador.SetText(L"R0");
+	tbxNombreCliente.SetText(L"GENERAL");
 
 }
 
@@ -44,7 +50,8 @@ void OrdenVentasDlg::Window_Open(Win::Event& e)
 void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva consultasObj;
-	DetallesOrdenVentaDlg ventana;
+	_puntoVenta = ddPuntoVenta.Text;
+	DetallesOrdenVentaDlg ventana(_puntoVenta);
 	wstring folio = tbxFolio.Text;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
@@ -59,7 +66,9 @@ void OrdenVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
 	LibreriaAdDll::ordenNueva consultasObj;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
-
+	consultasObj.llenarDDCliente(ddCliente, idPuntoVenta, 100, true);
+	ddCliente.SetSelectedIndex(0);
+	wstring clave_cliente = ddCliente.Text;
 	if (puntoVenta == L"R1")
 	{
 		tbxIdentificador.SetText(L"R1");
@@ -67,6 +76,7 @@ void OrdenVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
 		tbxNombreCliente.Visible = true;
 		ddCliente.Enabled = true;
 		tbxIdentificador.Enabled = true;
+
 	}
 	else if (puntoVenta == L"R2")
 	{
@@ -114,10 +124,10 @@ void OrdenVentasDlg::ddCliente_SelChange(Win::Event& e)
 	LibreriaAdDll::ordenNueva consultasObj;
 	wstring folio = tbxFolio.Text;
 	wstring puntoVenta = ddPuntoVenta.Text;
-	wstring clave_cliente = ddCliente.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
+	wstring clave_cliente = ddCliente.Text;
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text);
-	consultasObj.sacarNombreCliente(idPuntoVenta, clave_cliente);
+	tbxNombreCliente.SetText( consultasObj.sacarNombreCliente(idPuntoVenta, clave_cliente));
 
 }
 

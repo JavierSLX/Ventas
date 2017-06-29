@@ -296,5 +296,3 @@ CREATE TABLE articulo
 	tipoArticulo_id INT UNSIGNED NOT NULL REFERENCES tipo_articulo.id ON UPDATE CASCADE,
 	modelo_id INT UNSIGNED NOT NULL REFERENCES modelo.id ON UPDATE CASCADE
 );
-
-select * from orden_descripcion;
