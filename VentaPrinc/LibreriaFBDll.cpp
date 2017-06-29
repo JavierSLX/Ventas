@@ -2024,3 +2024,56 @@ void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fe
 
 	conn.CloseSession();
 }
+
+//LLENA UN LIST VIEW con los totales de las ordenes dependiendo del departamento
+
+void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring puntoVenta, int large)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.DeleteAllItems();
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	lvTabla.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
+	lvTabla.Cols.Add(1, LVCFMT_CENTER, 130, L"Nombre del cliente");
+	lvTabla.Cols.Add(2, LVCFMT_CENTER, 130, L"Clave del cliente");
+	lvTabla.Cols.Add(3, LVCFMT_CENTER, 100, L"Departamento");
+	lvTabla.Cols.Add(4, LVCFMT_CENTER, 130, L"Fecha");
+	lvTabla.Cols.Add(5, LVCFMT_CENTER, 130, L"Total");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cre.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
+			(select distinct sum(oddescr.cantidad)\
+				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
+		where oddescr.orden_id = o.id\
+		and o.cliente_id = cl.id\
+			and ccte.cliente_id = cl.id\
+			and o.puntoVenta_id = pvta.id\
+			AND o.id = ord.id)\
+			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
+			WHERE cre.orden_id = ord.id\
+			AND ord.cliente_id = cli.id\
+			AND orcom.orden_id = ord.id\
+			AND ccli.cliente_id = cli.id\
+			AND ccli.puntoVenta_id = pv.id\
+			AND ord.puntoVenta_id = pv.id\
+			AND pv.tipo = '%s'\
+			AND cli.activo = true\
+			AND cre.estado = true;", puntoVenta.c_str());
+
+		conn.ExecuteSelect(consulta, large, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}

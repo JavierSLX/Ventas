@@ -48,6 +48,10 @@ void busquedaVentasDlg::btBuscar_Click(Win::Event& e)
 		
 
 	}
+	if (radioDepartamento.IsChecked() == true)
+	{
+		bonoObj.llenarpuntoVenta(lvOrden, ddDepartamentos.Text, 100);
+	}
 }
 
 void busquedaVentasDlg::radioFolio_Click(Win::Event& e)
@@ -55,6 +59,7 @@ void busquedaVentasDlg::radioFolio_Click(Win::Event& e)
 	dtboxFecha.Visible = false;
 	tbxOpcionBusqueda.SetFocus();
 	ddPuntosVenta.Visible = false;
+	tbxOpcionBusqueda.Enabled =true;
 	ddDepartamentos.Visible = false;
 }
 
@@ -63,6 +68,7 @@ void busquedaVentasDlg::radioClaveCliente_Click(Win::Event& e)
 	dtboxFecha.Visible = false;
 	tbxOpcionBusqueda.SetFocus();
 	ddPuntosVenta.Visible = true;
+	tbxOpcionBusqueda.Enabled = true;
 	ddDepartamentos.Visible = false;
 }
 
@@ -85,10 +91,14 @@ void busquedaVentasDlg::lvOrden_ItemActivate(Win::Event& e)
 
 void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 {
+	LibreriaFBDll::bonoCredito bonoObj;
 	ddDepartamentos.Visible = true;
 	LibreriaJRDll::WintemplaCLS javObj;
 	javObj.llenarDdRutasExclusiva(ddDepartamentos, true, 100);
 	ddDepartamentos.SetSelectedIndex(0);
 	tbxOpcionBusqueda.Enabled = false;
+	
+
+
 }
 

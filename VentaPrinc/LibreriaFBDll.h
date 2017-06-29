@@ -160,6 +160,7 @@ public:
 		void LibreriaFBDll::bonoCredito::llenarclaveCliente(Win::ListView lvTabla, int puntoVenta_id, wstring folio, int large);
 		void LibreriaFBDll::bonoCredito::llenarFolioOrden(Win::ListView lvTabla, wstring folio, int large);
 		void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fecha, int large);
+		void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring puntoVenta, int large);
 	private:
 
 	};
