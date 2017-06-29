@@ -114,6 +114,7 @@ public:
 			void  LibreriaAdDll::ordenNueva::llenarDDModelo(Win::DropDownList ddModelo, wstring marca, int large, bool activo);
 			double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id);
 			int LibreriaAdDll::ordenNueva::sacarIDPuntoVenta(wstring PV);
+			double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv);
 		
 
 

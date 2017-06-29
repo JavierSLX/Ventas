@@ -30,7 +30,7 @@ void DetallesOrdenVentaDlg::Window_Open(Win::Event& e)
 	consultasObj.llenarDDcolor(ddColor, 100, articulo_id, _puntoVenta);
 	ddColor.SetSelectedIndex(0);
 	int pv_id = consultasObj.sacarIDPuntoVenta(_puntoVenta);
-	/*tbxPrecioSugerido = Sys::Convert::ToString(consultasObj.sacarPrecioArticulo(articulo_id, pv_id));*/
+	tbxPrecioSugerido.SetText(Sys::Convert::ToString(consultasObj.sacarPrecioArticulo(articulo_id, pv_id)));
 
 
 	radioArticulo.Checked = true;
@@ -197,5 +197,13 @@ void DetallesOrdenVentaDlg::ddTipo_SelChange(Win::Event& e)
 	tbxPrecioSugerido.Enabled = false;
 	wstring folio = consultasObj.sacarUltimoFolio();
 	consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folio);
+}
+
+void DetallesOrdenVentaDlg::tbxCantidad_Change(Win::Event& e)
+{
+	int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+	double precio = Sys::Convert::ToDouble(tbxPrecioSugerido.Text);
+	double precioTotal = cantidad*precio;
+	tbxPrecioFinal.SetText(Sys::Convert::ToString(precioTotal));
 }
 

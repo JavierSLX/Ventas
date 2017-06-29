@@ -2031,28 +2031,28 @@ void  LibreriaAdDll::ordenNueva::llenarDDModelo(Win::DropDownList ddModelo, wstr
 
 	conn.CloseSession();
 }
-//double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv)
-//{
-//	wstring consulta;
-//	Sql::SqlConnection conn;
-//	double pv_id = 0;
-//
-//	try {
-//		conn.OpenSession(hWnd, CONNECTION_STRING);
-//		Sys::Format(consulta, L"SELECT precio\
-//			FROM precio_cliente\
-//			WHERE clave_cliente = %d\
-//			AND articulo_id = %d;", articulo_id);
-//		pv_id = conn.GetInt(consulta);
-//	}
-//	catch (Sql::SqlException e)
-//	{
-//
-//	}
-//
-//	conn.CloseSession();
-//	return pv_id;
-//}
+double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT precio\
+			FROM precio_cliente\
+			WHERE clave_cliente = %d\
+			AND articulo_id = %d;", articulo_id);
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
 int LibreriaAdDll::ordenNueva::sacarIDPuntoVenta(wstring pv)
 {
 	wstring consulta;
