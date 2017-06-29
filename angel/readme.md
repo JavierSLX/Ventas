@@ -44,3 +44,9 @@ Actividades realizadas durante el día 27 de Junio del 2017:
 * Método que muestra las regiones en un <code>DropDownList</code>.
 * Método que muestra las ciudades en un <code>DropDownList</code> dependiendo de la opción seleccionada en el <code>DropDownList</code> de regiones.
 * Método que muestra los requerimientos en un <code>DropDownList</code>.
+<h5>28/06/2017</h5>
+Actividades realizadas durante el día 28 de Junio del 2017:
+
+* Re diseño de la tabla orden_descripcion.
+* Creación del método generación del reporte general.
+* creación del método generación del reporte por departamento.
