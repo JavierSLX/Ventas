@@ -259,24 +259,63 @@ VALUES ('863748292', 460, true, 1, 17);
 INSERT INTO articulo (codigo, precio, activo, tipoArticulo_id, modelo_id)
 VALUES ('884781043', 140, true, 3,21);
 
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (15, 7, 8, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 7, 7, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (17, 7, 6, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 8, 2, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (19, 8, 4, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (15, 8, 1, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (22, 8, 3, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (12, 9, 9, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (19, 9, 5, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 9, 3, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (16, 9, 9, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (11, 10, 3, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (19, 10, 9, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (22, 10, 5, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (12, 10, 7, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (11, 10, 3, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (14, 11, 8, 7);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (20, 11, 12, 7);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (15, 11, 11, 7);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 12, 5, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (17, 12, 4, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (20, 12, 10, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (13, 12, 9, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 12, 5, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 13, 13, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 13, 6, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (11, 13, 2, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 14, 8, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (12, 14, 9, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (17, 14, 4, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (20, 15, 6, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (16, 15, 5, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (14, 15, 7, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (13, 16, 6, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (19, 16, 4, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (17, 16, 8, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 16, 5, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 17, 6, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (21, 17, 13, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (17, 17, 11, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (19, 17, 2, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 18, 10, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 18, 11, 7);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (15, 18, 1, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (28, 18, 2, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (14, 19, 3, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (12, 19, 4, 4);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (13, 19, 12, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 19, 2, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (5, 20, 5, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (16, 20, 7, 7);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (13,20 , 3, 5);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 20, 2, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (12, 21, 4, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (15, 21, 8, 3);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (13, 21, 4, 6);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (8, 21, 10, 4);
 
-
-select * from punto_venta;
-SELECT cli.nombre
-			FROM punto_venta pv, cliente cli, clave_cliente cc 
-			WHERE  pv.id= cc.puntoVenta_id
-			AND cli.id = cc.cliente_id
-			AND pv.id = 3
-			AND cc.numero = '001';
-            SELECT id, tipo
-								FROM punto_venta
-								WHERE activo = true
-								ORDER BY tipo ASC;
-SELECT mo.id, mo.nombre
-								FROM modelo mo, marca ma
-								WHERE mo.marca_id = ma.id
-								AND ma.nombre = 'Alcatel'
-								AND mo.activo = true
-								ORDER BY mo.nombre ASC;
 
 

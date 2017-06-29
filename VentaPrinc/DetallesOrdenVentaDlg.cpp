@@ -3,25 +3,42 @@
 
 void DetallesOrdenVentaDlg::Window_Open(Win::Event& e)
 {
+	LibreriaAdDll::ordenNueva consultasObj;
 	LibreriaAdDll::articulo consultasArtObj;
-	consultasArtObj.llenarDDMarca(ddMarca, 100, true);
+	//llenar tipo de articulo
+	consultasObj.llenarDDTipoArticulo(ddTipo, 100, true, _puntoVenta);
+	ddTipo.SetSelectedIndex(0);
+	tipoPV = ddTipo.Text;
+
+	//llena la marca
+	consultasObj.llenarDDMarca(ddMarca, 100, true, tipoPV);
 	ddMarca.SetSelectedIndex(0);
 	marcaWsPV = ddMarca.Text;
-	consultasArtObj.llenarDDModelo(ddModelo, marcaWsPV, 100, true);
+	int marca_id = consultasArtObj.sacarIDMarca(marcaWsPV);
+	//llena el modelo
+	consultasObj.llenarDDModelo(ddModelo, marcaWsPV, 100, true);
 	ddModelo.SetSelectedIndex(0);
-	consultasArtObj.llenarDDcolor(ddColor, 100, true);
+	wstring modeloWS = ddModelo.Text;
+	int modelo_id = consultasArtObj.sacarIDModelo(modeloWS);
+
+
+	//saca el id del articulo
+	int articulo_id = consultasObj.sacarIDArticulo(tipoPV, modelo_id, marca_id,_puntoVenta);
+
+
+	//llena el color
+	consultasObj.llenarDDcolor(ddColor, 100, articulo_id, _puntoVenta);
 	ddColor.SetSelectedIndex(0);
-	consultasArtObj.llenarDDarticulo(ddTipo, 100, true);
-	ddTipo.SetSelectedIndex(0);
+	int pv_id = consultasObj.sacarIDPuntoVenta(_puntoVenta);
+	/*tbxPrecioSugerido = Sys::Convert::ToString(consultasObj.sacarPrecioArticulo(articulo_id, pv_id));*/
+
+
 	radioArticulo.Checked = true;
 	tbxPrecioSugerido.Enabled = false;
+	wstring folio = consultasObj.sacarUltimoFolio();
+	consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folio);
 	
 	
-	//________________________________________________________ lvCaracteristicasOrden
-	lvCaracteristicasOrden.Cols.Add(0, LVCFMT_LEFT, 100, L"Day");
-	lvCaracteristicasOrden.Cols.Add(1, LVCFMT_RIGHT, 200, L"Activity");
-	lvCaracteristicasOrden.Items.Add(0, L"Monday");
-	lvCaracteristicasOrden.Items[0][1].Text = L"Math Class";
 	
 }
 
@@ -96,17 +113,39 @@ void DetallesOrdenVentaDlg::radioArticulo_Click(Win::Event& e)
 	lbMarca.Visible = true;
 	lbModelo.Visible = true;
 	lbColor.Visible = true;
+
+	LibreriaAdDll::ordenNueva consultasObj;
 	LibreriaAdDll::articulo consultasArtObj;
-	consultasArtObj.llenarDDMarca(ddMarca, 100, true);
+	//llenar tipo de articulo
+	consultasObj.llenarDDTipoArticulo(ddTipo, 100, true, _puntoVenta);
+	ddTipo.SetSelectedIndex(0);
+	tipoPV = ddTipo.Text;
+
+
+	//llena la marca
+	consultasObj.llenarDDMarca(ddMarca, 100, true, tipoPV);
 	ddMarca.SetSelectedIndex(0);
 	marcaWsPV = ddMarca.Text;
-	consultasArtObj.llenarDDModelo(ddModelo, marcaWsPV, 100, true);
+	int marca_id = consultasArtObj.sacarIDMarca(marcaWsPV);
+	//llena el modelo
+	consultasObj.llenarDDModelo(ddModelo, marcaWsPV, 100, true);
 	ddModelo.SetSelectedIndex(0);
-	consultasArtObj.llenarDDcolor(ddColor, 100, true);
+	wstring modeloWS = ddModelo.Text;
+	int modelo_id = consultasArtObj.sacarIDModelo(modeloWS);
+
+
+	//saca el id del articulo
+	int articulo_id = consultasObj.sacarIDArticulo(tipoPV, modelo_id, marca_id, _puntoVenta);
+
+
+	//llena el color
+	consultasObj.llenarDDcolor(ddColor, 100, articulo_id, _puntoVenta);
 	ddColor.SetSelectedIndex(0);
-	consultasArtObj.llenarDDarticulo(ddTipo, 100, true);
-	ddTipo.SetSelectedIndex(0);
+
 	radioArticulo.Checked = true;
+	tbxPrecioSugerido.Enabled = false;
+	wstring folio = consultasObj.sacarUltimoFolio();
+	consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folio);
 }
 
 void DetallesOrdenVentaDlg::radioServicio_Click(Win::Event& e)
@@ -128,9 +167,35 @@ void DetallesOrdenVentaDlg::radioServicio_Click(Win::Event& e)
 void DetallesOrdenVentaDlg::ddTipo_SelChange(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva consultasObj;
-	int servicio_id = consultasObj.sacarIDServicio(ddTipo.Text);
-	double precio = consultasObj.sacarPrecio(servicio_id);
-	tbxPrecioSugerido.SetText(Sys::Convert::ToString(precio));
-	tbxPrecioFinal.SetText(Sys::Convert::ToString(precio));
+	LibreriaAdDll::articulo consultasArtObj;
+	//llenar tipo de articulo
+	consultasObj.llenarDDTipoArticulo(ddTipo, 100, true, _puntoVenta);
+	ddTipo.SetSelectedIndex(0);
+	wstring tipo = ddTipo.Text;
+
+	//llena la marca
+	consultasObj.llenarDDMarca(ddMarca, 100, true, tipo);
+	ddMarca.SetSelectedIndex(0);
+	marcaWsPV = ddMarca.Text;
+	int marca_id = consultasArtObj.sacarIDMarca(marcaWsPV);
+	//llena el modelo
+	consultasObj.llenarDDModelo(ddModelo, marcaWsPV, 100, true);
+	ddModelo.SetSelectedIndex(0);
+	wstring modeloWS = ddModelo.Text;
+	int modelo_id = consultasArtObj.sacarIDModelo(modeloWS);
+
+
+	//saca el id del articulo
+	int articulo_id = consultasObj.sacarIDArticulo(tipo, modelo_id, marca_id, _puntoVenta);
+
+
+	//llena el color
+	consultasObj.llenarDDcolor(ddColor, 100, articulo_id, _puntoVenta);
+	ddColor.SetSelectedIndex(0);
+
+	radioArticulo.Checked = true;
+	tbxPrecioSugerido.Enabled = false;
+	wstring folio = consultasObj.sacarUltimoFolio();
+	consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folio);
 }
 

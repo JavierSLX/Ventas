@@ -15,6 +15,7 @@ public:
 	wstring _puntoVenta;
 private:
 	wstring marcaWsPV;
+	wstring tipoPV;
 	
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Button gboxOrden;

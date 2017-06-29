@@ -255,205 +255,205 @@ VALUES(17, 2);
 INSERT INTO cantidad_requerimiento(cantidad_id, requerimiento_id)
 VALUES(18, 2);
 
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(1,1,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id,articulo_id)
 VALUES(2,2,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(3,3,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(4,4,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(5,5,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(6,6,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(7,7,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(8,8,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(9,9,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(10,10,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(11,11,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(12,12,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(13,13,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(14,14,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(15,15,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(16,16,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(17,17,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(18,18,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(19,19,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(20,20,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(21,21,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(22,22,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(23,23,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(24,24,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(25,25,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(26,26,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(27,27,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(28,28,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(29,29,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(30,30,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(31,31,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(32,32,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(33,33,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(34,34,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(35,35,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(36,36,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(37,37,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(38,38,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(39,39,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(40,40,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(41,41,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(42,42,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(43,43,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(44,44,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(45,45,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(46,46,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(47,47,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(48,48,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(49,49,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(50,50,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(51,51,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(52,52,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(53,53,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(54,54,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(55,55,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(56,56,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(57,57,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(58,58,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(59,59,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(60,60,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(61,61,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(62,62,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(63,63,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(64,64,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(65,65,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(66,66,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(67,67,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(68,68,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(69,69,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(70,70,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(71,71,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(72,72,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(73,73,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(74,74,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(75,75,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(76,77,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(77,77,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(78,78,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(79,79,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(80,80,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(81,81,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(82,82,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(83,83,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(84,84,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(85,85,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(86,86,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(87,87,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(88,88,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(89,89,1);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(90,90,2);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(91,91,3);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(92,92,4);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(93,93,5);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(94,94,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(95,95,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(96,96,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(97,97,8);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(98,98,7);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(99,99,6);
-INSERT INTO precio_cliente(precio, claveCliente_id, tipoArticulo_id)
+INSERT INTO precio_cliente(precio, claveCliente_id, articulo_id)
 VALUES(100,100,5);
 
 
