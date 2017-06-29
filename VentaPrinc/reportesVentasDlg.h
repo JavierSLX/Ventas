@@ -29,7 +29,6 @@ private:
 	Win::Label lbRequerimiento;
 	Win::DropDownList ddRequerimiento;
 	Win::ListView lvReporte;
-	Win::Label lb6;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -52,7 +51,6 @@ protected:
 		lbRequerimiento.CreateX(NULL, L"Requerimiento", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 0.29104, 1.95792, 5.18583, 0.60854, hWnd, 1008);
 		ddRequerimiento.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 0.29104, 2.69875, 5.18583, 0.60854, hWnd, 1009);
 		lvReporte.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.26458, 3.73062, 25.47938, 12.32958, hWnd, 1010);
-		lb6.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 7.99042, 2.27542, 2.19604, 0.60854, hWnd, 1011);
 		lvReporte.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		ddTipoReporte.Font = fontArial009A;
@@ -66,12 +64,13 @@ protected:
 		lbRequerimiento.Font = fontArial009A;
 		ddRequerimiento.Font = fontArial009A;
 		lvReporte.Font = fontArial009A;
-		lb6.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void ddTipoReporte_SelChange(Win::Event& e);
 	void ddDepartamento_SelChange(Win::Event& e);
 	void ddRegion_SelChange(Win::Event& e);
+	void ddCiudad_SelChange(Win::Event& e);
+	void ddRequerimiento_SelChange(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -79,6 +78,8 @@ protected:
 		if (ddTipoReporte.IsEvent(e, CBN_SELCHANGE)) {ddTipoReporte_SelChange(e); return true;}
 		if (ddDepartamento.IsEvent(e, CBN_SELCHANGE)) {ddDepartamento_SelChange(e); return true;}
 		if (ddRegion.IsEvent(e, CBN_SELCHANGE)) {ddRegion_SelChange(e); return true;}
+		if (ddCiudad.IsEvent(e, CBN_SELCHANGE)) {ddCiudad_SelChange(e); return true;}
+		if (ddRequerimiento.IsEvent(e, CBN_SELCHANGE)) {ddRequerimiento_SelChange(e); return true;}
 		return false;
 	}
 };
