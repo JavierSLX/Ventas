@@ -22,7 +22,6 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddRequerimiento.SetSelectedIndex(0);
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	generarReporte(ddTipoReporte.Text);
-	generarReporte(ddTipoReporte.Text);
 }
 void reportesVentasDlg::generarReporte(wstring tipoReporte)
 {
@@ -30,7 +29,7 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 	LibreriaAngelDll::reportesCLS reportesObj;
 	if (tipoReporte == L"Ventas General")
 	{
-		reporteVentasObj.llenarReporteVentasGeneral(lvReporte,_idRequerimiento, 300, true);
+		reporteVentasObj.llenarReporteVentasGeneral(lvReporte,_idRequerimiento,400,dtboxInicial.GetSelectedDateTime(),dtboxFinal.GetSelectedDateTime(),true);
 	}
 	else
 	{
@@ -145,12 +144,17 @@ void reportesVentasDlg::ddRegion_SelChange(Win::Event& e)
 		reporteVentasObj.llenarCiudad(ddCiudad, 200);
 		ddCiudad.SetSelectedIndex(0);
 		_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+		_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+		_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	}
 	else
 	{
 		_idRegion= reportesObj.obtenerIdOculto(ddRegion);
 		reporteVentasObj.llenarCiudad(ddCiudad, _idRegion, 200);
 		ddCiudad.SetSelectedIndex(0);
+		_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+		_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+		_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	}
 	generarReporte(ddTipoReporte.Text);
 }
@@ -160,6 +164,9 @@ void reportesVentasDlg::ddDepartamento_SelChange(Win::Event& e)
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
 	_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
+	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	generarReporte(ddTipoReporte.Text);
 }
 
@@ -168,6 +175,8 @@ void reportesVentasDlg::ddCiudad_SelChange(Win::Event& e)
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
 	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	generarReporte(ddTipoReporte.Text);
 }
 
@@ -176,11 +185,33 @@ void reportesVentasDlg::ddRequerimiento_SelChange(Win::Event& e)
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
 	generarReporte(ddTipoReporte.Text);
 }
 
 void reportesVentasDlg::tbxFolio_Change(Win::Event& e)
 {
+	generarReporte(ddTipoReporte.Text);
+}
+
+void reportesVentasDlg::dtboxInicial_DatetimeChange(Win::Event& e)
+{
+	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
+	LibreriaAngelDll::reportesCLS reportesObj;
+	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+	generarReporte(ddTipoReporte.Text);
+}
+
+void reportesVentasDlg::dtboxFinal_DatetimeChange(Win::Event& e)
+{
+	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
+	LibreriaAngelDll::reportesCLS reportesObj;
+	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
+	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
+	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	generarReporte(ddTipoReporte.Text);
 }
 

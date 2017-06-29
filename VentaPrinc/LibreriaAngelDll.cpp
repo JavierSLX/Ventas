@@ -1043,7 +1043,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarCiudad(Win::DropDownList ddCiudad
 }
 
 //LLenar reporte general
-void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListView lvReporte,int idRequerimiento,int longuitud, bool activo)
+void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListView lvReporte,int idRequerimiento,int longuitud, Sys::Time inicial, Sys::Time termino,bool activo)
 {
 	Sql::SqlConnection coneccion;
 	wstring consulta;
@@ -1060,8 +1060,10 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 	lvReporte.Cols.Add(2, LVCFMT_CENTER, 100, L"S/A");
 	lvReporte.Cols.Add(3, LVCFMT_CENTER, 100, L"Requerimiento");
 	lvReporte.Cols.Add(4, LVCFMT_CENTER, 100, L"Cantidad");
-	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Precio Final");
-	lvReporte.Cols.Add(6, LVCFMT_CENTER, 100, L"Fecha");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Precio Sugerido");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 100, L"Precio Final");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 100, L"Total");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 100, L"Fecha");
 	//reporte general de todos los requerimientos
 	if (idRequerimiento == 0)
 	{
@@ -1071,7 +1073,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 
 			//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
 			Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
-			od.cantidad,od.precio_final,o.fecha\
+			od.cantidad,od.precio_sugerido,od.precio_final,od.cantidad*od.precio_final,o.fecha\
 		FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
 			servicio_requerimiento sr, servicio_venta sv \
 		WHERE od.orden_id=o.id\
@@ -1082,9 +1084,11 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 			AND sr.requerimiento_id = r.id\
 			AND sr.servicioVenta_id = sv.id\
 			AND sv.id = od.tipoVentaId\
+			AND DATE(o.fecha) >= '%d-%d-%d'\
+			AND DATE(o.fecha) <= '%d-%d-%d'\
 		UNION\
 		SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
-			od.cantidad, od.precio_final, o.fecha\
+			od.cantidad,od.precio_sugerido,od.precio_final,od.cantidad*od.precio_final,o.fecha\
 		FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
 			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma\
 		WHERE od.orden_id = o.id\
@@ -1096,7 +1100,9 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 			AND cr.cantidad_id = can.id\
 			AND can.articulo_id = a.id\
 			AND a.modelo_id = mo.id\
-			AND a.id = od.tipoVentaId;");
+			AND a.id = od.tipoVentaId\
+			AND DATE(o.fecha) >= '%d-%d-%d'\
+			AND DATE(o.fecha) <= '%d-%d-%d';", inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay);
 
 			coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
 		}
@@ -1113,7 +1119,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 
 			//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
 			Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre,\
-			od.cantidad,od.precio_final,o.fecha\
+			od.cantidad,od.precio_sugerido,od.precio_final,od.cantidad*od.precio_final,o.fecha\
 		FROM orden o,orden_descripcion od,cliente c,clave_cliente cc,punto_venta pv,requerimiento r,\
 			servicio_requerimiento sr, servicio_venta sv \
 		WHERE od.orden_id=o.id\
@@ -1125,9 +1131,11 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 			AND r.id=%d\
 			AND sr.servicioVenta_id = sv.id\
 			AND sv.id = od.tipoVentaId\
+			AND DATE(o.fecha) >= '%d-%d-%d'\
+			AND DATE(o.fecha) <= '%d-%d-%d'\
 		UNION\
 		SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),r.tipo,mo.nombre,\
-			od.cantidad, od.precio_final, o.fecha\
+			od.cantidad,od.precio_sugerido,od.precio_final,od.cantidad*od.precio_final,o.fecha\
 		FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
 			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma\
 		WHERE od.orden_id = o.id\
@@ -1140,7 +1148,9 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 			AND cr.cantidad_id = can.id\
 			AND can.articulo_id = a.id\
 			AND a.modelo_id = mo.id\
-			AND a.id = od.tipoVentaId;",idRequerimiento,idRequerimiento);
+			AND a.id = od.tipoVentaId\
+			AND DATE(o.fecha) >= '%d-%d-%d'\
+			AND DATE(o.fecha) <= '%d-%d-%d';",idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay,idRequerimiento, termino.wYear, termino.wMonth, termino.wDay);
 
 			coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
 		}
