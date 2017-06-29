@@ -61,6 +61,8 @@ void DetallesOrdenVentaDlg::btAgregar_Click(Win::Event& e)
 		double precioFinal = Sys::Convert::ToDouble(tbxPrecioFinal.Text);
 		int requerimienti_id = consultasObj.sacarIDRequerimiento(L"Articulo");
 		int orden_id = consultasObj.sacarUltIDOrden();
+		lb8.SetText(Sys::Convert::ToString(requerimienti_id));
+
 		consultasObj.insertOrdenDescripcion(articulo_id, cantidad, precioSugerido, precioFinal, orden_id, requerimienti_id);
 		MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
 	}

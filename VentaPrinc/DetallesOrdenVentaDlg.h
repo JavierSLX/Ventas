@@ -40,6 +40,7 @@ private:
 	Win::Button btAgregar;
 	Win::Button btLimpiar;
 	Win::Button btTerminar;
+	Win::Label lb8;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -73,6 +74,7 @@ protected:
 		btAgregar.CreateX(NULL, L"Agregar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.54792, 8.86354, 2.11667, 0.68792, hWnd, 1019);
 		btLimpiar.CreateX(NULL, L"Limpiar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.62729, 10.02771, 2.03729, 0.68792, hWnd, 1020);
 		btTerminar.CreateX(NULL, L"Terminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.68021, 11.16542, 1.95792, 0.68792, hWnd, 1021);
+		lb8.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 23.36271, 7.43479, 2.16958, 0.60854, hWnd, 1022);
 		lvCaracteristicasOrden.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		gboxOrden.Font = fontArial009A;
@@ -97,6 +99,7 @@ protected:
 		btAgregar.Font = fontArial009A;
 		btLimpiar.Font = fontArial009A;
 		btTerminar.Font = fontArial009A;
+		lb8.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioArticulo_Click(Win::Event& e);

@@ -1691,7 +1691,7 @@ void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int tipoVentaId, int cant
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"INSERT INTO orden_descripcion (tipoVentaId, cantidad, precio_sugerido, precio_final, orden_id, requerimiento_id) \
-				VALUES(%d,%lf, %lf,%d,%d);", cantidad, precioSugerido, precioFinal, orden, requerimiento);
+				VALUES(%d,%d,%lf, %lf,%d,%d);", tipoVentaId, cantidad, precioSugerido, precioFinal, orden, requerimiento);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
