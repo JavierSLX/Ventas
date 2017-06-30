@@ -78,11 +78,15 @@ void VentaPrinc::Cmd_Newcliente(Win::Event& e)
 //Opción "Editar Cliente" del menú
 void VentaPrinc::Cmd_Editcliente(Win::Event& e)
 {
+	ClienteVentasDlg clienteObj;
+	clienteObj.BeginDialog(hWnd);
 }
 
 //Opción "Eliminar Cliente" del menú
 void VentaPrinc::Cmd_Delcliente(Win::Event& e)
 {
+	EliminarClienteVentasDlg clienteObj;
+	clienteObj.BeginDialog(hWnd);
 }
 
 //Opción "Precio Cliente" del menú

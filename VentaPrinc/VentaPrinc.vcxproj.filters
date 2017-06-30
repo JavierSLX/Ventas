@@ -100,9 +100,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="detallesOrdenVentasDlg.h">
-		<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EliminarLadaDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EliminarClienteVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -186,9 +189,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="detallesOrdenVentasDlg.cpp">
-		<Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EliminarLadaDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EliminarClienteVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
