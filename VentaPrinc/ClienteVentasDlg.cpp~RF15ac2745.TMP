@@ -128,7 +128,7 @@ void ClienteVentasDlg::btActualizar_Click(Win::Event& e)
 		}
 		else
 		{
-			btRegistrar_Click(e);
+
 		}
 	}
 	
@@ -184,58 +184,6 @@ void ClienteVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 		ddCiudad.SetSelected(ciudadVP);
 		emailVP = sqlObj.sacarEmailCliente(claveClienteIDVP);
 		tbxEmail.Text = emailVP;
-	}
-}
-
-//Cuando se presiona un botón sobre la tabla
-void ClienteVentasDlg::lvTabla_KeyDown(Win::Event& e)
-{
-	LibreriaJRDll::SqlCLS sqlObj;
-	LibreriaJRDll::WintemplaCLS wintemplaObj;
-	LPNMLVKEYDOWN p = (LPNMLVKEYDOWN) e.lParam;
-
-	//Cambia de estado el registro
-	if (p->wVKey == VK_DELETE)
-	{
-		if (estadoVP)
-		{
-			//Cambia el estado del viejo registro
-			sqlObj.actualizarEstadoClaveCliente(claveClienteIDVP, false);
-
-			//Llena la listview
-			wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, true, 200);
-		}
-		else
-		{
-			//Cambia el estado del viejo registro
-			sqlObj.actualizarEstadoClaveCliente(claveClienteIDVP, true);
-
-			//Llena la listview
-			wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, false, 200);
-		}
-
-		claveClienteIDVP = 0;
-	}
-
-	//Muestra los registros de activos
-	if (p->wVKey == VK_DOWN)
-	{
-		if (estadoVP)
-		{
-			//Llena la listview
-			wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, true, 200);
-
-			estadoVP = false;
-		}
-		else
-		{
-			//Llena la listview
-			wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, false, 200);
-
-			estadoVP = true;
-		}
-
-		claveClienteIDVP = 0;
 	}
 }
 

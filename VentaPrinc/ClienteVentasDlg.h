@@ -8,12 +8,14 @@ class ClienteVentasDlg: public Win::Dialog
 public:
 	ClienteVentasDlg()
 	{
+		estadoVP = true;
 	}
 	~ClienteVentasDlg()
 	{
 	}
 private:
 	int claveClienteIDVP;
+	bool estadoVP;
 	wstring rutaVP;
 	wstring claveVP;
 	wstring nombreVP;
@@ -93,6 +95,7 @@ protected:
 	void btRegistrar_Click(Win::Event& e);
 	void btActualizar_Click(Win::Event& e);
 	void lvTabla_ItemChanged(Win::Event& e);
+	void lvTabla_KeyDown(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -101,6 +104,7 @@ protected:
 		if (btRegistrar.IsEvent(e, BN_CLICKED)) {btRegistrar_Click(e); return true;}
 		if (btActualizar.IsEvent(e, BN_CLICKED)) {btActualizar_Click(e); return true;}
 		if (lvTabla.IsEvent(e, LVN_ITEMCHANGED)) {lvTabla_ItemChanged(e); return true;}
+		if (lvTabla.IsEvent(e, LVN_KEYDOWN)) {lvTabla_KeyDown(e); return true;}
 		return false;
 	}
 };
