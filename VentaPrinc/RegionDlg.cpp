@@ -1,12 +1,12 @@
 #include "stdafx.h"  //_____________________________________________ RegionDlg.cpp
 #include "RegionDlg.h"
-
+//Metodo que nos permite mostrar todos los valores declarados en el wintempla con sus valores
 void RegionDlg::Window_Open(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;
 	regionObj.MostrarRegion(lvRegion, 200, true);
 }
-
+////Metodo que permite agragar regiones
 void RegionDlg::btAgregar_Click(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;
@@ -30,7 +30,7 @@ void RegionDlg::btAgregar_Click(Win::Event& e)
 
 	}
 }
-
+//Metodo que permite modificar los valores que tenemos en lada
 void RegionDlg::btActualizar_Click(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;
@@ -40,7 +40,7 @@ void RegionDlg::btActualizar_Click(Win::Event& e)
 	//tbxDireccion.Text = L"";
 	regionObj.MostrarRegion(lvRegion, 200, true);
 }
-
+//Metodo que nos permite optener los valores dentro del listview
 void RegionDlg::lvRegion_DblClk(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;

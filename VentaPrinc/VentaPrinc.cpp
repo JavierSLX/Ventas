@@ -142,11 +142,15 @@ void VentaPrinc::Cmd_Reglada(Win::Event& e)
 //Opción "Editar Lada" del menú
 void VentaPrinc::Cmd_Editlada(Win::Event& e)
 {
+	LadaDlg ladaObj;
+	ladaObj.BeginDialog(hWnd);
 }
 
 //Opción "Borrar Lada" del menú
 void VentaPrinc::Cmd_Dellada(Win::Event& e)
 {
+	EliminarLadaDlg regionObj;
+	regionObj.BeginDialog(hWnd);
 }
 
 //Opción "Nuevo Servicio" del menú
