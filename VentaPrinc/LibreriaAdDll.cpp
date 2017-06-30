@@ -1691,7 +1691,7 @@ void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int tipoVentaId, int cant
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"INSERT INTO orden_descripcion (tipoVentaId, cantidad, precio_sugerido, precio_final, orden_id, requerimiento_id) \
-				VALUES(%d,%lf, %lf,%d,%d);", cantidad, precioSugerido, precioFinal, orden, requerimiento);
+				VALUES(%d,%d,%lf, %lf,%d,%d);", tipoVentaId, cantidad, precioSugerido, precioFinal, orden, requerimiento);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -1834,6 +1834,236 @@ double LibreriaAdDll::ordenNueva::sacarPrecio(int servicio_id)
 		Sys::Format(consulta, L"SELECT precio\
 			FROM servicio_venta\
 			WHERE id = %d;", servicio_id);
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
+void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, int large, wstring folio)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+	lvOrden.SetRedraw(false);
+	lvOrden.Cols.DeleteAll();
+	lvOrden.Items.DeleteAll();
+	lvOrden.SetRedraw(true);
+
+	lvOrden.Cols.Add(0, LVCFMT_LEFT, 120, L"Tipo");
+	lvOrden.Cols.Add(1, LVCFMT_LEFT, 120, L"Marca");
+	lvOrden.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
+	lvOrden.Cols.Add(3, LVCFMT_LEFT, 120, L"Color");
+	lvOrden.Cols.Add(4, LVCFMT_LEFT, 120, L"Cantidad");
+	lvOrden.Cols.Add(6, LVCFMT_LEFT, 120, L"P. Sugerido");
+	lvOrden.Cols.Add(7, LVCFMT_LEFT, 120, L"P. Final");
+	lvOrden.Cols.Add(8, LVCFMT_LEFT, 120, L"Fecha");
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT o.id, ta.nombre, ma.nombre, mo.nombre, co.nombre, od.cantidad, od.precio_sugerido, od.precio_final, o.fecha\
+			FROM orden o, punto_venta pv, requerimiento r, tipo_articulo ta,\
+			marca ma, modelo mo, color co, cantidad ca, orden_descripcion od, cantidad_requerimiento canr, articulo art\
+			WHERE od.orden_id = o.id\
+			AND r.id = od.requerimiento_id\
+			AND canr.requerimiento_id = r.id\
+			AND canr.cantidad_id = ca.id\
+			AND ca.color_id = co.id\
+			AND ca.articulo_id = art.id\
+			AND art.tipoArticulo_id = ta.id\
+			AND o.puntoVenta_id = pv.id\
+			AND art.modelo_id = mo.id\
+			AND mo.marca_id = ma.id\
+			AND o.folio = '%s'", folio.c_str());
+
+		conn.ExecuteSelect(consulta, large, lvOrden);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int large, bool activo, wstring tipo) 
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddMarca.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT ma.id, ma.nombre\
+								FROM marca ma, tipo_articulo ta, modelo mo, articulo ar\
+								WHERE ar.tipoArticulo_id = ta.id\
+								AND ar.modelo_id = mo.id\
+								AND mo.marca_id = ma.id\
+								AND ma.activo = %d\
+								AND ta.nombre = '%s'\
+								ORDER BY ma.nombre ASC;", activo, tipo.c_str());
+
+		conn.ExecuteSelect(consulta, large, ddMarca);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+void  LibreriaAdDll::ordenNueva::llenarDDcolor(Win::DropDownList ddcolor, int large, int articulo_id, wstring pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddcolor.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT co.id,co.nombre\
+			FROM color co, punto_venta pv, cantidad ca, articulo art\
+			WHERE ca.articulo_id = art.id\
+			AND ca.puntoVenta_id = pv.id\
+			AND co.id = ca.color_id\
+			AND ca.valor > 0\
+			AND art.id = %d\
+			AND co.activo = true\
+			AND pv.tipo =  '%s' ", articulo_id,pv.c_str());
+
+		conn.ExecuteSelect(consulta, large, ddcolor);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+int LibreriaAdDll::ordenNueva::sacarIDArticulo( wstring tipo, int modelo, int marca, wstring pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int marca_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT ar.id\
+			FROM articulo ar, tipo_articulo ta, modelo mo, marca ma, cantidad ca, punto_venta pv\
+			WHERE ar.modelo_id = mo.id\
+			AND mo.marca_id = ma.id\
+			AND ar.tipoArticulo_id = ta.id\
+			AND ca.articulo_id = ar.id\
+			AND ca.puntoVenta_id = pv.id\
+			AND ta.nombre = '%s'\
+			AND mo.id = %d\
+			AND pv.tipo = '%s'\
+			AND ca.valor > 0\
+			AND ma.id = %d; ", tipo.c_str(), modelo, pv.c_str(), marca);
+						marca_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return marca_id;
+}
+void  LibreriaAdDll::ordenNueva::llenarDDTipoArticulo(Win::DropDownList ddTipoArticulo, int large, bool activo, wstring pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddTipoArticulo.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT distinct ta.id, ta.nombre\
+			From tipo_articulo ta, cantidad ca, articulo ar, punto_venta pv\
+			WHERE ar.tipoArticulo_id = ta.id\
+			AND ca.articulo_id = ar.id\
+			AND ca.puntoVenta_id = pv.id\
+			AND pv.tipo = '%s'\
+			AND ca.valor > 0\
+			AND ta.activo = true\
+			ORDER BY ta.nombre ASC; ", pv.c_str(),activo);
+
+		conn.ExecuteSelect(consulta, large, ddTipoArticulo);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+void  LibreriaAdDll::ordenNueva::llenarDDModelo(Win::DropDownList ddModelo, wstring marca, int large, bool activo)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddModelo.DeleteAllItems();
+	try
+
+
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT mo.id, mo.nombre\
+								FROM modelo mo, marca ma\
+								WHERE mo.marca_id = ma.id\
+								AND ma.nombre = '%s'\
+								AND mo.activo = %d\
+								ORDER BY mo.nombre ASC;", marca.c_str(), activo);
+
+		conn.ExecuteSelect(consulta, large, ddModelo);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT precio\
+			FROM precio_cliente\
+			WHERE clave_cliente = %d\
+			AND articulo_id = %d;", articulo_id);
+		pv_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+
+	}
+
+	conn.CloseSession();
+	return pv_id;
+}
+int LibreriaAdDll::ordenNueva::sacarIDPuntoVenta(wstring pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int pv_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM punto_venta\
+			WHERE tipo = '%s';", pv.c_str());
 		pv_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)

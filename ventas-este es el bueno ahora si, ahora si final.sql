@@ -182,7 +182,7 @@ CREATE TABLE precio_cliente
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     precio DOUBLE NOT NULL,
     claveCliente_id INT UNSIGNED NOT NULL REFERENCES clave_cliente.id ON UPDATE CASCADE,
-    tipoArticulo_id INT UNSIGNED NOT NULL REFERENCES tipo_articulo.id ON UPDATE CASCADE
+    articulo_id INT UNSIGNED NOT NULL REFERENCES tipo_articulo.id ON UPDATE CASCADE
 );
 
 CREATE TABLE articulo_compania 
