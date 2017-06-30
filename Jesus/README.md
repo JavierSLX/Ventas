@@ -16,3 +16,7 @@ Actividades realizadas durante el día:
 * Le agregamos el método al botón de actualizar, el cual nos permitía modificar los valores ya registrados.  
 * Se creo un dialog EliminarLadasDgl, el cual permite pasar de un estado de verdadero a falso los valores de lada.
 * Dentro del dialog EliminarLadasDlg se agrego un botón eliminar, el cual permitirá pasar los valores de lada a falso, y un botón de restaurar el cual pasara los datos falsos a verdaderos.
+
+###30/06/2017
+
+* Finalice mi parte.
