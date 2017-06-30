@@ -1406,6 +1406,30 @@ wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad,int lada)
 	conn.CloseSession();
 	return valor;
 }
+//saca la lada de una ciudad
+wstring LibreriaFBDll::Ciudad::sacarLada(wstring ciudad)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	wstring valor;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT la.tipo\
+			FROM lada la, ciudad c\
+			WHERE c.lada_id = la.id\
+			AND c.nombre = '%s'", ciudad.c_str());
+		conn.GetString(consulta, valor, 100);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return valor;
+}
+
 
 // Saca un texto especifico
 wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna)
@@ -1887,27 +1911,23 @@ void LibreriaFBDll::bonoCredito::llenarclaveCliente(Win::ListView lvTabla, int p
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT cre.id,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y'),\
+		Sys::Format(consulta, L"SELECT ord.id,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y'),\
 			(select distinct sum(oddescr.cantidad)\
 				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
 		where oddescr.orden_id = o.id\
 		and o.cliente_id = cl.id\
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
-			and ccte.numero = '%s'\
-			AND pvta.id = %d\
 			AND o.id = ord.id)\
-			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
-			WHERE cre.orden_id = ord.id\
-			AND ord.cliente_id = cli.id\
+			FROM orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
+			WHERE ord.cliente_id = cli.id\
 			AND orcom.orden_id = ord.id\
 			AND ccli.cliente_id = cli.id\
 			AND ccli.puntoVenta_id = pv.id\
 			AND ccli.numero = '%s'\
 			AND ord.puntoVenta_id = pv.id\
 			AND pv.id = %d\
-			AND cli.activo = true\
-			AND cre.estado = true;",folio.c_str(),puntoVenta_id,folio.c_str(),puntoVenta_id);
+			AND cli.activo = true",folio.c_str(),puntoVenta_id,folio.c_str(),puntoVenta_id);
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
 	}
@@ -1942,25 +1962,22 @@ void LibreriaFBDll::bonoCredito::llenarFolioOrden(Win::ListView lvTabla, wstring
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT cre.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
+		Sys::Format(consulta, L"SELECT ord.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
 			(select distinct sum(oddescr.cantidad)\
 				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
 		where oddescr.orden_id = o.id\
 		and o.cliente_id = cl.id\
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
-			and o.folio = '%s'\
 			AND o.id = ord.id)\
-			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
-			WHERE cre.orden_id = ord.id\
-			AND ord.cliente_id = cli.id\
+			FROM  orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
+			WHERE ord.cliente_id = cli.id\
 			AND orcom.orden_id = ord.id\
 			AND ccli.cliente_id = cli.id\
 			AND ccli.puntoVenta_id = pv.id\
-			AND ord.folio = '%s'\
 			AND ord.puntoVenta_id = pv.id\
-			AND cli.activo = true\
-			AND cre.estado = true;", folio.c_str(), folio.c_str());
+			AND ord.folio = '%s'\
+			AND cli.activo = true; ", folio.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
 	}
@@ -1995,7 +2012,7 @@ void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fe
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT cre.id,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y'),\
+		Sys::Format(consulta, L"SELECT ord.id,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y'),\
 			(select distinct sum(oddescr.cantidad)\
 				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
 		where oddescr.orden_id = o.id\
@@ -2003,17 +2020,15 @@ void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fe
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
 			AND o.id = ord.id)\
-			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
-			WHERE cre.orden_id = ord.id\
-			AND ord.cliente_id = cli.id\
+			FROM  orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
+			WHERE ord.cliente_id = cli.id\
 			AND orcom.orden_id = ord.id\
 			AND ccli.cliente_id = cli.id\
 			AND ccli.puntoVenta_id = pv.id\
 			and ord.fecha >= '%d-%d-%d 00:00:00'\
 			and ord.fecha <= '%d-%d-%d 23:59:59'\
 			AND ord.puntoVenta_id = pv.id\
-			AND cli.activo = true\
-			AND cre.estado = true; ", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay);
+			AND cli.activo = true", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay);
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
 	}
@@ -2049,7 +2064,7 @@ void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT cre.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
+		Sys::Format(consulta, L"SELECT ord.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
 			(select distinct sum(oddescr.cantidad)\
 				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
 		where oddescr.orden_id = o.id\
@@ -2057,16 +2072,14 @@ void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
 			AND o.id = ord.id)\
-			FROM credito cre, orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
-			WHERE cre.orden_id = ord.id\
-			AND ord.cliente_id = cli.id\
+			FROM  orden ord, cliente cli, clave_cliente ccli, orden_completa orcom, punto_venta pv\
+			WHERE ord.cliente_id = cli.id\
 			AND orcom.orden_id = ord.id\
 			AND ccli.cliente_id = cli.id\
 			AND ccli.puntoVenta_id = pv.id\
 			AND ord.puntoVenta_id = pv.id\
 			AND pv.tipo = '%s'\
-			AND cli.activo = true\
-			AND cre.estado = true;", puntoVenta.c_str());
+			AND cli.activo = true;", puntoVenta.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
 	}
@@ -2076,4 +2089,99 @@ void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring
 	}
 
 	conn.CloseSession();
+}
+
+
+// saca la ultima lada insertada
+wstring LibreriaFBDll::Ciudad::sacarUltimaLada()
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	wstring ma;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT tipo\
+			FROM lada \
+			ORDER BY id DESC limit 1;");
+		conn.GetString(consulta, ma, 50);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+
+void LibreriaFBDll::bonoCredito::llenardetallesOrdenCompra(Win::ListView lvReporte, wstring folio, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvReporte.DeleteAllItems();
+	int rows = 0;
+	lvReporte.SetRedraw(false);
+	lvReporte.Cols.DeleteAll();
+	lvReporte.Items.DeleteAll();
+	lvReporte.SetRedraw(true);
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
+	lvReporte.Cols.Add(1, LVCFMT_CENTER, 100, L"Cliente");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 100, L"S/A");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 100, L"Requerimiento");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 100, L"Marca");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 80, L"Cantidad");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 100,  L"Precio sugerido");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 100, L"Precio Final");
+	lvReporte.Cols.Add(9, LVCFMT_CENTER, 100, L"Total");
+	lvReporte.Cols.Add(10, LVCFMT_CENTER, 100, L"Fecha");
+	//reporte general de todos los requerimientos
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+		Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+			, 'NA', 'NA', od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad*od.precio_final, o.fecha\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			servicio_requerimiento sr, servicio_venta sv\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND sr.requerimiento_id = r.id\
+			AND sr.servicioVenta_id = sv.id\
+			AND sv.id = od.tipoVentaId\
+			AND o.folio = '%s'\
+			UNION\
+			SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, mo.nombre, ma.nombre,\
+			od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad*od.precio_final, o.fecha\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta, color col\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND cr.requerimiento_id = r.id\
+			AND cr.cantidad_id = can.id\
+			AND can.articulo_id = a.id\
+			AND a.modelo_id = mo.id\
+			AND mo.marca_id = ma.id\
+			AND a.tipoArticulo_id = ta.id\
+			AND a.id = od.tipoVentaId\
+			AND o.folio = '%s'; ", folio.c_str(), folio.c_str());
+
+		coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
 }

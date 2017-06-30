@@ -3,6 +3,7 @@
 #include "LibreriaFBDll.h"
 #include "registrarAbonosVentasDlg.h"
 #include "LibreriaAdDll.h"
+#include "LibreriaJRDll.h"
 class bonoCreditoVentasDlg: public Win::Dialog
 {
 public:
@@ -29,6 +30,7 @@ private:
 	Win::Label lbOpcion;
 	Win::ListView lvCredito;
 	Win::DropDownList ddPuntosVenta;
+	Win::Button btLimpiar;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -44,10 +46,11 @@ protected:
 		radioFolio.CreateX(NULL, L"Folio de venta", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 0.63500, 0.31750, 5.52979, 0.63500, hWnd, 1001);
 		radioNombre.CreateX(NULL, L"Nombre del cliente", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 6.56167, 0.29104, 5.55625, 0.63500, hWnd, 1002);
 		radioClave.CreateX(NULL, L"Clave del cliente", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.56771, 0.26458, 5.63563, 0.63500, hWnd, 1003);
-		btBuscar.CreateX(NULL, L"Buscar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 6.48229, 2.93688, 5.63563, 0.68792, hWnd, 1004);
+		btBuscar.CreateX(NULL, L"Buscar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 3.20146, 2.93688, 5.63563, 0.68792, hWnd, 1004);
 		lbOpcion.CreateX(NULL, L"Opcion", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 4.39208, 1.82562, 1.71979, 0.60854, hWnd, 1005);
 		lvCredito.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.50271, 4.70958, 17.99167, 9.10167, hWnd, 1006);
 		ddPuntosVenta.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 12.14438, 1.82562, 3.46604, 0.60854, hWnd, 1007);
+		btLimpiar.CreateX(NULL, L"Limpiar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 9.12813, 2.93688, 5.21229, 0.68792, hWnd, 1008);
 		lvCredito.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btBuscar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -59,6 +62,7 @@ protected:
 		lbOpcion.Font = fontArial009A;
 		lvCredito.Font = fontArial009A;
 		ddPuntosVenta.Font = fontArial009A;
+		btLimpiar.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioFolio_Click(Win::Event& e);
@@ -66,6 +70,7 @@ protected:
 	void radioClave_Click(Win::Event& e);
 	void btBuscar_Click(Win::Event& e);
 	void lvCredito_ItemActivate(Win::Event& e);
+	void btLimpiar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -75,6 +80,7 @@ protected:
 		if (radioClave.IsEvent(e, BN_CLICKED)) {radioClave_Click(e); return true;}
 		if (btBuscar.IsEvent(e, BN_CLICKED)) {btBuscar_Click(e); return true;}
 		if (lvCredito.IsEvent(e, LVN_ITEMACTIVATE)) {lvCredito_ItemActivate(e); return true;}
+		if (btLimpiar.IsEvent(e, BN_CLICKED)) {btLimpiar_Click(e); return true;}
 		return false;
 	}
 };

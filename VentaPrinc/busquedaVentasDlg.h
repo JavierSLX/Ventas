@@ -5,6 +5,7 @@
 #include "LibreriaJRDll.h"
 #include "detallesOrdenVentasDlg.h"
 
+
 class busquedaVentasDlg: public Win::Dialog
 {
 public:
@@ -26,6 +27,7 @@ private:
 	Win::DropDownList ddPuntosVenta;
 	Win::Button radioDepartamento;
 	Win::DropDownList ddDepartamentos;
+	Win::Button btLimpiar;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -42,11 +44,12 @@ protected:
 		radioClaveCliente.CreateX(NULL, L"Clave del cliente", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.22375, 1.05833, 2.93688, 0.63500, hWnd, 1002);
 		radioFecha.CreateX(NULL, L"Fecha", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.14438, 1.98438, 1.56104, 0.63500, hWnd, 1003);
 		dtboxFecha.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | DTS_RIGHTALIGN, 13.97000, 1.98438, 4.55083, 0.68792, hWnd, 1004);
-		btBuscar.CreateX(NULL, L"Buscar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 2.43417, 2.56646, 6.79979, 0.68792, hWnd, 1005);
+		btBuscar.CreateX(NULL, L"Buscar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 0.87313, 2.56646, 5.18583, 0.68792, hWnd, 1005);
 		lvOrden.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.42333, 4.55083, 18.20333, 8.83708, hWnd, 1006);
 		ddPuntosVenta.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 15.47813, 1.03188, 3.06917, 0.60854, hWnd, 1007);
 		radioDepartamento.CreateX(NULL, L"Departamento", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.14438, 3.12208, 3.17500, 0.63500, hWnd, 1008);
 		ddDepartamentos.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 15.53104, 3.12208, 2.98979, 0.60854, hWnd, 1009);
+		btLimpiar.CreateX(NULL, L"Limpiar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 6.45583, 2.56646, 5.15937, 0.68792, hWnd, 1010);
 		lvOrden.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btBuscar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -60,6 +63,7 @@ protected:
 		ddPuntosVenta.Font = fontArial009A;
 		radioDepartamento.Font = fontArial009A;
 		ddDepartamentos.Font = fontArial009A;
+		btLimpiar.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioFolio_Click(Win::Event& e);
@@ -68,6 +72,7 @@ protected:
 	void btBuscar_Click(Win::Event& e);
 	void lvOrden_ItemActivate(Win::Event& e);
 	void radioDepartamento_Click(Win::Event& e);
+	void btLimpiar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -78,6 +83,7 @@ protected:
 		if (btBuscar.IsEvent(e, BN_CLICKED)) {btBuscar_Click(e); return true;}
 		if (lvOrden.IsEvent(e, LVN_ITEMACTIVATE)) {lvOrden_ItemActivate(e); return true;}
 		if (radioDepartamento.IsEvent(e, BN_CLICKED)) {radioDepartamento_Click(e); return true;}
+		if (btLimpiar.IsEvent(e, BN_CLICKED)) {btLimpiar_Click(e); return true;}
 		return false;
 	}
 };

@@ -47,6 +47,7 @@ void LadaDlg::btAgregar_Click(Win::Event& e)
 			ladaObj.InsertarLada(tbxLada.Text, idRegion, true);
 			tbxLada.Text = L"";
 			ladaObj.MostrarLada(lvLada, 200, true);
+			ladaBool = true;
 
 		}
 

@@ -12,7 +12,9 @@ public:
 	{
 	}
 	int _id;
+	bool ladaBool;
 private:
+	
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Label lb1;
 	Win::Textbox tbxLada;
