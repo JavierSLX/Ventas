@@ -441,7 +441,7 @@ void LibreriaJRDll::WintemplaCLS::llenarLVPuntoVentaBusqueda(Win::ListView lvTab
 }
 
 //Método que llena todos los clientes de un determinado punto de venta
-void LibreriaJRDll::WintemplaCLS::llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size)
+void LibreriaJRDll::WintemplaCLS::llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activoCliente, bool activoClaveCliente, int size)
 {
 	Sql::SqlConnection conn;
 
@@ -469,8 +469,9 @@ void LibreriaJRDll::WintemplaCLS::llenarLVClientes(Win::ListView lvTabla, wstrin
 		WHERE cc.cliente_id = c.id\
 		AND  pv.id = cc.puntoVenta_id\
 		AND c.ciudad_id = cd.id\
+		AND cc.activo = %d\
 		AND c.activo = %d\
-		AND pv.tipo = '%s';", punto_venta.c_str(), activo, punto_venta.c_str());
+		AND pv.tipo = '%s';", punto_venta.c_str(), activoClaveCliente, activoCliente, punto_venta.c_str());
 		conn.ExecuteSelect(consulta, size, lvTabla);
 	}
 	catch (Sql::SqlException e)
@@ -792,6 +793,32 @@ int LibreriaJRDll::SqlCLS::sacarIDCliente(wstring nombre)
 	return estandar_id;
 }
 
+//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDClaveCliente(int cliente_id, int puntoVenta_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM clave_cliente\
+		WHERE cliente_id = %d\
+		AND puntoVenta_id = %d;", cliente_id, puntoVenta_id);
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
 //Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 {
@@ -937,6 +964,33 @@ void LibreriaJRDll::SqlCLS::actualizarPuntoVentaColocacion(int puntoVentaColocac
 		Sys::Format(consulta, L"UPDATE puntoVenta_colocacion \
 		SET puntoVenta_id = %d, colocacion_id = %d \
 		WHERE id = %d", puntoVenta_id, colocacion_id, puntoVentaColocacion_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que actualiza el estado de un registro de la tabla clave_cliente
+void LibreriaJRDll::SqlCLS::actualizarEstadoClaveCliente(int claveCliente_id, bool estado)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE clave_cliente \
+		SET activo = %d \
+		WHERE id = %d", estado, claveCliente_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{

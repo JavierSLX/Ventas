@@ -56,7 +56,7 @@ public:
 		void llenarLVPuntoVentaBusqueda(Win::ListView lvTabla, wstring texto, bool activo, int size);
 
 		//Método que llena todos los clientes de un determinado punto de venta
-		void llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size);
+		void llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activoCliente, bool activoClaveCliente, int size);
 
 		//Método que llena la drop down list con los tipos de punto de venta registrados
 		void llenarDdPuntoVenta(Win::DropDownList ddVenta, int size);
@@ -104,6 +104,9 @@ public:
 		//Saca el id de un registro de la tabla cliente, en caso de no existir regresa un 0
 		int sacarIDCliente(wstring nombre);
 
+		//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
+		int sacarIDClaveCliente(int cliente_id, int puntoVenta_id);
+
 		//Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 		int sacarUltimoIDClaveCliente(wstring punto_venta);
 
@@ -121,6 +124,9 @@ public:
 
 		//Método que actualiza un registro de la tabla puntoVenta_colocacion dado por su id
 		void actualizarPuntoVentaColocacion(int puntoVentaColocacion_id, int puntoVenta_id, int colocacion_id);
+
+		//Método que actualiza el estado de un registro de la tabla clave_cliente
+		void actualizarEstadoClaveCliente(int claveCliente_id, bool estado);
 
 		//Método que inserta un registro en la tabla punto_venta
 		void insertarPuntoVenta(wstring nombre);
