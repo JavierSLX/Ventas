@@ -261,22 +261,3 @@ VALUES ('884781043', 140, true, 3,21);
 
 
 
-select * from punto_venta;
-SELECT cli.nombre
-			FROM punto_venta pv, cliente cli, clave_cliente cc 
-			WHERE  pv.id= cc.puntoVenta_id
-			AND cli.id = cc.cliente_id
-			AND pv.id = 3
-			AND cc.numero = '001';
-            SELECT id, tipo
-								FROM punto_venta
-								WHERE activo = true
-								ORDER BY tipo ASC;
-SELECT mo.id, mo.nombre
-								FROM modelo mo, marca ma
-								WHERE mo.marca_id = ma.id
-								AND ma.nombre = 'Alcatel'
-								AND mo.activo = true
-								ORDER BY mo.nombre ASC;
-
-

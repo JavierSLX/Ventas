@@ -131,6 +131,7 @@ public:
 		void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id, bool estado);
 		void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large);
 		int LibreriaFBDll::Ciudad::sacarIDLada(wstring tipo);
+
 		/*void LibreriaFBDll::Ciudad::llenarLVCiudadNombre(Win::ListView lvCiudad, wstring ciudad, int large);*/
 	private:
 
@@ -156,6 +157,10 @@ public:
 		int LibreriaFBDll::bonoCredito::sacarTotalCompletaSiFolio(wstring folio);
 		void LibreriaFBDll::bonoCredito::llenarLVOrdenCredito(Win::ListView lvCredito, wstring folio, int creditoId, int large);
 		void LibreriaFBDll::bonoCredito::llenarLVOrdenCompleta(Win::ListView lvCredito, wstring folio, int orcomId, int large);
+		void LibreriaFBDll::bonoCredito::llenarclaveCliente(Win::ListView lvTabla, int puntoVenta_id, wstring folio, int large);
+		void LibreriaFBDll::bonoCredito::llenarFolioOrden(Win::ListView lvTabla, wstring folio, int large);
+		void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fecha, int large);
+		void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring puntoVenta, int large);
 	private:
 
 	};
