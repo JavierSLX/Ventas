@@ -9,6 +9,28 @@ INSERT INTO punto_venta (tipo, activo) VALUES ('Oficina', true);
 INSERT INTO punto_venta (tipo, activo) VALUES ('Local Juárez', true);
 INSERT INTO punto_venta (tipo, activo) VALUES ('Local Zaragoza', true);
 
+ 
+#Tabla cantidad
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 1, 2, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (15, 1, 5, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (11, 1, 3, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (17, 2, 4, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (12, 2, 8, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (16, 2, 7, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (20, 3, 1, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (21, 3, 9, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 3, 10, 1);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (13, 4, 6, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (14, 4, 9, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (16, 4, 10, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (18, 5, 11, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (11, 5, 13, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (19, 5, 8, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (23, 6, 7, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (27, 6, 1, 2);
+INSERT INTO cantidad (valor, articulo_id, color_id, puntoVenta_id) VALUES (10, 6, 3, 2);
+
+
 INSERT INTO ciudad(nombre, activo, lada_id)
 VALUES('ABASOLO',TRUE, 14);
 INSERT INTO ciudad(nombre, activo, lada_id)
