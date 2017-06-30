@@ -49,4 +49,12 @@ Actividades realizadas durante el día 28 de Junio del 2017:
 
 * Re diseño de la tabla orden_descripcion.
 * Creación del método generación del reporte general.
-* creación del método generación del reporte por departamento.
+* Creación del método generación del reporte por departamento.
+
+<h5>29/06/2017</h5>
+Actividades realizadas durante el día 29 de Junio del 2017:
+
+* Programación del evento selchange en los DropDownList del dialogo reportesDlg para cambiar los parámetros del reporte.
+* Adecuación del método para la generación del reporte por departamento y general.
+* Creación del método para reporte de ventas por orden de compra.
+* Programación del evento textchange del TextBox de orden de compra para generar el reporte de ventas por orden.
