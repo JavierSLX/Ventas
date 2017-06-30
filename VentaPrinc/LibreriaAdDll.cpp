@@ -1740,6 +1740,7 @@ int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
 		Sys::Format(consulta, L"SELECT id\
 			FROM orden\
 			ORDER BY id DESC limit 1;");
+
 		orden_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
