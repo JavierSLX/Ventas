@@ -58,3 +58,11 @@ Actividades realizadas durante el día 29 de Junio del 2017:
 * Adecuación del método para la generación del reporte por departamento y general.
 * Creación del método para reporte de ventas por orden de compra.
 * Programación del evento textchange del TextBox de orden de compra para generar el reporte de ventas por orden.
+*
+<h5>30/06/2017</h5>
+Actividades realizadas durante el día 30 de Junio del 2017:
+
+* Reporte de ventas generales con filtro por fechas, se agregaron los campos de modelo y marca en caso de artículo.
+* Unificación de los script de la base de datos para el proyecto.
+* Reporte de ventas por departamento con filtro por fechas, se agregaron los campos de modelo y marca en caso de artículo.
+* Reporte de ventas por orden de compra al cual se le agregaron los campos de modelo y marca en caso de artículo.
