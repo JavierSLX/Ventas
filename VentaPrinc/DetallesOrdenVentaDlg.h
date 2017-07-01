@@ -16,7 +16,20 @@ public:
 private:
 	wstring marcaWsPV;
 	wstring tipoPV;
-	
+	wstring folioVP;
+
+	wstring TipoArticuloVP;
+	wstring MarcaVP;
+	wstring ModeloVP;
+	wstring ColorVP;
+	wstring CantidadVP;
+	wstring PSugeridoVP;
+	wstring PFinalVP;
+	int idArtUPVP;
+	int idColorVP;
+	int idPuntoVentaVP;
+	int cantidadVP;
+
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Button gboxOrden;
 	Win::Button radioArticulo;
@@ -40,7 +53,7 @@ private:
 	Win::Button btAgregar;
 	Win::Button btLimpiar;
 	Win::Button btTerminar;
-	Win::Label lb8;
+	Win::Button btEditar;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -63,18 +76,18 @@ protected:
 		lbColor.CreateX(NULL, L"Color", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 17.19792, 0.97896, 4.55083, 0.60854, hWnd, 1008);
 		tbxPrecioSugerido.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 22.25146, 4.57729, 4.41854, 0.60854, hWnd, 1009);
 		tbxPrecioFinal.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 22.27792, 6.32354, 4.41854, 0.60854, hWnd, 1010);
-		lvCaracteristicasOrden.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.47625, 3.57187, 21.16667, 8.86354, hWnd, 1011);
+		lvCaracteristicasOrden.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_ALIGNMASK | LVS_REPORT, 0.47625, 3.57187, 21.16667, 8.86354, hWnd, 1011);
 		lbPrecio_Sugerido.CreateX(NULL, L"Precio ", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 22.25146, 3.65125, 4.44500, 0.60854, hWnd, 1012);
 		lbPrecioFinal.CreateX(NULL, L"Total", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 22.33083, 5.52979, 4.33917, 0.60854, hWnd, 1013);
 		tbxCantidad.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_NUMBER | ES_LEFT | ES_WINNORMALCASE, 22.19854, 1.85208, 4.47146, 0.60854, hWnd, 1014);
 		lbCantidad.CreateX(NULL, L"Cantidad", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 22.19854, 1.00542, 4.49792, 0.60854, hWnd, 1015);
 		lbTipo.CreateX(NULL, L"Tipo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 4.12750, 1.05833, 3.88937, 0.60854, hWnd, 1016);
 		ddTipo.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 4.10104, 2.01083, 3.96875, 0.60854, hWnd, 1017);
-		gboxBotones.CreateX(WS_EX_TRANSPARENT, NULL, WS_CHILD | WS_VISIBLE | BS_GROUPBOX, 22.33083, 8.36083, 4.44500, 3.96875, hWnd, 1018);
+		gboxBotones.CreateX(WS_EX_TRANSPARENT, NULL, WS_CHILD | WS_VISIBLE | BS_GROUPBOX, 22.33083, 7.43479, 4.44500, 4.89479, hWnd, 1018);
 		btAgregar.CreateX(NULL, L"Agregar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.54792, 8.86354, 2.11667, 0.68792, hWnd, 1019);
 		btLimpiar.CreateX(NULL, L"Limpiar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.62729, 10.02771, 2.03729, 0.68792, hWnd, 1020);
 		btTerminar.CreateX(NULL, L"Terminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.68021, 11.16542, 1.95792, 0.68792, hWnd, 1021);
-		lb8.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 23.36271, 7.43479, 2.16958, 0.60854, hWnd, 1022);
+		btEditar.CreateX(NULL, L"Editar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.52146, 7.83167, 2.16958, 0.68792, hWnd, 1022);
 		lvCaracteristicasOrden.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		gboxOrden.Font = fontArial009A;
@@ -99,17 +112,19 @@ protected:
 		btAgregar.Font = fontArial009A;
 		btLimpiar.Font = fontArial009A;
 		btTerminar.Font = fontArial009A;
-		lb8.Font = fontArial009A;
+		btEditar.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioArticulo_Click(Win::Event& e);
 	void radioServicio_Click(Win::Event& e);
 	void ddMarca_SelChange(Win::Event& e);
+	void lvCaracteristicasOrden_ItemChanged(Win::Event& e);
 	void tbxCantidad_Change(Win::Event& e);
 	void ddTipo_SelChange(Win::Event& e);
 	void btAgregar_Click(Win::Event& e);
 	void btLimpiar_Click(Win::Event& e);
 	void btTerminar_Click(Win::Event& e);
+	void btEditar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -117,11 +132,13 @@ protected:
 		if (radioArticulo.IsEvent(e, BN_CLICKED)) {radioArticulo_Click(e); return true;}
 		if (radioServicio.IsEvent(e, BN_CLICKED)) {radioServicio_Click(e); return true;}
 		if (ddMarca.IsEvent(e, CBN_SELCHANGE)) {ddMarca_SelChange(e); return true;}
+		if (lvCaracteristicasOrden.IsEvent(e, LVN_ITEMCHANGED)) {lvCaracteristicasOrden_ItemChanged(e); return true;}
 		if (tbxCantidad.IsEvent(e, EN_CHANGE)) {tbxCantidad_Change(e); return true;}
 		if (ddTipo.IsEvent(e, CBN_SELCHANGE)) {ddTipo_SelChange(e); return true;}
 		if (btAgregar.IsEvent(e, BN_CLICKED)) {btAgregar_Click(e); return true;}
 		if (btLimpiar.IsEvent(e, BN_CLICKED)) {btLimpiar_Click(e); return true;}
 		if (btTerminar.IsEvent(e, BN_CLICKED)) {btTerminar_Click(e); return true;}
+		if (btEditar.IsEvent(e, BN_CLICKED)) {btEditar_Click(e); return true;}
 		return false;
 	}
 };

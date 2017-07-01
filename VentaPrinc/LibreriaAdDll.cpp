@@ -1740,6 +1740,7 @@ int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
 		Sys::Format(consulta, L"SELECT id\
 			FROM orden\
 			ORDER BY id DESC limit 1;");
+
 		orden_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -1866,20 +1867,38 @@ void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, in
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT o.id, ta.nombre, ma.nombre, mo.nombre, co.nombre, od.cantidad, od.precio_sugerido, od.precio_final, o.fecha\
-			FROM orden o, punto_venta pv, requerimiento r, tipo_articulo ta,\
-			marca ma, modelo mo, color co, cantidad ca, orden_descripcion od, cantidad_requerimiento canr, articulo art\
+		Sys::Format(consulta, L"SELECT DISTINCT od.id,r.tipo,sv.nombre\
+			, 'NA', 'NA', 'NA', od.cantidad, od.precio_sugerido, od.precio_final, o.fecha\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			servicio_requerimiento sr, servicio_venta sv\
 			WHERE od.orden_id = o.id\
-			AND r.id = od.requerimiento_id\
-			AND canr.requerimiento_id = r.id\
-			AND canr.cantidad_id = ca.id\
-			AND ca.color_id = co.id\
-			AND ca.articulo_id = art.id\
-			AND art.tipoArticulo_id = ta.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
 			AND o.puntoVenta_id = pv.id\
-			AND art.modelo_id = mo.id\
+			AND od.requerimiento_id = r.id\
+			AND sr.requerimiento_id = r.id\
+			AND sr.servicioVenta_id = sv.id\
+			AND sv.id = od.tipoVentaId\
+			AND o.folio LIKE '%s'\
+			UNION\
+			SELECT DISTINCT od.id, r.tipo, ta.nombre, mo.nombre, ma.nombre,\
+			col.nombre, od.cantidad, od.precio_sugerido, od.precio_final, o.fecha\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta, color col\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND cr.requerimiento_id = r.id\
+			AND cr.cantidad_id = can.id\
+			AND can.articulo_id = a.id\
+			AND can.color_id = col.id\
+			AND a.modelo_id = mo.id\
 			AND mo.marca_id = ma.id\
-			AND o.folio = '%s'", folio.c_str());
+			AND a.tipoArticulo_id = ta.id\
+			AND a.id = od.tipoVentaId\
+			AND o.folio LIKE '%s'; ", folio.c_str(),folio.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvOrden);
 	}
@@ -2073,4 +2092,122 @@ int LibreriaAdDll::ordenNueva::sacarIDPuntoVenta(wstring pv)
 
 	conn.CloseSession();
 	return pv_id;
+}
+int LibreriaAdDll::ordenNueva::sacarIDOcultoLV(Win::ListView lv2)
+{
+	int indice = lv2.GetSelectedIndex();
+	int id = lv2.Items[indice].Data;
+
+	return id;
+}
+//Saca una cadena en una determinada celda de listview, lo regresa
+wstring LibreriaAdDll::ordenNueva::sacarTextoLV(Win::ListView lvTabla, int columna)
+{
+	int s = lvTabla.GetSelectedIndex();
+	wstring nombre = lvTabla.Items[s].GetText(columna);
+	return nombre;
+}
+void LibreriaAdDll::ordenNueva::updateTipoArticulo(int articulo_id, wstring tipoArticulo)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE tipo_articulo ta, articulo ar \
+		SET ta.nombre = '%s'\
+		WHERE ar.tipoArticulo_id = ta.id\
+		AND ar.id = %d", tipoArticulo.c_str(), articulo_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+void LibreriaAdDll::ordenNueva::updateMarca(int articulo_id, wstring marca)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE modelo mo, marca ma, articulo ar \
+		SET ma.nombre = '%s'\
+		WHERE ar.modelo_id = mo.id\
+		AND mo.marca_id = ma.id\
+		AND ar.id = %d", marca.c_str(), articulo_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+void LibreriaAdDll::ordenNueva::updateModelo(int articulo_id, wstring modelo)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE modelo mo, articulo ar \
+		SET mo.nombre = '%s'\
+		WHERE ar.modelo_id = mo.id\
+		AND ar.id = %d", modelo.c_str(), articulo_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+int LibreriaAdDll::ordenNueva::sacarIDArticuloUpdate(wstring tipo, wstring modelo, wstring marca )
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int marca_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT ar.id\
+			FROM articulo ar, tipo_articulo ta, modelo mo, marca ma, cantidad ca\
+			WHERE ar.modelo_id = mo.id\
+			AND mo.marca_id = ma.id\
+			AND ar.tipoArticulo_id = ta.id\
+			AND ca.articulo_id = ar.id\
+			AND ta.nombre = '%s'\
+			AND mo.nombre= '%s'\
+			AND ca.valor > 0\
+			AND ma.nombre = '%s'; ", tipo.c_str(), modelo.c_str(), marca.c_str());
+		marca_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return marca_id;
 }
