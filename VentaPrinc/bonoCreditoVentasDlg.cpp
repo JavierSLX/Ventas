@@ -82,7 +82,8 @@ void bonoCreditoVentasDlg::radioClave_Click(Win::Event& e)
 {
 	ddPuntosVenta.Visible = true;
 	LibreriaAdDll::articulo adObj;
-	adObj.llenarDDdepartamento(ddPuntosVenta, 100, true);
+	LibreriaJRDll::WintemplaCLS jrdObj;;
+	jrdObj.llenarDdRutasExclusiva(ddPuntosVenta, true, 100);
 	ddPuntosVenta.SetSelectedIndex(0);
 
 }
@@ -95,5 +96,15 @@ void bonoCreditoVentasDlg::radioFolio_Click(Win::Event& e)
 void bonoCreditoVentasDlg::radioNombre_Click(Win::Event& e)
 {
 	ddPuntosVenta.Visible = false;
+}
+
+void bonoCreditoVentasDlg::btLimpiar_Click(Win::Event& e)
+{
+
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	tbxOpcion.SetText(L"");
 }
 

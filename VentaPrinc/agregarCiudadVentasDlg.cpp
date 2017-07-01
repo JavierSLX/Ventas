@@ -19,11 +19,6 @@ void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 	{
 
 	}
-	
-
-	//________________________________________________________ ddLadas
-	ddLadas.Items.Add(L"Item 0 with value 10", 10);
-	ddLadas.Items.Add(L"Item 1 with value 20", 20);
 }
 
 
@@ -93,11 +88,23 @@ void agregarCiudadVentasDlg::lvCiudades_ItemChanged(Win::Event& e)
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadIdVP = modeloObj.sacarIDOculto(lvCiudades);
 	nombreCiudadVP = ciudadObj.sacarTextoLV(lvCiudades, 0);
+	wstring lada = ciudadObj.sacarLada(tbxNombre.Text);
 	tbxNombre.SetText(nombreCiudadVP);
+	ddLadas.SetSelected(lada);
 
 }
 
-void agregarCiudadVentasDlg::btAgregarMarca_Click(Win::Event& e)
+void agregarCiudadVentasDlg::btAgregarLada_Click(Win::Event& e)
 {
+	LibreriaFBDll::Ciudad ciudadObj;
+	LadaDlg ladaObj;
+	ladaObj.BeginDialog(hWnd);
+	if (ladaObj.ladaBool == true)
+	{
+		ciudadObj.llenarDDLada(ddLadas, 100);
+		wstring ultimaLada = ciudadObj.sacarUltimaLada();
+		ddLadas.SetSelected(ultimaLada);
+	}
+
 }
 

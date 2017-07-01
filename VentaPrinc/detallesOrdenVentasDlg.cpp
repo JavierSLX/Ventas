@@ -3,7 +3,8 @@
 
 void detallesOrdenVentasDlg::Window_Open(Win::Event& e)
 {
-	lb1.SetText(folioVP);
+	LibreriaFBDll::bonoCredito bonoObj;
+	bonoObj.llenardetallesOrdenCompra(lv1, folioVP, 100, true);
 }
 
 

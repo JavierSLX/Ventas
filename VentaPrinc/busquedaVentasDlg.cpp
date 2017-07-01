@@ -33,11 +33,11 @@ void busquedaVentasDlg::btBuscar_Click(Win::Event& e)
 	if (radioFolio.IsChecked ()==true)
 	{
 		bonoObj.llenarFolioOrden(lvOrden, tbxOpcionBusqueda.Text, 100);
-
 	}
 	if (radioClaveCliente.IsChecked() == true)
 	{
 		bonoObj.llenarclaveCliente(lvOrden, idpuntoVenta, tbxOpcionBusqueda.Text, 100);
+		
 
 	}
 	if (radioFecha.IsChecked() == true)
@@ -46,11 +46,13 @@ void busquedaVentasDlg::btBuscar_Click(Win::Event& e)
 		Sys::Format(fecha, L"%02d/%02d/%d ",dtboxFecha.GetSelectedDateTime().wYear,dtboxFecha.GetSelectedDateTime().wMonth,dtboxFecha.GetSelectedDateTime().wDay);
 		bonoObj.llenarFecha(lvOrden, dtboxFecha.GetSelectedDateTime(), 100);
 		
+		
 
 	}
 	if (radioDepartamento.IsChecked() == true)
 	{
 		bonoObj.llenarpuntoVenta(lvOrden, ddDepartamentos.Text, 100);
+
 	}
 }
 
@@ -61,6 +63,10 @@ void busquedaVentasDlg::radioFolio_Click(Win::Event& e)
 	ddPuntosVenta.Visible = false;
 	tbxOpcionBusqueda.Enabled =true;
 	ddDepartamentos.Visible = false;
+	lvOrden.SetRedraw(false);
+	lvOrden.Cols.DeleteAll();
+	lvOrden.Items.DeleteAll();
+	lvOrden.SetRedraw(true);
 }
 
 void busquedaVentasDlg::radioClaveCliente_Click(Win::Event& e)
@@ -70,6 +76,10 @@ void busquedaVentasDlg::radioClaveCliente_Click(Win::Event& e)
 	ddPuntosVenta.Visible = true;
 	tbxOpcionBusqueda.Enabled = true;
 	ddDepartamentos.Visible = false;
+	lvOrden.SetRedraw(false);
+	lvOrden.Cols.DeleteAll();
+	lvOrden.Items.DeleteAll();
+	lvOrden.SetRedraw(true);
 }
 
 void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
@@ -79,6 +89,10 @@ void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
 	ddPuntosVenta.Visible = false;
 	tbxOpcionBusqueda.Enabled = false;
 	ddDepartamentos.Visible = false;
+	lvOrden.SetRedraw(false);
+	lvOrden.Cols.DeleteAll();
+	lvOrden.Items.DeleteAll();
+	lvOrden.SetRedraw(true);
 }
 
 void busquedaVentasDlg::lvOrden_ItemActivate(Win::Event& e)
@@ -97,8 +111,28 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 	javObj.llenarDdRutasExclusiva(ddDepartamentos, true, 100);
 	ddDepartamentos.SetSelectedIndex(0);
 	tbxOpcionBusqueda.Enabled = false;
-	
+	lvOrden.SetRedraw(false);
+	lvOrden.Cols.DeleteAll();
+	lvOrden.Items.DeleteAll();
+	lvOrden.SetRedraw(true);
 
+
+}
+
+void busquedaVentasDlg::btLimpiar_Click(Win::Event& e)
+{
+	lvOrden.SetRedraw(false);
+	lvOrden.Cols.DeleteAll();
+	lvOrden.Items.DeleteAll();
+	lvOrden.SetRedraw(true);
+	tbxOpcionBusqueda.SetText(L"");
+	tbxOpcionBusqueda.SetFocus();
+	radioFolio.Checked = true;
+	radioClaveCliente.Checked =false;
+	radioDepartamento.Checked = false;
+	radioFecha.Checked = false;
+	ddPuntosVenta.Visible = false;
+	ddDepartamentos.Visible = false;
 
 }
 
