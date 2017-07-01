@@ -1,13 +1,16 @@
 #pragma once   //_____________________________________________ DetallesOrdenVentaDlg.h  
 #include "resource.h"
 # include "libreriaAdDll.h"
+#include "LibreriaFBDll.h"
+#include "LibreriaAngelDll.h"
 
 class DetallesOrdenVentaDlg: public Win::Dialog
 {
 public:
-	DetallesOrdenVentaDlg(wstring puntoVenta)
+	DetallesOrdenVentaDlg(wstring puntoVenta, wstring folio)
 	{
 		this->_puntoVenta = puntoVenta;
+		this->folioVP = folio;
 	}
 	~DetallesOrdenVentaDlg()
 	{
@@ -54,11 +57,12 @@ private:
 	Win::Button btLimpiar;
 	Win::Button btTerminar;
 	Win::Button btEditar;
+	Win::Label lb8;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(27.35792);
+		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(30.82396);
 		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(12.91167);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -88,6 +92,7 @@ protected:
 		btLimpiar.CreateX(NULL, L"Limpiar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.62729, 10.02771, 2.03729, 0.68792, hWnd, 1020);
 		btTerminar.CreateX(NULL, L"Terminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.68021, 11.16542, 1.95792, 0.68792, hWnd, 1021);
 		btEditar.CreateX(NULL, L"Editar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 23.52146, 7.83167, 2.16958, 0.68792, hWnd, 1022);
+		lb8.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 27.49021, 0.89958, 3.14854, 0.60854, hWnd, 1023);
 		lvCaracteristicasOrden.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		gboxOrden.Font = fontArial009A;
@@ -113,6 +118,7 @@ protected:
 		btLimpiar.Font = fontArial009A;
 		btTerminar.Font = fontArial009A;
 		btEditar.Font = fontArial009A;
+		lb8.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioArticulo_Click(Win::Event& e);

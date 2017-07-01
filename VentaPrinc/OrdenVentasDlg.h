@@ -24,11 +24,12 @@ private:
 	Win::Button btAceptar;
 	Win::Textbox tbxIdentificador;
 	Win::Textbox tbxNombreCliente;
+	Win::Label lb4;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(6.61458);
+		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(9.07521);
 		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(8.57250);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -44,6 +45,7 @@ protected:
 		btAceptar.CreateX(NULL, L"Aceptar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 2.75167, 7.69937, 2.64583, 0.68792, hWnd, 1006);
 		tbxIdentificador.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 1.71979, 5.47687, 1.79917, 0.60854, hWnd, 1007);
 		tbxNombreCliente.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 1.69333, 6.64104, 4.68312, 0.84667, hWnd, 1008);
+		lb4.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 6.56167, 2.96333, 2.32833, 0.60854, hWnd, 1009);
 		this->SetDefaultButton(btAceptar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		lbFolio.Font = fontArial009A;
@@ -55,6 +57,7 @@ protected:
 		btAceptar.Font = fontArial009A;
 		tbxIdentificador.Font = fontArial009A;
 		tbxNombreCliente.Font = fontArial009A;
+		lb4.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void ddCliente_SelChange(Win::Event& e);
