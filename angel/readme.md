@@ -66,3 +66,10 @@ Actividades realizadas durante el día 30 de Junio del 2017:
 * Unificación de los script de la base de datos para el proyecto.
 * Reporte de ventas por departamento con filtro por fechas, se agregaron los campos de modelo y marca en caso de artículo.
 * Reporte de ventas por orden de compra al cual se le agregaron los campos de modelo y marca en caso de artículo.
+
+<h5>01/07/2017</h5>
+Actividades realizadas durante el día 01 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
+* Reporte de ventas por ciudad con filtro de fechas, se agregaron los campos de modelo y marca en caso de artículo.
+* Cambio en el diseño de los encabezados (título y tamaño) del ListView del reporte de ventas.

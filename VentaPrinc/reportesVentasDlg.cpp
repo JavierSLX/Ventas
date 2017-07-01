@@ -43,7 +43,7 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 		{
 			if (tipoReporte == L"Ciudad")
 			{
-				reporteVentasObj.llenarReporteVentasCiudad(lvReporte, _idRegion, _idCiudad, _idRequerimiento, 300, true);
+				reporteVentasObj.llenarReporteVentasCiudad(lvReporte, _idRegion, _idCiudad, _idRequerimiento, 300, dtboxInicial.GetSelectedDateTime(), dtboxFinal.GetSelectedDateTime(),true);
 			}
 			else
 			{
