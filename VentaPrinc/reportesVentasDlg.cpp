@@ -217,3 +217,135 @@ void reportesVentasDlg::dtboxFinal_DatetimeChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+void reportesVentasDlg::btImprimir_Click(Win::Event& e)
+{
+	Win::PrintDoc documento;
+	Win::PrintPreviewDlg dialogo;
+	LibreriaAngelDll::Logo *logo = new LibreriaAngelDll::Logo(L".\\logoAtc\\logo.emf", 2000);
+	//Crea el nuevo documento
+	documento.Create(L"Reporte de Inventario");
+
+	//Obtiene la fecha y hora actual
+	Sys::Time fecha = Sys::Time::Now();
+
+	//Salto de linea
+	tbxEspacio.Text = L"";
+
+	//Creación del header del documento
+	wstring header;
+	Sys::Format(header, L"Ventas. A %02d/%02d/%d\r\n", fecha.wDay, fecha.wMonth, fecha.wYear);
+	tbxCabecera.SetFont(_cursivas);
+	tbxCabecera.Text = header;
+	tbxCabecera.SetPrintAlignment(0);
+	documento.Add(400, tbxCabecera.GetPrintLineCount(documento, 400) + 1, tbxCabecera);
+
+	//Agrega el logo al documento
+	documento.Add(200, 1, *logo);
+
+	//Creacion del  título del documento
+	wstring titulo;
+	wstring tipoReporte = ddTipoReporte.Text;
+	if (tipoReporte == L"Ventas General")
+	{
+		titulo = L"Reporte de Ventas General";
+		//titulo += ddPuntoVenta.Text;
+		tbxTitulo.Text = titulo;
+		tbxTitulo.SetFont(_negritas);
+		documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
+		//Imprimir un espacio
+		documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+		titulo = L"Periodo: De";
+		titulo += dtboxInicial.Text;
+		titulo += L" A ";
+		titulo += dtboxFinal.Text;
+		tbxEspecifico.Text = titulo;
+		tbxEspecifico.SetFont(_negritas);
+		documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxEspecifico);
+	}
+	else
+	{
+		if (tipoReporte == L"Departamento")
+		{
+			titulo = L"Reporte de ventas del departamento: ";
+			titulo += ddDepartamento.Text;
+			tbxTitulo.Text = titulo;
+			tbxTitulo.SetFont(_negritas);
+			documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
+			//Imprimir un espacio
+			documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+			titulo = L"Región: ";
+			titulo += ddRegion.Text;
+			titulo += L" Ciudad: ";
+			titulo += ddCiudad.Text;
+			tbxEspecifico.Text = titulo;
+			tbxEspecifico.SetFont(_negritas);
+			documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxEspecifico);
+			//Imprimir un espacio
+			documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+			titulo = L"Periodo: De";
+			titulo += dtboxInicial.Text;
+			titulo += L" A ";
+			titulo += dtboxFinal.Text;
+			tbxFecha.Text = titulo;
+			tbxFecha.SetFont(_negritas);
+			documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxFecha);
+		}
+		else
+		{
+			if (tipoReporte == L"Ciudad")
+			{
+				titulo = L"Reporte de Ventas de la Ciudad: ";
+				titulo += ddCiudad.Text;
+				tbxTitulo.Text = titulo;
+				tbxTitulo.SetFont(_negritas);
+				documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
+				//Imprimir un espacio
+				documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+				titulo = L"Periodo: De";
+				titulo += dtboxInicial.Text;
+				titulo += L" A ";
+				titulo += dtboxFinal.Text;
+				tbxFecha.Text = titulo;
+				tbxFecha.SetFont(_negritas);
+				documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxFecha);
+			}
+			else
+			{
+				if (tipoReporte == L"Orden de Compra")
+				{
+					titulo = L"Reporte de ventas por orden de compra: ";
+					titulo += tbxFolio.Text;
+					tbxTitulo.Text = titulo;
+					tbxTitulo.SetFont(_negritas);
+					documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
+				}
+			}
+		}
+	}
+
+	//Imprimir un espacio
+	documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+
+	//Imprime la tabla que contiene el reporte de inventario
+	documento.Add(500, lvReporte.Items.Count + 1, lvReporte);
+
+	//Imprime un espacio
+	documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+
+	//Creacion de la firma
+	wstring firma;
+	LibreriaAngelDll::reportesCLS reportesObj;
+	wstring usuario = reportesObj.obtenerNombreUsuario(26);
+	Sys::Format(firma, L"Impreso en la fecha %02d/%02d/%d a las %02d:%02d:%02d hrs por %s", fecha.wDay, fecha.wMonth,
+		fecha.wYear, fecha.wHour, fecha.wMinute, fecha.wSecond, usuario.c_str());
+	tbxFirma.SetFont(_cursivas);
+	tbxFirma.Text = firma;
+	tbxFirma.SetPrintAlignment(1);
+	documento.Add(400, tbxFirma.GetPrintLineCount(documento, 400) + 1, tbxFirma);
+
+	//Muestra el dialogo de impresion
+	dialogo.BeginDialog_(hWnd, &documento);
+
+	delete logo;
+}
+
