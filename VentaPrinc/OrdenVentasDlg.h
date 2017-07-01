@@ -2,6 +2,7 @@
 #include "resource.h"
 # include "libreriaAdDll.h"
 #include "DetallesOrdenVentaDlg.h"
+#include "DescripcionOrdenVentasDlg.h"
 
 class OrdenVentasDlg: public Win::Dialog
 {

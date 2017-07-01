@@ -16,6 +16,7 @@ void EliminarClienteVentasDlg::Window_Open(Win::Event& e)
 	wintemplaObj.llenarLVClientes(lvTabla, ddRutas.Text, true, true, 200);
 
 	//Le da nombre al botón
+	btAccion.Enabled = false;
 	btAccion.Text = L"Eliminar";
 }
 
@@ -40,6 +41,8 @@ void EliminarClienteVentasDlg::tabCliente_SelChange(Win::Event& e)
 		//Le da nombre al botón
 		btAccion.Text = L"Restaurar";
 	}
+
+	btAccion.Enabled = false;
 }
 
 //Cuando se le da click al botón de accion
@@ -47,6 +50,7 @@ void EliminarClienteVentasDlg::btAccion_Click(Win::Event& e)
 {
 	LibreriaJRDll::SqlCLS sqlObj;
 	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	wstring anuncio;
 
 	if (claveClienteIDVP > 0)
 	{
@@ -56,6 +60,8 @@ void EliminarClienteVentasDlg::btAccion_Click(Win::Event& e)
 
 			//Llena la list view
 			wintemplaObj.llenarLVClientes(lvTabla, ddRutas.Text, true, true, 200);
+
+			anuncio = L"Elemento eliminado correctamente";
 		}
 		else
 		{
@@ -63,7 +69,11 @@ void EliminarClienteVentasDlg::btAccion_Click(Win::Event& e)
 
 			//Llena la list view
 			wintemplaObj.llenarLVClientes(lvTabla, ddRutas.Text, true, false, 200);
+
+			anuncio = L"Elemento restaurado correctamente";
 		}
+
+		MessageBoxW(anuncio, L"Cliente", MB_OK | MB_ICONINFORMATION);
 	}
 }
 
@@ -89,5 +99,6 @@ void EliminarClienteVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 {
 	LibreriaJRDll::WintemplaCLS wintemplaObj;
 	claveClienteIDVP = wintemplaObj.sacarIDOcultoLV(lvTabla);
+	btAccion.Enabled = true;
 }
 

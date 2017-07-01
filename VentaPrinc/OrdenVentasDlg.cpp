@@ -51,14 +51,18 @@ void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva consultasObj;
 	_puntoVenta = ddPuntoVenta.Text;
-	DetallesOrdenVentaDlg ventana(_puntoVenta);
+	//DetallesOrdenVentaDlg ventana(_puntoVenta);
 	wstring folio = tbxFolio.Text;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text);
 	consultasObj.insertOrden(folio, cliente_id, idPuntoVenta);
 	MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
-	ventana.BeginDialog(hWnd);
+	//ventana.BeginDialog(hWnd);
+
+	//Esta ventana es para probar de nuevo todo el proceso de detalles
+	DescripcionOrdenVentasDlg dlg(ddPuntoVenta.Text, tbxFolio.Text);
+	dlg.BeginDialog(hWnd);
 }
 
 void OrdenVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)

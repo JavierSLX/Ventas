@@ -1953,7 +1953,7 @@ void  LibreriaAdDll::ordenNueva::llenarDDcolor(Win::DropDownList ddcolor, int la
 			AND ca.valor > 0\
 			AND art.id = %d\
 			AND co.activo = true\
-			AND pv.tipo =  '%s' ", articulo_id,pv.c_str());
+			AND pv.tipo =  '%s' ", articulo_id, pv.c_str());
 
 		conn.ExecuteSelect(consulta, large, ddcolor);
 	}
@@ -1985,11 +1985,12 @@ int LibreriaAdDll::ordenNueva::sacarIDArticulo( wstring tipo, int modelo, int ma
 			AND pv.tipo = '%s'\
 			AND ca.valor > 0\
 			AND ma.id = %d; ", tipo.c_str(), modelo, pv.c_str(), marca);
-						marca_id = conn.GetInt(consulta);
+			marca_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
 	{
-		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		marca_id = 0;
 	}
 
 	conn.CloseSession();
