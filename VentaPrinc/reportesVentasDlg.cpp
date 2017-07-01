@@ -12,6 +12,12 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddTipoReporte.Items.Add(L"Orden de Compra");
 	ddTipoReporte.SetSelectedIndex(0);
 	ponerVisibleElementos(false);
+	tbxCabecera.Visible = false;
+	tbxEspacio.Visible = false;
+	tbxEspecifico.Visible = false;
+	tbxFecha.Visible = false;
+	tbxFirma.Visible = false;
+	tbxTitulo.Visible = false;
 	//________________________________________________________ ddRegion
 	ddRegion.Items.Add(L"Todas las regiones");
 	//________________________________________________________ ddCiudad
@@ -23,6 +29,8 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	generarReporte(ddTipoReporte.Text);
 }
+
+//Metodo que envia los parametros para el reporte que se muetsra en el listview
 void reportesVentasDlg::generarReporte(wstring tipoReporte)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -55,6 +63,8 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 		}
 	}
 }
+
+//Metodo que cambia la propiedad active de los elementos del formulario
 void reportesVentasDlg::ponerVisibleElementos(bool activo)
 {
 	lbDepartamento.Visible = activo;
@@ -67,8 +77,7 @@ void reportesVentasDlg::ponerVisibleElementos(bool activo)
 	tbxFolio.Visible = activo;
 }
 
-
-
+//Metodo que envia el parametro del tipo de reporte que se desea visualizar y activo los elementos necesarios
 void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -137,6 +146,7 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 	}
 }
 
+//Metodo que envia recarga el dropdownlist de ciudad dependiendo de la region seleccionada y envia los parametros para generar el reporte
 void reportesVentasDlg::ddRegion_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -161,6 +171,7 @@ void reportesVentasDlg::ddRegion_SelChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que envia el parametro del departamento que se desea visualizar en el reporte
 void reportesVentasDlg::ddDepartamento_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -172,6 +183,7 @@ void reportesVentasDlg::ddDepartamento_SelChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que envia el parametro de la ciudad que se desea visualizar en el reporte
 void reportesVentasDlg::ddCiudad_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -182,6 +194,7 @@ void reportesVentasDlg::ddCiudad_SelChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que envia el parametro del requerimiento que se desea visualizar en el reporte
 void reportesVentasDlg::ddRequerimiento_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -192,11 +205,13 @@ void reportesVentasDlg::ddRequerimiento_SelChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que envia el folio que se desea mostrar en el reporte
 void reportesVentasDlg::tbxFolio_Change(Win::Event& e)
 {
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que envia el parametro de la fecha inicial que se desea visualizar
 void reportesVentasDlg::dtboxInicial_DatetimeChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -207,6 +222,7 @@ void reportesVentasDlg::dtboxInicial_DatetimeChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que envia el parametro de la fecha final que se desea visualizar
 void reportesVentasDlg::dtboxFinal_DatetimeChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
@@ -217,6 +233,7 @@ void reportesVentasDlg::dtboxFinal_DatetimeChange(Win::Event& e)
 	generarReporte(ddTipoReporte.Text);
 }
 
+//Metodo que imprime el reporte
 void reportesVentasDlg::btImprimir_Click(Win::Event& e)
 {
 	Win::PrintDoc documento;
