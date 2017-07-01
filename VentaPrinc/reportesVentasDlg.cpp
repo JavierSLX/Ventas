@@ -29,13 +29,15 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 	LibreriaAngelDll::reportesCLS reportesObj;
 	if (tipoReporte == L"Ventas General")
 	{
-		reporteVentasObj.llenarReporteVentasGeneral(lvReporte,_idRequerimiento,400,dtboxInicial.GetSelectedDateTime(),dtboxFinal.GetSelectedDateTime(),true);
+		_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+		reporteVentasObj.llenarReporteVentasGeneral(lvReporte,_idRequerimiento,400, dtboxInicial.GetSelectedDateTime(), dtboxFinal.GetSelectedDateTime(),true);
+		//reporteVentasObj.llenarReporteVentasGeneral(lvReporte, _idRequerimiento, 400,true);
 	}
 	else
 	{
 		if (tipoReporte == L"Departamento")
 		{
-			reporteVentasObj.llenarReporteVentasDepartamento(lvReporte, _idDepartamento, _idRegion, _idCiudad, _idRequerimiento, 300, true);
+			reporteVentasObj.llenarReporteVentasDepartamento(lvReporte, _idDepartamento, _idRegion, _idCiudad, _idRequerimiento, 300, dtboxInicial.GetSelectedDateTime(), dtboxFinal.GetSelectedDateTime(),true);
 		}
 		else
 		{
