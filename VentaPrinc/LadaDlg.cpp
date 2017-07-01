@@ -18,12 +18,20 @@ void LadaDlg::btRegion_Click(Win::Event& e)
 //Metodo que permite modificar los valores que tenemos en lada
 void LadaDlg::btActualizar_Click(Win::Event& e)
 {
-	LibreriaJesusDll::datosLadaCLS ladaObj;
-	ladaObj.ActualizarLada(_id, tbxLada.Text);
-	//regionObj.ActualizarDireccion(_id, tbxDireccion.Text);
-	tbxLada.Text = L"";
-	//tbxDireccion.Text = L"";
-	ladaObj.MostrarLada(lvLada, 200, true);
+	if (this->tbxLada.GetTextLength() == 0)
+	{
+		this->tbxLada.ShowBalloonTip(L"Lada", L"Seleccione una Lada", TTI_ERROR);
+	}
+	else
+	{
+		LibreriaJesusDll::datosLadaCLS ladaObj;
+		//LibreriaJesusDll::datosRegionCLS regionObj;
+		int idRegion = ladaObj.obtenerIdOcultoDropDown(ddRegion);
+		ladaObj.ActualizarLada(_id, tbxLada.Text, idRegion);
+		tbxLada.Text = L"";
+		ladaObj.MostrarLada(lvLada, 200, true);
+		tbxLada.ShowBalloonTip(L"Lada", L"Se actualizo lada", TTI_NONE);
+	}
 }
 //Metodo que permite agragar ladas
 void LadaDlg::btAgregar_Click(Win::Event& e)
@@ -48,7 +56,7 @@ void LadaDlg::btAgregar_Click(Win::Event& e)
 			tbxLada.Text = L"";
 			ladaObj.MostrarLada(lvLada, 200, true);
 			ladaBool = true;
-
+			tbxLada.ShowBalloonTip(L"Lada", L"Se agrego lada", TTI_NONE);
 		}
 
 	}

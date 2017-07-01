@@ -60,7 +60,7 @@ public:
 		void LibreriaJesusDll::datosLadaCLS::MostrarLadaEliminar(Win::ListView lvLada, int longuitud, bool activo);
 		int LibreriaJesusDll::datosLadaCLS::ObtenerIdUltimoRegistro();
 		wstring LibreriaJesusDll::datosLadaCLS::obtenerlada(Win::ListView lvLada, int columna);
-		void LibreriaJesusDll::datosLadaCLS::ActualizarLada(int idLada, wstring nombreLada);
+		void LibreriaJesusDll::datosLadaCLS::ActualizarLada(int idLada, wstring nombreLada,int idRegion);
 	private:
 
 	};

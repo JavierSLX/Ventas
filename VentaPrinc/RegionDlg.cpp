@@ -26,6 +26,7 @@ void RegionDlg::btAgregar_Click(Win::Event& e)
 			regionObj.InsertarRegion(tbxRegion.Text, true);
 			tbxRegion.Text = L"";
 			regionObj.MostrarRegion(lvRegion, 200, true);
+			tbxRegion.ShowBalloonTip(L"Region", L"Se agrego la region", TTI_NONE);
 		}
 
 	}
@@ -33,18 +34,24 @@ void RegionDlg::btAgregar_Click(Win::Event& e)
 //Metodo que permite modificar los valores que tenemos en lada
 void RegionDlg::btActualizar_Click(Win::Event& e)
 {
-	LibreriaJesusDll::datosRegionCLS regionObj;
-	regionObj.ActualizarRegion(_id, tbxRegion.Text);
-	//regionObj.ActualizarDireccion(_id, tbxDireccion.Text);
-	tbxRegion.Text = L"";
-	//tbxDireccion.Text = L"";
-	regionObj.MostrarRegion(lvRegion, 200, true);
+	if (this->tbxRegion.GetTextLength() == 0)
+	{
+		this->tbxRegion.ShowBalloonTip(L"Region", L"Ingrese una Región", TTI_ERROR);
+	}
+	else
+	{
+		LibreriaJesusDll::datosRegionCLS regionObj;
+		regionObj.ActualizarRegion(_id, tbxRegion.Text);
+		tbxRegion.Text = L"";
+		regionObj.MostrarRegion(lvRegion, 200, true);
+		tbxRegion.ShowBalloonTip(L"Region", L"Se actualizo region", TTI_NONE);
+	}
 }
 //Metodo que nos permite optener los valores dentro del listview
-void RegionDlg::lvRegion_DblClk(Win::Event& e)
+void RegionDlg::lvRegion_Click(Win::Event& e)
 {
 	LibreriaJesusDll::datosRegionCLS regionObj;
 	_id = regionObj.obtenerIdOculto(lvRegion);
-	tbxRegion.Text = regionObj.obtenerRegion(lvRegion,0);
+	tbxRegion.Text = regionObj.obtenerRegion(lvRegion, 0);
 }
 

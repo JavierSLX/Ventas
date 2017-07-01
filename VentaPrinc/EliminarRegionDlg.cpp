@@ -37,12 +37,12 @@ void EliminarRegionDlg::btEliminar_Click(Win::Event& e)
 	{
 		regionObj.CambiarEstadoRegion(id, false);
 		regionObj.MostrarRegion(lvRegion, 200, true);
-		MessageBox(L"Se elimino correcta mente", L"Eliminar region", MB_OK || MB_ICONINFORMATION);
+		MessageBox(L"Se elimino correcta mente", L"Eliminar region", MB_OK);
 
 	}
 	else
 	{
-		MessageBox(L"No hay elementos seleccionados", L"Eliminar region", MB_OK || MB_ICONERROR);
+		MessageBox(L"No hay elementos seleccionados", L"Eliminar region", MB_OK);
 	}
 }
 //Permite restaurar los valores que fueron eliminados o viceversa
@@ -55,12 +55,12 @@ void EliminarRegionDlg::btRestaurar_Click(Win::Event& e)
 	{
 		regionObj.CambiarEstadoRegion(id, true);
 		regionObj.MostrarRegion(lvRegion, 200, false);
-		MessageBox(L"Se restauro correcta mente", L"Restaurar region", MB_OK || MB_ICONINFORMATION);
+		MessageBox(L"Se restauro correcta mente", L"Restaurar region", MB_OK);
 
 	}
 	else
 	{
-		MessageBox(L"No hay elementos seleccionados", L"Restaurar region", MB_OK || MB_ICONERROR);
+		MessageBox(L"No hay elementos seleccionados", L"Restaurar region", MB_OK);
 	}
 }
 

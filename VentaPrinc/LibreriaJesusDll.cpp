@@ -262,14 +262,14 @@ wstring LibreriaJesusDll::datosLadaCLS::obtenerlada(Win::ListView lvLada, int co
 	int indice = lvLada.GetSelectedIndex();
 	return lvLada.Items[indice].GetText(columna);
 }
-void LibreriaJesusDll::datosLadaCLS::ActualizarLada(int idLada, wstring nombreLada)
+void LibreriaJesusDll::datosLadaCLS::ActualizarLada(int idLada, wstring nombreLada,int idRegion)
 {
 	Sql::SqlConnection coneccion;
 	wstring consulta;
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"UPDATE lada SET tipo='%s' WHERE id=%d", nombreLada.c_str(), idLada);
+		Sys::Format(consulta, L"UPDATE lada SET tipo='%s',region_id=%d WHERE id=%d", nombreLada.c_str(),idRegion ,idLada);
 		coneccion.ExecuteNonQuery(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -277,9 +277,8 @@ void LibreriaJesusDll::datosLadaCLS::ActualizarLada(int idLada, wstring nombreLa
 		this->MessageBox(e.GetDescription(), L"Error", MB_OK);
 	}
 }
-void LibreriaJesusDll::Window_Open(Win::Event& e)
-{
-}
+
+
 
 
 

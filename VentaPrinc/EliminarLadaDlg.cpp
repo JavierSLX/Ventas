@@ -20,12 +20,12 @@ void EliminarLadaDlg::btEliminar_Click(Win::Event& e)
 	{
 		ladaObj.CambiarEstadoLada(id, false);
 		ladaObj.MostrarLadaEliminar(lvLada, 200, true);
-		MessageBox(L"Se elimino correcta mente", L"Eliminar region", MB_OK || MB_ICONINFORMATION);
+		MessageBox(L"Se elimino correcta mente", L"Eliminar region", MB_OK );
 
 	}
 	else
 	{
-		MessageBox(L"No hay elementos seleccionados", L"Eliminar region", MB_OK || MB_ICONERROR);
+		MessageBox(L"No hay elementos seleccionados", L"Eliminar region", MB_OK );
 	}
 }
 //Permite restaurar los valores que fueron eliminados o viceversa
@@ -37,12 +37,12 @@ void EliminarLadaDlg::btRestaurar_Click(Win::Event& e)
 	{
 		ladaObj.CambiarEstadoLada(id, true);
 		ladaObj.MostrarLadaEliminar(lvLada, 200, false);
-		MessageBox(L"Se restauro correcta mente", L"Restaurar region", MB_OK || MB_ICONINFORMATION);
+		MessageBox(L"Se restauro correcta mente", L"Restaurar region", MB_OK );
 
 	}
 	else
 	{
-		MessageBox(L"No hay elementos seleccionados", L"Restaurar region", MB_OK || MB_ICONERROR);
+		MessageBox(L"No hay elementos seleccionados", L"Restaurar region", MB_OK );
 	}
 }
 //Permite cambiar de tabla de inactivos y activos
