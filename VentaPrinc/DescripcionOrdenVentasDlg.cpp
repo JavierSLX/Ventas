@@ -23,8 +23,6 @@ void DescripcionOrdenVentasDlg::Window_Open(Win::Event& e)
 	int articulo_id = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 
-	tbxCantidad.IntValue = articulo_id;
-
 	if (articulo_id != 0)
 	{
 		ordenObj.llenarDDcolor(ddColor, 100, articulo_id, puntoVentaVP);
@@ -66,8 +64,6 @@ void DescripcionOrdenVentasDlg::ddTipo_SelChange(Win::Event& e)
 	int articulo_id = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 
-	tbxCantidad.IntValue = articulo_id;
-
 	if (articulo_id != 0)
 	{
 		ordenObj.llenarDDcolor(ddColor, 100, articulo_id, puntoVentaVP);
@@ -93,8 +89,6 @@ void DescripcionOrdenVentasDlg::ddMarca_SelChange(Win::Event& e)
 	int articulo_id = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 
-	tbxCantidad.IntValue = articulo_id;
-
 	if (articulo_id != 0)
 	{
 		ordenObj.llenarDDcolor(ddColor, 100, articulo_id, puntoVentaVP);
@@ -116,12 +110,11 @@ void DescripcionOrdenVentasDlg::ddModelo_SelChange(Win::Event& e)
 	int articulo_id = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 
-	tbxCantidad.IntValue = articulo_id;
-
 	if (articulo_id != 0)
 	{
 		ordenObj.llenarDDcolor(ddColor, 100, articulo_id, puntoVentaVP);
 		ddColor.SetSelectedIndex(0);
+		//tbxPrecio.DoubleValue = ordenObj.sacarPrecioArticulo(articulo_id, puntoVentaVP);
 	}
 	else
 	{
