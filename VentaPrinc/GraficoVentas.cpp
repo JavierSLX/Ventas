@@ -20,8 +20,17 @@ void GraficoVentas::Window_Open(Win::Event& e)
 
 	//Hace invisible la gráfica de barras
 	bchartBarras.Visible = false;
+	//________________________________________________________ ddTipo
+	ddTipo.Items.Add(L"Item 0 with value 10", 10);
+	ddTipo.Items.Add(L"Item 1 with value 20", 20);
+	//________________________________________________________ ddDepartamento
+	ddDepartamento.Items.Add(L"Item 0 with value 10", 10);
+	ddDepartamento.Items.Add(L"Item 1 with value 20", 20);
+	//________________________________________________________ ddArticulo
+	ddArticulo.Items.Add(L"Item 0 with value 10", 10);
+	ddArticulo.Items.Add(L"Item 1 with value 20", 20);
+	
 }
-
 
 //Cuando cambia la tab
 void GraficoVentas::tabVenta_SelChange(Win::Event& e)
@@ -36,5 +45,13 @@ void GraficoVentas::tabVenta_SelChange(Win::Event& e)
 		piePastel.Visible = false;
 		bchartBarras.Visible = true;
 	}
+}
+
+void GraficoVentas::btGenerar_Click(Win::Event& e)
+{
+}
+
+void GraficoVentas::btImprimir_Click(Win::Event& e)
+{
 }
 
