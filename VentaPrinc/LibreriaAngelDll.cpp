@@ -1297,7 +1297,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND a.tipoArticulo_id=ta.id\
 						AND a.id = od.tipoVentaId\
 						AND DATE(o.fecha) >= '%d-%d-%d'\
-						AND DATE(o.fecha) <= '%d-%d-%d'\;", idPuntoVenta,idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay,idPuntoVenta,idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay);
+						AND DATE(o.fecha) <= '%d-%d-%d';", idPuntoVenta,idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay,idPuntoVenta,idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay);
 					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
 				}
 				catch (Sql::SqlException e)
@@ -1809,7 +1809,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND a.tipoArticulo_id=ta.id\
 						AND a.id = od.tipoVentaId\
 						AND DATE(o.fecha) >= '%d-%d-%d'\
-						AND DATE(o.fecha) <= '%d-%d-%d'\;",idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay, idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay);
+						AND DATE(o.fecha) <= '%d-%d-%d';",idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay, idRequerimiento, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay);
 					coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
 				}
 				catch (Sql::SqlException e)

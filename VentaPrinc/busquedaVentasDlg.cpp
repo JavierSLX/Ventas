@@ -121,18 +121,21 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 
 void busquedaVentasDlg::btLimpiar_Click(Win::Event& e)
 {
+	tbxOpcionBusqueda.Enabled = true;
+	tbxOpcionBusqueda.SetFocus();
 	lvOrden.SetRedraw(false);
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
-	tbxOpcionBusqueda.SetText(L"");
-	tbxOpcionBusqueda.SetFocus();
 	radioFolio.Checked = true;
 	radioClaveCliente.Checked =false;
 	radioDepartamento.Checked = false;
 	radioFecha.Checked = false;
 	ddPuntosVenta.Visible = false;
 	ddDepartamentos.Visible = false;
+	dtboxFecha.Visible = false;
+	tbxOpcionBusqueda.SetText(L"");
+	
 
 }
 

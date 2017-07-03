@@ -2138,12 +2138,11 @@ void LibreriaFBDll::bonoCredito::llenardetallesOrdenCompra(Win::ListView lvRepor
 	lvReporte.Cols.Add(3, LVCFMT_CENTER, 100, L"Requerimiento");
 	lvReporte.Cols.Add(4, LVCFMT_CENTER, 100, L"Marca");
 	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
-	lvReporte.Cols.Add(6, LVCFMT_CENTER, 100, L"Color");
-	lvReporte.Cols.Add(7, LVCFMT_CENTER, 80, L"Cantidad");
-	lvReporte.Cols.Add(8, LVCFMT_CENTER, 100,  L"Precio sugerido");
-	lvReporte.Cols.Add(9, LVCFMT_CENTER, 100, L"Precio Final");
-	lvReporte.Cols.Add(10, LVCFMT_CENTER, 100, L"Total");
-	lvReporte.Cols.Add(11, LVCFMT_CENTER, 100, L"Fecha");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 80, L"Cantidad");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 100,  L"Precio sugerido");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 100, L"Precio Final");
+	lvReporte.Cols.Add(9, LVCFMT_CENTER, 100, L"Total");
+	lvReporte.Cols.Add(10, LVCFMT_CENTER, 100, L"Fecha");
 	//reporte general de todos los requerimientos
 	try
 	{
@@ -2151,7 +2150,7 @@ void LibreriaFBDll::bonoCredito::llenardetallesOrdenCompra(Win::ListView lvRepor
 
 		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
 		Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
-			, 'NA', 'NA', 'NA' ,od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad*od.precio_final, DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
+			, 'NA', 'NA',od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad*od.precio_final, DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
 			servicio_requerimiento sr, servicio_venta sv\
 			WHERE od.orden_id = o.id\
@@ -2164,10 +2163,10 @@ void LibreriaFBDll::bonoCredito::llenardetallesOrdenCompra(Win::ListView lvRepor
 			AND sv.id = od.tipoVentaId\
 			AND o.folio = '%s'\
 			UNION\
-			SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, mo.nombre, ma.nombre,co.nombre,\
+			SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, mo.nombre, ma.nombre,\
 			od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad*od.precio_final,DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
-			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, color co, tipo_articulo ta\
+			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta\
 			WHERE od.orden_id = o.id\
 			AND o.cliente_id = c.id\
 			AND cc.cliente_id = c.id\
@@ -2177,7 +2176,6 @@ void LibreriaFBDll::bonoCredito::llenardetallesOrdenCompra(Win::ListView lvRepor
 			AND cr.cantidad_id = can.id\
 			AND can.articulo_id = a.id\
 			AND a.modelo_id = mo.id\
-			AND can.color_id = co.id\
 			AND mo.marca_id = ma.id\
 			AND a.tipoArticulo_id = ta.id\
 			AND a.id = od.tipoVentaId\

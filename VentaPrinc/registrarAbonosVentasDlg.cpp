@@ -32,7 +32,9 @@ void registrarAbonosVentasDlg::btAgregar_Click(Win::Event& e)
 	{
 		if (tbxTotal.Text == L"0")
 		{
+			tbxCantidadAbono.Enabled = false;
 			MessageBoxW(L"Se completo el monto del credito", L"", MB_OK | MB_ICONINFORMATION);
+			
 		}
 		else
 		{
@@ -41,10 +43,20 @@ void registrarAbonosVentasDlg::btAgregar_Click(Win::Event& e)
 			bonoObj.insertarbonoCredito(abono, idCreditoVP);
 			bonoObj.updateCantidadCredito(cantidadAbonoActualizar, idCreditoVP);
 			MessageBoxW(L"Se agrego el abono", L"", MB_OK | MB_ICONINFORMATION);
-
 			bonoObj.llenarLVCreditoAbonos(lvAbonos, idCreditoVP, folioOrdenVP, 100);
 			tbxTotal.SetText(Sys::Convert::ToString(cantidadAbonoActualizar));
+			totalCreditoVP = cantidadAbonoActualizar;
 			tbxCantidadAbono.SetText(L"");
+			if (cantidadAbonoActualizar == 0)
+			{
+				tbxCantidadAbono.Enabled = false;
+				MessageBoxW(L"Se completo el monto del credito", L"", MB_OK | MB_ICONINFORMATION);
+
+			}
+			abono = 0;
+			cantidadAbonoActualizar = 0;
+
+			
 		}
 		
 
