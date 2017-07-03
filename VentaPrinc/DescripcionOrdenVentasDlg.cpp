@@ -240,3 +240,72 @@ void DescripcionOrdenVentasDlg::tbxCantidad_Change(Win::Event& e)
 	
 }
 
+void DescripcionOrdenVentasDlg::btEditar_Click(Win::Event& e)
+{
+}
+
+void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
+{
+	if (MessageBoxW(L"La compra es al CONTADO", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
+	{
+	}
+	else {
+
+	}
+}
+
+void DescripcionOrdenVentasDlg::btEliminar_Click(Win::Event& e)
+{
+}
+
+void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
+{
+
+	LibreriaAdDll::ordenNueva consultasObj;
+	LibreriaAdDll::articulo consultasArtObj;
+
+
+	idDetalles = consultasObj.sacarIDOcultoLV(lvTabla);
+	wstring requerimiento = consultasObj.sacarTextoLV(lvTabla, 0);
+	if (requerimiento == L"Articulo")
+	{
+		
+		TipoArticuloVP = consultasObj.sacarTextoLV(lvTabla, 1);
+
+		MarcaVP = consultasObj.sacarTextoLV(lvTabla, 2);
+		lb8.SetText(MarcaVP);
+		ModeloVP = consultasObj.sacarTextoLV(lvTabla, 3);
+		ColorVP = consultasObj.sacarTextoLV(lvTabla, 4);
+		CantidadVP = consultasObj.sacarTextoLV(lvTabla, 5);
+		PSugeridoVP = consultasObj.sacarTextoLV(lvTabla, 6);
+		PFinalVP = consultasObj.sacarTextoLV(lvTabla, 7);
+
+		ddTipo.SetSelected(TipoArticuloVP);
+		ddMarca.SetText(MarcaVP);
+		ddModelo.SetSelected(ModeloVP);
+		ddColor.SetSelected(ColorVP);
+		tbxCantidad.SetText(CantidadVP);
+		tbxPrecio.SetText(PSugeridoVP);
+		tbxFinal.SetText(PFinalVP);
+	}
+	else if (requerimiento == L"Servicio")
+	{
+		TipoArticuloVP = consultasObj.sacarTextoLV(lvTabla, 1);
+		CantidadVP = consultasObj.sacarTextoLV(lvTabla, 5);
+		lb8.SetText(CantidadVP);
+		PSugeridoVP = consultasObj.sacarTextoLV(lvTabla, 6);
+		PFinalVP = consultasObj.sacarTextoLV(lvTabla, 7);
+
+		ddTipo.SetSelected(TipoArticuloVP);
+		ddMarca.Visible = false;
+		ddModelo.Visible = false;
+		ddColor.Visible = false;
+		lbMarca.Visible = false;
+		lb3.Visible = false;
+		lbColor.Visible = false;
+		tbxCantidad.SetText(CantidadVP);
+		tbxPrecio.SetText(PSugeridoVP);
+		tbxFinal.SetText(PFinalVP);
+	}
+}
+

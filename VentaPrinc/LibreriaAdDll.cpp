@@ -2334,3 +2334,6 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 
 	conn.CloseSession();
 }
+
+
+	
