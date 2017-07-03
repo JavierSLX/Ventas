@@ -80,6 +80,7 @@ void LibreriaAdDll::marca::insertarMarca(wstring marca) {
 
 }
 
+
 wstring LibreriaAdDll::marca::sacarMarcaSiExiste(wstring marca) {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -2056,7 +2057,8 @@ void  LibreriaAdDll::ordenNueva::llenarDDModelo(Win::DropDownList ddModelo, wstr
 
 	conn.CloseSession();
 }
-double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv)
+double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int ClaveCliente)
+
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -2066,8 +2068,8 @@ double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv)
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT precio\
 			FROM precio_cliente\
-			WHERE clave_cliente = %d\
-			AND articulo_id = %d;", articulo_id);
+			WHERE claveCliente_id = %d\
+			AND articulo_id = %d;",ClaveCliente, articulo_id);
 		pv_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -2216,4 +2218,119 @@ int LibreriaAdDll::ordenNueva::sacarIDArticuloUpdate(wstring tipo, wstring model
 
 	conn.CloseSession();
 	return marca_id;
+}
+
+void LibreriaAdDll::ordenNueva::insertarCantidadRequerimiento(int cantidad,int requerimiento) {
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO cantidad_requerimiento (cantidad_id,requerimiento_id) \
+								VALUES(%d,%d);",cantidad,requerimiento);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+
+
+void LibreriaAdDll::ordenNueva::insertarServicioRequerimiento(int servicio, int requerimiento) {
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO servicio_requerimiento (servicio_id,requerimiento_id) \
+								VALUES(%d,%d);", servicio, requerimiento);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+
+void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, int large, bool activo, wstring folio) 
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	lvDetalles.SetRedraw(false);
+	lvDetalles.Cols.DeleteAll();
+	lvDetalles.Items.DeleteAll();
+	lvDetalles.SetRedraw(true);
+	lvDetalles.Cols.Add(0, LVCFMT_CENTER, 100, L"Tipo");
+	lvDetalles.Cols.Add(1, LVCFMT_CENTER, 100, L"Tipo");
+	lvDetalles.Cols.Add(2, LVCFMT_CENTER, 100, L"Marca");
+	lvDetalles.Cols.Add(3, LVCFMT_CENTER, 100, L"Modelo");
+	lvDetalles.Cols.Add(4, LVCFMT_CENTER, 100, L"Color");
+	lvDetalles.Cols.Add(5, LVCFMT_CENTER, 100, L"Cantidad");
+	lvDetalles.Cols.Add(6, LVCFMT_CENTER, 100, L"P. Sugerido");
+	lvDetalles.Cols.Add(7, LVCFMT_CENTER, 100, L"P. Final");
+	lvDetalles.Cols.Add(8, LVCFMT_CENTER, 100, L"Total");
+	lvDetalles.Cols.Add(9, LVCFMT_CENTER, 100, L"Fecha");
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT DISTINCT od.id, r.tipo, sv.nombre\
+			, 'NA', 'NA', 'NA', od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad * od.precio_final, o.fecha\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
+			servicio_requerimiento sr, servicio_venta sv\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND sr.requerimiento_id = r.id\
+			AND sr.servicioVenta_id = sv.id\
+			AND sv.id = od.tipoVentaId\
+			AND o.folio = '%s'\
+			UNION\
+			SELECT DISTINCT od.id, r.tipo, ta.nombre, mo.nombre, ma.nombre, \
+			col.nombre, od.cantidad, od.precio_sugerido, od.precio_final,od.cantidad * od.precio_final, o.fecha\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
+			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta, color col\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND od.requerimiento_id = r.id\
+			AND cr.requerimiento_id = r.id\
+			AND cr.cantidad_id = can.id\
+			AND can.articulo_id = a.id\
+			AND can.color_id = col.id\
+			AND a.modelo_id = mo.id\
+			AND mo.marca_id = ma.id\
+			AND a.tipoArticulo_id = ta.id\
+			AND a.id = od.tipoVentaId\
+			AND o.folio = '%s'; ", folio.c_str(),folio.c_str());
+
+		conn.ExecuteSelect(consulta, large, lvDetalles);
+	}
+	catch (Sql::SqlException e)
+	{
+		///*/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/*/
+	}
+
+	conn.CloseSession();
 }

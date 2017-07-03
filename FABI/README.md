@@ -11,3 +11,4 @@ Ademas se comenzo con la ventana de busquedas.
 
 ### 30/06/2017 Se empezo con los detalles de las ordenes existentes, ademas de que se diseñaron los dialogos, se agregaron metodos, y se corrigieron errores y se hicieron modificaciones en la ventana de ciudad.
 
+### 01/07/2017 Se corrigieron detalles esteticos en la ventana de busquedas y detalles de busquedas, ademas se trabajo en las venatanas de orden y en consultas para algunas de las ventanas ya mencionadas

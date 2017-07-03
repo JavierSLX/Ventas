@@ -40,7 +40,8 @@ void registrarAbonosVentasDlg::btAgregar_Click(Win::Event& e)
 			double cantidadAbonoActualizar = totalCreditoVP - abono;
 			bonoObj.insertarbonoCredito(abono, idCreditoVP);
 			bonoObj.updateCantidadCredito(cantidadAbonoActualizar, idCreditoVP);
-			MessageBoxW(L"Se agrego el abono", L"", MB_OK | MB_ICONINFORMATION);
+			MessageBoxW(L"Se agrego el abono", 
+				L"", MB_OK | MB_ICONINFORMATION);
 
 			bonoObj.llenarLVCreditoAbonos(lvAbonos, idCreditoVP, folioOrdenVP, 100);
 			tbxTotal.SetText(Sys::Convert::ToString(cantidadAbonoActualizar));

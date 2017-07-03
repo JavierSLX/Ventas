@@ -57,11 +57,11 @@ void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text, puntoVenta);
 	consultasObj.insertOrden(folio, cliente_id, idPuntoVenta);
-	MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
+	/*MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);*/
 	//ventana.BeginDialog(hWnd);
 
 	//Esta ventana es para probar de nuevo todo el proceso de detalles
-	DescripcionOrdenVentasDlg dlg(ddPuntoVenta.Text, tbxFolio.Text);
+	DescripcionOrdenVentasDlg dlg(ddPuntoVenta.Text, tbxFolio.Text, ddCliente.Text);
 	dlg.BeginDialog(hWnd);
 }
 
