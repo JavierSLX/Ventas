@@ -85,3 +85,5 @@ Actividades realizadas durante el día 03 de Julio del 2017:
 * Cambio del orden de tabulación del dialogo rangoDlg.
 * Cambio del orden de tabulación del dialogo ServicioDlg.
 * Programación del focus dentro del formulario dependiendo del tipo de reporte seleccionado.
+* Pruebas de humo con usuario para verificar el funcionamiento del software.
+* Cambios en los mensajes de error en las ventas de ServicioDlg y rangoDlg.

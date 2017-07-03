@@ -70,7 +70,7 @@ void RangoDlg::btActualizar_Click(Win::Event& e)
 	//Validación el rango mínimo tenga valor
 	if (this->tbxMinimo.GetTextLength() == 0)
 	{
-		this->tbxMinimo.ShowBalloonTip(L"Rangos", L"Ingrese la cantidad mínima", TTI_ERROR);
+		this->tbxMinimo.ShowBalloonTip(L"Rangos", L"No hay rango seleccionado", TTI_ERROR);
 		return;
 	}
 	else
@@ -78,7 +78,7 @@ void RangoDlg::btActualizar_Click(Win::Event& e)
 		//Validación el rango máximo tenga valor
 		if (this->tbxMaximo.GetTextLength() == 0)
 		{
-			this->tbxMaximo.ShowBalloonTip(L"Rangos", L"Ingrese la cantidad máxima", TTI_ERROR);
+			this->tbxMaximo.ShowBalloonTip(L"Rangos", L"No hay rango seleccionado", TTI_ERROR);
 			return;
 		}
 		else
@@ -86,7 +86,7 @@ void RangoDlg::btActualizar_Click(Win::Event& e)
 			//Validación el rango comisión tenga valor
 			if (this->tbxComision.GetTextLength() == 0)
 			{
-				this->tbxComision.ShowBalloonTip(L"Rangos", L"Ingrese la comsión asignada", TTI_ERROR);
+				this->tbxComision.ShowBalloonTip(L"Rangos", L"No hay rango seleccionado", TTI_ERROR);
 			}
 			else
 			{
@@ -122,11 +122,7 @@ void RangoDlg::btActualizar_Click(Win::Event& e)
 //Muestra la información del rango seleccionado en el ListView
 void RangoDlg::lvRango_DblClk(Win::Event& e)
 {
-	LibreriaAngelDll::tipoArticuloCLS tipoArticuloObj;
-	_id = tipoArticuloObj.obtenerIdOculto(lvRango);
-	tbxMinimo.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 0);
-	tbxMaximo.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 1);
-	tbxComision.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 2);
+	
 }
 
 //Muestra el dialogo para eliminar o restaurar un rango
@@ -136,4 +132,21 @@ void RangoDlg::btEliminar_Click(Win::Event& e)
 	rangoObj.BeginDialog(hWnd);
 }
 
+//Muestra la información del rango seleccionado en el ListView
+void RangoDlg::lvRango_ItemChanged(Win::Event& e)
+{
+	LibreriaAngelDll::tipoArticuloCLS tipoArticuloObj;
+	_id = tipoArticuloObj.obtenerIdOculto(lvRango);
+	tbxMinimo.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 0);
+	tbxMaximo.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 1);
+	tbxComision.Text = tipoArticuloObj.obtenerTextoListView(lvRango, 2);
+}
+
+void RangoDlg::btLimpiar_Click(Win::Event& e)
+{
+	tbxMinimo.Text = L"";
+	tbxMaximo.Text = L"";
+	tbxComision.Text = L"";
+	tbxMinimo.SetFocus();
+}
 
