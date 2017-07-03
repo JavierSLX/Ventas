@@ -111,6 +111,7 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 	javObj.llenarDdRutasExclusiva(ddDepartamentos, true, 100);
 	ddDepartamentos.SetSelectedIndex(0);
 	tbxOpcionBusqueda.Enabled = false;
+	tbxOpcionBusqueda.SetFocus();
 	lvOrden.SetRedraw(false);
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();

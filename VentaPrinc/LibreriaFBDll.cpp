@@ -1394,8 +1394,7 @@ wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad,int lada)
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT nombre\
 			FROM ciudad\
-			WHERE nombre = '%s'\
-			AND lada_id = %d ",ciudad.c_str(),lada);
+			WHERE nombre = '%s'",ciudad.c_str());
 		conn.GetString(consulta, valor, 100);
 	}
 	catch (Sql::SqlException e)
