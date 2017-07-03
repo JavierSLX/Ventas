@@ -3,6 +3,7 @@
 
 void DetallesOrdenVentaDlg::Window_Open(Win::Event& e)
 {
+	
 	LibreriaAdDll::ordenNueva consultasObj;
 	LibreriaAdDll::articulo consultasArtObj;
 	//llenar tipo de articulo
@@ -35,7 +36,7 @@ void DetallesOrdenVentaDlg::Window_Open(Win::Event& e)
 
 	radioArticulo.Checked = true;
 	tbxPrecioSugerido.Enabled = false;
-	folioVP = consultasObj.sacarUltimoFolio();
+	/*folioVP = consultasObj.sacarUltimoFolio();*/
 	consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folioVP);
 	
 	
@@ -66,7 +67,11 @@ void DetallesOrdenVentaDlg::btAgregar_Click(Win::Event& e)
 
 		consultasObj.insertOrdenDescripcion(articulo_id, cantidad, precioSugerido, precioFinal, orden_id, requerimienti_id);
 		MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
-		consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folioVP);
+		lb8.SetText(Sys::Convert::ToString(orden_id));
+		LibreriaAngelDll::reporteVentasCLS reporteObj;
+		reporteObj.llenarReporteVentasOrdenCompra(lvCaracteristicasOrden, folioVP, 100, true  );
+
+		/*consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folioVP);*/
 	}
 	else if(radioServicio.IsChecked() == true)
 	{
@@ -79,7 +84,10 @@ void DetallesOrdenVentaDlg::btAgregar_Click(Win::Event& e)
 		int orden_id = consultasObj.sacarUltIDOrden();
 		consultasObj.insertOrdenDescripcion(servicio_id, cantidad, precioSugerido, precioFinal, orden_id, requerimienti_id);
 		MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
-		consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folioVP);
+		lb8.SetText(Sys::Convert::ToString(orden_id));
+		LibreriaAngelDll::reporteVentasCLS reporteObj;
+		reporteObj.llenarReporteVentasOrdenCompra(lvCaracteristicasOrden, folioVP, 100, true);
+		/*consultasObj.llenarDescripcionOrden(lvCaracteristicasOrden, 100, folioVP);*/
 	}
 
 	

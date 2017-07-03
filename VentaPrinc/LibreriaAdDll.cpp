@@ -1542,7 +1542,7 @@ int LibreriaAdDll::ordenNueva::sacarIDpuntoVenta(wstring pv)
 	conn.CloseSession();
 	return pv_id;
 }
-int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente)
+int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente, wstring pv)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -1550,10 +1550,12 @@ int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente)
 
 	try {
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT id\
-			FROM cliente cli, clave_cliente cc\
+		Sys::Format(consulta, L"SELECT cc.id\
+			FROM cliente cli, clave_cliente cc, punto_venta pv\
 			WHERE cc.cliente_id = cli.id\
-			AND cc.numero = '%s';", clave_cliente.c_str());
+			AND cc.puntoVenta_id = pv.id\
+			AND cc.numero = '%s'\
+			AND pv.tipo = '%s';", clave_cliente.c_str(),pv.c_str());
 		pv_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -1856,10 +1858,11 @@ void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, in
 	lvOrden.SetRedraw(true);
 
 	lvOrden.Cols.Add(0, LVCFMT_LEFT, 120, L"Tipo");
-	lvOrden.Cols.Add(1, LVCFMT_LEFT, 120, L"Marca");
-	lvOrden.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
-	lvOrden.Cols.Add(3, LVCFMT_LEFT, 120, L"Color");
-	lvOrden.Cols.Add(4, LVCFMT_LEFT, 120, L"Cantidad");
+	lvOrden.Cols.Add(1, LVCFMT_CENTER, 100, L"Algo");
+	lvOrden.Cols.Add(2, LVCFMT_LEFT, 120, L"Marca");
+	lvOrden.Cols.Add(3, LVCFMT_LEFT, 120, L"Modelo");
+	lvOrden.Cols.Add(4, LVCFMT_LEFT, 120, L"Color");
+	lvOrden.Cols.Add(5, LVCFMT_LEFT, 120, L"Cantidad");
 	lvOrden.Cols.Add(6, LVCFMT_LEFT, 120, L"P. Sugerido");
 	lvOrden.Cols.Add(7, LVCFMT_LEFT, 120, L"P. Final");
 	lvOrden.Cols.Add(8, LVCFMT_LEFT, 120, L"Fecha");
@@ -1879,7 +1882,7 @@ void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, in
 			AND sr.requerimiento_id = r.id\
 			AND sr.servicioVenta_id = sv.id\
 			AND sv.id = od.tipoVentaId\
-			AND o.folio LIKE '%s'\
+			AND o.folio = '%s'\
 			UNION\
 			SELECT DISTINCT od.id, r.tipo, ta.nombre, mo.nombre, ma.nombre,\
 			col.nombre, od.cantidad, od.precio_sugerido, od.precio_final, o.fecha\
@@ -1898,7 +1901,7 @@ void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, in
 			AND mo.marca_id = ma.id\
 			AND a.tipoArticulo_id = ta.id\
 			AND a.id = od.tipoVentaId\
-			AND o.folio LIKE '%s'; ", folio.c_str(),folio.c_str());
+			AND o.folio = '%s'; ", folio.c_str(),folio.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvOrden);
 	}

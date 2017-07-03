@@ -97,7 +97,7 @@ public:
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorFecha(wstring cadena);
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena);
 		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv);
-		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente);
+		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente, wstring pv);
 		void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, int large, bool activo);
 		void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int tipoVentaId, int cantidad, double precioSugerido, double precioFinal, int orden, int requerimiento);
 		int LibreriaAdDll::ordenNueva::sacarIDArticulo(int color, int departamento_id, int modelo, int marca, int ta);
