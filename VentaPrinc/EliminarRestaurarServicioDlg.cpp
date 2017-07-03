@@ -17,9 +17,12 @@ void EliminarRestaurarServicioDlg::btEliminar_Click(Win::Event& e)
 {
 	LibreriaAngelDll::tipoArticuloCLS tipoArticuloObj;
 	LibreriaAngelDll::servicioVentaCLS servicioVentaObj;
+	//Obtiene el id del servicio que se desea eliminar
 	int id = tipoArticuloObj.obtenerIdOculto(lvEliminarRestaurarServicio);
+	//Validación de que se encuentre un servicio seleccionado
 	if (id > 0)
 	{
+		//Cambia de estado el servicio a inactivo y actualzia la ListView
 		servicioVentaObj.cambiarEstadoServicio(id, false);
 		servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, true);
 		MessageBoxW(L"Se eliminó correctamente", L"Eliminar servicio", MB_OK|MB_ICONINFORMATION);
@@ -35,9 +38,12 @@ void EliminarRestaurarServicioDlg::btRestaurar_Click(Win::Event& e)
 {
 	LibreriaAngelDll::tipoArticuloCLS tipoArticuloObj;
 	LibreriaAngelDll::servicioVentaCLS servicioVentaObj;
+	//Obtiene el id del servicio que se desea eliminar
 	int id = tipoArticuloObj.obtenerIdOculto(lvEliminarRestaurarServicio);
+	//Validación de que se encuentre un servicio seleccionado
 	if (id > 0)
 	{
+		//Cambia de estado el servicio a activo y actualzia la ListView
 		servicioVentaObj.cambiarEstadoServicio(id, true);
 		servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, false);
 		MessageBoxW(L"Se restauró correctamente", L"Eliminar servicio", MB_OK | MB_ICONINFORMATION);
@@ -54,17 +60,18 @@ void EliminarRestaurarServicioDlg::tabEliminarRestaurarServicio_SelChange(Win::E
 	LibreriaAngelDll::servicioVentaCLS servicioVentaObj;
 	switch (tabEliminarRestaurarServicio.GetSelectedIndex())
 	{
-
-	case 0:
-		servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, true);
-		btEliminar.Visible = true;
-		btRestaurar.Visible = false;
-		break;
-	case 1:
-		servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, false);
-		btEliminar.Visible = false;
-		btRestaurar.Visible = true;
-		break;
+		//Muestra los servicios activos y activa el boton de elimiar
+		case 0:
+			servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, true);
+			btEliminar.Visible = true;
+			btRestaurar.Visible = false;
+			break;
+		//Muestra los servicios inactivos y activa el boton de elimiar
+		case 1:
+			servicioVentaObj.mostrarServiciosExistentes(lvEliminarRestaurarServicio, 200, false);
+			btEliminar.Visible = false;
+			btRestaurar.Visible = true;
+			break;
 	}
 }
 

@@ -76,3 +76,12 @@ Actividades realizadas durante el día 01 de Julio del 2017:
 * Se incluyo la carpeta logoAtc, la cual contiene el logotipo de la empresa necesario para la impresión de los reportes.
 * Creación del formato para imprimir reportes.
 * Programación del botón para imprimir el reporte de ventas.
+
+<h5>03/07/2017</h5>
+Actividades realizadas durante el día 03 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
+* Se agregaron detalles a la visualización del reporte de ventas.
+* Cambio del orden de tabulación del dialogo rangoDlg.
+* Cambio del orden de tabulación del dialogo ServicioDlg.
+* Programación del focus dentro del formulario dependiendo del tipo de reporte seleccionado.
