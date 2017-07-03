@@ -188,5 +188,7 @@ void VentaPrinc::Cmd_Reporteventa(Win::Event& e)
 //Opción "Gráfica" del menú
 void VentaPrinc::Cmd_Graficaventas(Win::Event& e)
 {
+	GraficoVentas graficoDlg;
+	graficoDlg.BeginDialog(hWnd);
 }
 

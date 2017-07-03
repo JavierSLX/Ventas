@@ -17,6 +17,7 @@
 #include "busquedaVentasDlg.h"
 #include "EliminarLadaDlg.h"
 #include "EliminarClienteVentasDlg.h"
+#include "GraficoVentas.h"
 
 class VentaPrinc: public Win::Window
 {
