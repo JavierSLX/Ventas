@@ -627,7 +627,7 @@ int LibreriaAdDll::articulo::sacarIDMarca(wstring marca)
 	}
 	catch (Sql::SqlException e)
 	{
-		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
 	}
 
 	conn.CloseSession();
@@ -690,7 +690,7 @@ int LibreriaAdDll::articulo::sacarIDModelo(wstring modelo)
 	}
 	catch (Sql::SqlException e)
 	{
-		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
 	}
 
 	conn.CloseSession();
@@ -1924,7 +1924,7 @@ void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int la
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT ma.id, ma.nombre\
+		Sys::Format(consulta, L"SELECT ma.nombre\
 								FROM marca ma, tipo_articulo ta, modelo mo, articulo ar\
 								WHERE ar.tipoArticulo_id = ta.id\
 								AND ar.modelo_id = mo.id\
@@ -2041,7 +2041,7 @@ void  LibreriaAdDll::ordenNueva::llenarDDModelo(Win::DropDownList ddModelo, wstr
 
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT mo.id, mo.nombre\
+		Sys::Format(consulta, L"SELECT mo.nombre\
 								FROM modelo mo, marca ma\
 								WHERE mo.marca_id = ma.id\
 								AND ma.nombre = '%s'\
@@ -2306,7 +2306,7 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 			AND sv.id = od.tipoVentaId\
 			AND o.folio = '%s'\
 			UNION\
-			SELECT DISTINCT od.id, r.tipo, ta.nombre, mo.nombre, ma.nombre, \
+			SELECT DISTINCT od.id, r.tipo, ta.nombre, ma.nombre, mo.nombre, \
 			col.nombre, od.cantidad, od.precio_sugerido, od.precio_final,od.cantidad * od.precio_final, o.fecha\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
 			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta, color col\

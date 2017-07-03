@@ -142,7 +142,7 @@ void DescripcionOrdenVentasDlg::ddTipo_SelChange(Win::Event& e)
 	else if (radioServicio.IsChecked()== true)
 	{
 		tbxPrecio.SetText(Sys::Convert::ToString(ordenObj.sacarPrecio(ordenObj.sacarIDServicio(ddTipo.Text))));
-		tbxFinal.SetText(tbxPrecio.Text);
+		tbxFinal.SetText(Sys::Convert::ToString(ordenObj.sacarPrecio(ordenObj.sacarIDServicio(ddTipo.Text))));
 
 	}
 
@@ -183,8 +183,6 @@ void DescripcionOrdenVentasDlg::ddModelo_SelChange(Win::Event& e)
 		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 	double precioCliente = ordenObj.sacarPrecioArticulo(articulo_id, ordenObj.sacarIDCliente(CClienteVP, puntoVentaVP));
 	tbxPrecio.SetText(Sys::Convert::ToString(precioCliente));
-	tbxFinal.SetText(tbxPrecio.Text);
-	tbxCantidad.SetText(L"");
 	if (articulo_id != 0)
 	{
 		ordenObj.llenarDDcolor(ddColor, 100, articulo_id, puntoVentaVP);
@@ -203,8 +201,8 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 	LibreriaFBDll::Movimiento movObj;
 	LibreriaAdDll::ordenNueva ordenObj;
 	LibreriaAdDll::articulo articuloObj;
-	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
-		
+	
+	
 
 		if (radioArticulo.IsChecked() == true)
 		{
@@ -237,16 +235,16 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 
 
-//void DescripcionOrdenVentasDlg::tbxCantidad_Change(Win::Event& e)
-//{
-//	LibreriaAdDll::ordenNueva ordenObj;
-//	LibreriaAdDll::articulo articuloObj;
-//	/*int idCantidad=articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text,articuloObj.sacarIDModelo(ddModelo.Text),articuloObj.sacarIDMarca(ddMarca.Text),puntoVentaVP));
-//	;*/
-//	LibreriaFBDll::Movimiento movObj;
-//	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
-//	
-//}
+void DescripcionOrdenVentasDlg::tbxCantidad_Change(Win::Event& e)
+{
+	LibreriaAdDll::ordenNueva ordenObj;
+	LibreriaAdDll::articulo articuloObj;
+	/*int idCantidad=articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text,articuloObj.sacarIDModelo(ddModelo.Text),articuloObj.sacarIDMarca(ddMarca.Text),puntoVentaVP));
+	;*/
+	LibreriaFBDll::Movimiento movObj;
+	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+	
+}
 
 void DescripcionOrdenVentasDlg::btEditar_Click(Win::Event& e)
 {
@@ -271,53 +269,42 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 
 	LibreriaAdDll::ordenNueva consultasObj;
 	LibreriaAdDll::articulo consultasArtObj;
-	LibreriaAdDll::ordenNueva ordenObj;
-	LibreriaAdDll::articulo articuloObj;
+
 
 	idDetalles = consultasObj.sacarIDOcultoLV(lvTabla);
 	wstring requerimiento = consultasObj.sacarTextoLV(lvTabla, 0);
-	lb8.SetText(requerimiento);
 	if (requerimiento == L"Articulo")
 	{
 		
 		TipoArticuloVP = consultasObj.sacarTextoLV(lvTabla, 1);
 
 		MarcaVP = consultasObj.sacarTextoLV(lvTabla, 2);
+		lb8.SetText(MarcaVP);
 		ModeloVP = consultasObj.sacarTextoLV(lvTabla, 3);
 		ColorVP = consultasObj.sacarTextoLV(lvTabla, 4);
 		CantidadVP = consultasObj.sacarTextoLV(lvTabla, 5);
 		PSugeridoVP = consultasObj.sacarTextoLV(lvTabla, 6);
 		PFinalVP = consultasObj.sacarTextoLV(lvTabla, 7);
 
-		ddTipo.SetSelected(TipoArticuloVP);
-		/*Llena la ddlist de marca*/
-		ordenObj.llenarDDMarca(ddMarca, 100, true,TipoArticuloVP);
-		ddMarca.SetSelected(MarcaVP);
-
-		//Llena la ddlist de modelo
-		ordenObj.llenarDDModelo(ddModelo, ddMarca.Text, 100, true);
-		ddModelo.SetSelected(ModeloVP);
-
-		//Llena la ddlist con los colores
-		ordenObj.llenarDDcolor(ddColor, 100, ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
-			articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), puntoVentaVP);
-		ddColor.SetSelected(ColorVP);
-		
-		tbxCantidad.SetText(CantidadVP);
-		tbxPrecio.SetText(PSugeridoVP);
-		tbxFinal.SetText(PFinalVP);
 		ddMarca.Visible = true;
 		ddModelo.Visible = true;
 		ddColor.Visible = true;
 		lbMarca.Visible = true;
 		lb3.Visible = true;
 		lbColor.Visible = true;
-		
+		ddTipo.SetSelected(TipoArticuloVP);
+		ddMarca.SetText(MarcaVP);
+		ddModelo.SetSelected(ModeloVP);
+		ddColor.SetSelected(ColorVP);
+		tbxCantidad.SetText(CantidadVP);
+		tbxPrecio.SetText(PSugeridoVP);
+		tbxFinal.SetText(PFinalVP);
 	}
 	else if (requerimiento == L"Servicio")
 	{
 		TipoArticuloVP = consultasObj.sacarTextoLV(lvTabla, 1);
 		CantidadVP = consultasObj.sacarTextoLV(lvTabla, 5);
+		lb8.SetText(CantidadVP);
 		PSugeridoVP = consultasObj.sacarTextoLV(lvTabla, 6);
 		PFinalVP = consultasObj.sacarTextoLV(lvTabla, 7);
 

@@ -56,6 +56,9 @@ private:
 	Win::Button btTerminar;
 	Win::Button btEliminar;
 	Win::Label lb8;
+	Win::Label lb9;
+	Win::Label lb10;
+	Win::Label lb11;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -90,6 +93,9 @@ protected:
 		btTerminar.CreateX(NULL, L"Terminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 26.59062, 9.39271, 3.96875, 0.68792, hWnd, 1020);
 		btEliminar.CreateX(NULL, L"Eliminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 29.21000, 10.66271, 1.42875, 0.92604, hWnd, 1021);
 		lb8.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 14.26104, 12.40896, 3.49250, 0.60854, hWnd, 1022);
+		lb9.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 0.37042, 12.11792, 3.46604, 0.60854, hWnd, 1023);
+		lb10.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 4.78896, 11.95917, 3.51896, 0.60854, hWnd, 1024);
+		lb11.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 9.33979, 12.14438, 3.91583, 0.60854, hWnd, 1025);
 		lvTabla.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btAgregar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -116,6 +122,9 @@ protected:
 		btTerminar.Font = fontArial009A;
 		btEliminar.Font = fontArial009A;
 		lb8.Font = fontArial009A;
+		lb9.Font = fontArial009A;
+		lb10.Font = fontArial009A;
+		lb11.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioArticulo_Click(Win::Event& e);
@@ -123,7 +132,7 @@ protected:
 	void ddTipo_SelChange(Win::Event& e);
 	void ddMarca_SelChange(Win::Event& e);
 	void ddModelo_SelChange(Win::Event& e);
-	void tbxCantidad_Change(Win::Event& e);
+	/*void tbxCantidad_Change(Win::Event& e);*/
 	void lvTabla_ItemChanged(Win::Event& e);
 	void btAgregar_Click(Win::Event& e);
 	void btEditar_Click(Win::Event& e);
@@ -138,7 +147,7 @@ protected:
 		if (ddTipo.IsEvent(e, CBN_SELCHANGE)) {ddTipo_SelChange(e); return true;}
 		if (ddMarca.IsEvent(e, CBN_SELCHANGE)) {ddMarca_SelChange(e); return true;}
 		if (ddModelo.IsEvent(e, CBN_SELCHANGE)) {ddModelo_SelChange(e); return true;}
-		if (tbxCantidad.IsEvent(e, EN_CHANGE)) {tbxCantidad_Change(e); return true;}
+		/*if (tbxCantidad.IsEvent(e, EN_CHANGE)) {tbxCantidad_Change(e); return true;}*/
 		if (lvTabla.IsEvent(e, LVN_ITEMCHANGED)) {lvTabla_ItemChanged(e); return true;}
 		if (btAgregar.IsEvent(e, BN_CLICKED)) {btAgregar_Click(e); return true;}
 		if (btEditar.IsEvent(e, BN_CLICKED)) {btEditar_Click(e); return true;}
