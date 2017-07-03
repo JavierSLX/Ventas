@@ -130,11 +130,7 @@ void OrdenVentasDlg::ddCliente_SelChange(Win::Event& e)
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
 	wstring clave_cliente = ddCliente.Text;
-<<<<<<< HEAD
-	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text,puntoVenta);
-=======
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text, puntoVenta);
->>>>>>> origin/adri1
 	tbxNombreCliente.SetText( consultasObj.sacarNombreCliente(idPuntoVenta, clave_cliente));
 
 }
