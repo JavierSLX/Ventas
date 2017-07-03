@@ -1542,6 +1542,7 @@ int LibreriaAdDll::ordenNueva::sacarIDpuntoVenta(wstring pv)
 	conn.CloseSession();
 	return pv_id;
 }
+
 int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente, wstring pv)
 {
 	wstring consulta;
@@ -1555,7 +1556,8 @@ int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente, wstring pv)
 			WHERE cc.cliente_id = cli.id\
 			AND cc.puntoVenta_id = pv.id\
 			AND cc.numero = '%s'\
-			AND pv.tipo = '%s';", clave_cliente.c_str(),pv.c_str());
+			AND pv.tipo = '%s';", clave_cliente.c_str(), pv.c_str());
+
 		pv_id = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -1858,7 +1860,7 @@ void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, in
 	lvOrden.SetRedraw(true);
 
 	lvOrden.Cols.Add(0, LVCFMT_LEFT, 120, L"Tipo");
-	lvOrden.Cols.Add(1, LVCFMT_CENTER, 100, L"Algo");
+	lvOrden.Cols.Add(1, LVCFMT_LEFT, 120, L"Nombre");
 	lvOrden.Cols.Add(2, LVCFMT_LEFT, 120, L"Marca");
 	lvOrden.Cols.Add(3, LVCFMT_LEFT, 120, L"Modelo");
 	lvOrden.Cols.Add(4, LVCFMT_LEFT, 120, L"Color");

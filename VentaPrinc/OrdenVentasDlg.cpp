@@ -51,12 +51,11 @@ void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva consultasObj;
 	_puntoVenta = ddPuntoVenta.Text;
-	//DetallesOrdenVentaDlg ventana(_puntoVenta);
-	DetallesOrdenVentaDlg ventana(_puntoVenta,tbxFolio.Text);
+	DetallesOrdenVentaDlg ventana(_puntoVenta, tbxFolio.Text);
 	wstring folio = tbxFolio.Text;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
-	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text,puntoVenta);
+	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text, puntoVenta);
 	consultasObj.insertOrden(folio, cliente_id, idPuntoVenta);
 	MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);
 	//ventana.BeginDialog(hWnd);
@@ -131,7 +130,11 @@ void OrdenVentasDlg::ddCliente_SelChange(Win::Event& e)
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
 	wstring clave_cliente = ddCliente.Text;
+<<<<<<< HEAD
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text,puntoVenta);
+=======
+	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text, puntoVenta);
+>>>>>>> origin/adri1
 	tbxNombreCliente.SetText( consultasObj.sacarNombreCliente(idPuntoVenta, clave_cliente));
 
 }
