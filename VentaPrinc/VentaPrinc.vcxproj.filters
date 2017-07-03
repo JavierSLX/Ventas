@@ -111,6 +111,9 @@
     <ClInclude Include="DescripcionOrdenVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ComisionVentasDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -201,6 +204,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DescripcionOrdenVentasDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComisionVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
