@@ -112,6 +112,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GraficoVentas.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ComisionVentasDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -207,6 +210,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GraficoVentas.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComisionVentasDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

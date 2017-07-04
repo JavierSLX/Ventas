@@ -38,6 +38,7 @@ private:
 	Win::Textbox tbxCantidadAbono;
 	Win::Button btAgregar;
 	Win::ListView lvAbonos;
+	Win::Label lb6;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -61,6 +62,7 @@ protected:
 		tbxCantidadAbono.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 3.59833, 5.58271, 7.96396, 0.60854, hWnd, 1009);
 		btAgregar.CreateX(NULL, L"Agregar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 4.36563, 6.53521, 6.74688, 0.68792, hWnd, 1010);
 		lvAbonos.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.15875, 7.54062, 17.40958, 7.14375, hWnd, 1011);
+		lb6.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 12.88521, 4.97417, 3.25438, 0.60854, hWnd, 1012);
 		lvAbonos.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btAgregar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -76,6 +78,7 @@ protected:
 		tbxCantidadAbono.Font = fontArial009A;
 		btAgregar.Font = fontArial009A;
 		lvAbonos.Font = fontArial009A;
+		lb6.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void btAgregar_Click(Win::Event& e);

@@ -111,6 +111,7 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 	javObj.llenarDdRutasExclusiva(ddDepartamentos, true, 100);
 	ddDepartamentos.SetSelectedIndex(0);
 	tbxOpcionBusqueda.Enabled = false;
+	tbxOpcionBusqueda.SetFocus();
 	lvOrden.SetRedraw(false);
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
@@ -121,18 +122,21 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 
 void busquedaVentasDlg::btLimpiar_Click(Win::Event& e)
 {
+	tbxOpcionBusqueda.Enabled = true;
+	tbxOpcionBusqueda.SetFocus();
 	lvOrden.SetRedraw(false);
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
-	tbxOpcionBusqueda.SetText(L"");
-	tbxOpcionBusqueda.SetFocus();
 	radioFolio.Checked = true;
 	radioClaveCliente.Checked =false;
 	radioDepartamento.Checked = false;
 	radioFecha.Checked = false;
 	ddPuntosVenta.Visible = false;
 	ddDepartamentos.Visible = false;
+	dtboxFecha.Visible = false;
+	tbxOpcionBusqueda.SetText(L"");
+	
 
 }
 

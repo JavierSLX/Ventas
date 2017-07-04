@@ -88,7 +88,8 @@ void agregarCiudadVentasDlg::lvCiudades_ItemChanged(Win::Event& e)
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadIdVP = modeloObj.sacarIDOculto(lvCiudades);
 	nombreCiudadVP = ciudadObj.sacarTextoLV(lvCiudades, 0);
-	wstring lada = ciudadObj.sacarLada(tbxNombre.Text);
+	wstring lada = ciudadObj.sacarLada(nombreCiudadVP);
+	lb3.SetText(lada);
 	tbxNombre.SetText(nombreCiudadVP);
 	ddLadas.SetSelected(lada);
 

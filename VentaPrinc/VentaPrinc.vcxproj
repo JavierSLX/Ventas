@@ -164,6 +164,7 @@
     <ClInclude Include="busquedaVentasDlg.h" />
     <ClInclude Include="ClienteVentasDlg.h" />
     <ClInclude Include="agregarCiudadVentasDlg.h" />
+    <ClInclude Include="ComisionVentasDlg.h" />
     <ClInclude Include="DescripcionOrdenVentasDlg.h" />
     <ClInclude Include="DetallesOrdenVentaDlg.h" />
     <ClInclude Include="detallesOrdenVentasDlg.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="busquedaVentasDlg.cpp" />
     <ClCompile Include="ClienteVentasDlg.cpp" />
     <ClCompile Include="agregarCiudadVentasDlg.cpp" />
+    <ClCompile Include="ComisionVentasDlg.cpp" />
     <ClCompile Include="DescripcionOrdenVentasDlg.cpp" />
     <ClCompile Include="DetallesOrdenVentaDlg.cpp" />
     <ClCompile Include="detallesOrdenVentasDlg.cpp" />

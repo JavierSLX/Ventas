@@ -70,6 +70,7 @@ protected:
 	void ddTipo_SelChange(Win::Event& e);
 	void ddMarca_SelChange(Win::Event& e);
 	void ddModelo_SelChange(Win::Event& e);
+	void tbxCantidad_Change(Win::Event& e);
 	void btAgregar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
@@ -80,6 +81,7 @@ protected:
 		if (ddTipo.IsEvent(e, CBN_SELCHANGE)) {ddTipo_SelChange(e); return true;}
 		if (ddMarca.IsEvent(e, CBN_SELCHANGE)) {ddMarca_SelChange(e); return true;}
 		if (ddModelo.IsEvent(e, CBN_SELCHANGE)) {ddModelo_SelChange(e); return true;}
+		if (tbxCantidad.IsEvent(e, EN_CHANGE)) {tbxCantidad_Change(e); return true;}
 		if (btAgregar.IsEvent(e, BN_CLICKED)) {btAgregar_Click(e); return true;}
 		return false;
 	}

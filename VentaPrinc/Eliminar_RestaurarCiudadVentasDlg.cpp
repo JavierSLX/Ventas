@@ -18,11 +18,24 @@ void Eliminar_RestaurarCiudadVentasDlg::btEliminar_Click(Win::Event& e)
 	LibreriaFBDll::Ciudad ciudadObj;
 	LibreriaFBDll::Modelo modeloObj;
 	ciudadObj.eliminarRecuperarCiudad(ciudadIdVP, false);
-	if (MessageBoxW(L"Se elimino este registro", L"", MB_OK | MB_ICONINFORMATION) == IDYES)
+	if (ciudadIdVP == 0)
 	{
+		if (MessageBoxW(L"No hay nada seleccionado", L"", MB_OK | MB_ICONERROR) == IDYES)
+		{
 
+		}
+		
 	}
-	ciudadObj.llenarLVCiudad(lvE_Rciudades, 100);
+	else
+	{
+		if (MessageBoxW(L"Se elimino este registro", L"", MB_OK | MB_ICONINFORMATION) == IDYES)
+		{
+
+		}
+		ciudadObj.llenarLVCiudad(lvE_Rciudades, 100);
+		ciudadIdVP = 0;
+	}
+	
 }
 
 void Eliminar_RestaurarCiudadVentasDlg::btRestaurar_Click(Win::Event& e)
@@ -30,11 +43,23 @@ void Eliminar_RestaurarCiudadVentasDlg::btRestaurar_Click(Win::Event& e)
 	LibreriaFBDll::Ciudad ciudadObj;
 	LibreriaFBDll::Modelo modeloObj;
 	ciudadObj.eliminarRecuperarCiudad(ciudadIdVP,true);
-	if (MessageBoxW(L"Se restauro este registro", L"", MB_OK | MB_ICONINFORMATION) == IDYES)
+	if (ciudadIdVP == 0)
 	{
+		if (MessageBoxW(L"No hay nada seleccionado", L"", MB_OK | MB_ICONERROR) == IDYES)
+		{
+
+		}
 
 	}
-	ciudadObj.llenarLVCiudadInactiva(lvE_Rciudades, 100);
+	else
+	{
+		if (MessageBoxW(L"Se restauro este registro", L"", MB_OK | MB_ICONINFORMATION) == IDYES)
+		{
+
+		}
+		ciudadObj.llenarLVCiudadInactiva(lvE_Rciudades, 100);
+		ciudadIdVP = 0;
+	}
 
 }
 
