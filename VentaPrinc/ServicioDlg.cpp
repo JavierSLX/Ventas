@@ -12,6 +12,7 @@ void ServicioDlg::Window_Open(Win::Event& e)
 void ServicioDlg::btAgregar_Click(Win::Event& e)
 {
 	LibreriaAngelDll::servicioVentaCLS servicioVentaObj;
+	//Validación que servicio tenga valor
 	if (this->tbxServicio.GetTextLength() == 0)
 	{
 		this->tbxServicio.ShowBalloonTip(L"Servicios", L"Ingrese el nombre del servicio", TTI_ERROR);
@@ -19,6 +20,7 @@ void ServicioDlg::btAgregar_Click(Win::Event& e)
 	}
 	else
 	{
+		//Validación que precio tenga valor
 		if (this->tbxPrecio.GetTextLength() == 0)
 		{
 			this->tbxPrecio.ShowBalloonTip(L"Servicios", L"Ingrese el precio del servicio", TTI_ERROR);
@@ -26,6 +28,7 @@ void ServicioDlg::btAgregar_Click(Win::Event& e)
 		}
 		else
 		{
+			//Validación que el servicio no existe en la base de datos
 			wstring servicio = servicioVentaObj.sacarServicioSiExiste(tbxServicio.Text);
 			if (servicio == tbxServicio.Text)
 			{
@@ -39,6 +42,7 @@ void ServicioDlg::btAgregar_Click(Win::Event& e)
 			}
 			else
 			{
+				//Inserta un nuevo servicio y actualiza la base de datos
 				servicioVentaObj.insertarServicio(tbxServicio.Text, tbxPrecio.IntValue, true);
 				servicioVentaObj.mostrarServiciosExistentes(lvServicio, 200, true);
 				this->MessageBoxW(L"Se agrego correctamente", L"Nuevo servicio", MB_OK);
@@ -54,20 +58,23 @@ void ServicioDlg::btAgregar_Click(Win::Event& e)
 void ServicioDlg::btActualizar_Click(Win::Event& e)
 {
 	LibreriaAngelDll::servicioVentaCLS servicioVentaObj;
+	//Validación que servicio tenga valor
 	if (this->tbxServicio.GetTextLength() == 0)
 	{
-		this->tbxServicio.ShowBalloonTip(L"Servicios", L"Ingrese el nombre del servicio", TTI_ERROR);
+		this->tbxServicio.ShowBalloonTip(L"Servicios", L"No hay servicio seleccionado", TTI_ERROR);
 		return;
 	}
 	else
 	{
+		//Validación que precio tenga valor
 		if (this->tbxPrecio.GetTextLength() == 0)
 		{
-			this->tbxPrecio.ShowBalloonTip(L"Servicios", L"Ingrese el precio del servicio", TTI_ERROR);
+			this->tbxPrecio.ShowBalloonTip(L"Servicios", L"No hay servicio seleccionado", TTI_ERROR);
 			return;
 		}
 		else
 		{
+			//Valor que el servicio no exista en la base de datos
 			wstring servicio = servicioVentaObj.sacarServicioSiExiste(tbxServicio.Text);
 			if (servicio == tbxServicio.Text)
 			{
@@ -81,6 +88,7 @@ void ServicioDlg::btActualizar_Click(Win::Event& e)
 			}
 			else
 			{
+				//Actualiza el servicio en la base de datos y actualiza la ListView
 				servicioVentaObj.actualizarServicio(_idServicio, tbxServicio.Text, tbxPrecio.IntValue, true);
 				servicioVentaObj.mostrarServiciosExistentes(lvServicio, 200, true);
 				this->MessageBoxW(L"Se agrego correctamente", L"Nuevo servicio", MB_OK);
@@ -95,9 +103,21 @@ void ServicioDlg::btActualizar_Click(Win::Event& e)
 //Metodo que muestra la información en el formulario del servicio seleccionado
 void ServicioDlg::lvServicio_DblClk(Win::Event& e)
 {
+	
+}
+
+void ServicioDlg::lvServicio_ItemChanged(Win::Event& e)
+{
 	LibreriaAngelDll::tipoArticuloCLS tipoArticuloObj;
 	_idServicio = tipoArticuloObj.obtenerIdOculto(lvServicio);
 	tbxServicio.Text = tipoArticuloObj.obtenerTextoListView(lvServicio, 1);
 	tbxPrecio.Text = tipoArticuloObj.obtenerTextoListView(lvServicio, 0);
+}
+
+void ServicioDlg::btLimpiar_Click(Win::Event& e)
+{
+	tbxServicio.Text = L"";
+	tbxPrecio.Text = L"";
+	tbxServicio.SetFocus();
 }
 

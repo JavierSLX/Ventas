@@ -54,10 +54,10 @@ Actividades realizadas durante el día 28 de Junio del 2017:
 <h5>29/06/2017</h5>
 Actividades realizadas durante el día 29 de Junio del 2017:
 
-* Programación del evento selchange en los DropDownList del dialogo reportesDlg para cambiar los parámetros del reporte.
+* Programación del evento `selchange` en los `DropDownList` del dialogo reportesDlg para cambiar los parámetros del reporte.
 * Adecuación del método para la generación del reporte por departamento y general.
 * Creación del método para reporte de ventas por orden de compra.
-* Programación del evento textchange del TextBox de orden de compra para generar el reporte de ventas por orden.
+* Programación del evento textchange del `TextBox` de orden de compra para generar el reporte de ventas por orden.
 *
 <h5>30/06/2017</h5>
 Actividades realizadas durante el día 30 de Junio del 2017:
@@ -72,7 +72,18 @@ Actividades realizadas durante el día 01 de Julio del 2017:
 
 * Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
 * Reporte de ventas por ciudad con filtro de fechas, se agregaron los campos de modelo y marca en caso de artículo.
-* Cambio en el diseño de los encabezados (título y tamaño) del ListView del reporte de ventas.
+* Cambio en el diseño de los encabezados (título y tamaño) del `ListView` del reporte de ventas.
 * Se incluyo la carpeta logoAtc, la cual contiene el logotipo de la empresa necesario para la impresión de los reportes.
 * Creación del formato para imprimir reportes.
 * Programación del botón para imprimir el reporte de ventas.
+
+<h5>03/07/2017</h5>
+Actividades realizadas durante el día 03 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
+* Se agregaron detalles a la visualización del reporte de ventas.
+* Cambio del orden de tabulación del dialogo `rangoDlg`.
+* Cambio del orden de tabulación del dialogo `ServicioDlg`.
+* Programación del focus dentro del formulario dependiendo del tipo de reporte seleccionado.
+* Pruebas de humo con usuario para verificar el funcionamiento del software.
+* Cambios en los mensajes de error en las ventas de `ServicioDlg` y `rangoDlg`.

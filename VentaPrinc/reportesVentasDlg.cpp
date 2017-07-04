@@ -18,6 +18,7 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	tbxFecha.Visible = false;
 	tbxFirma.Visible = false;
 	tbxTitulo.Visible = false;
+	ddTipoReporte.SetFocus();
 	//________________________________________________________ ddRegion
 	ddRegion.Items.Add(L"Todas las regiones");
 	//________________________________________________________ ddCiudad
@@ -85,7 +86,10 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 	if (ddTipoReporte.Text == L"Ventas General")
 	{
 		ponerVisibleElementos(false);
+		lbRequerimiento.Visible = true;
+		ddRequerimiento.Visible = true;
 		generarReporte(ddTipoReporte.Text);
+		ddRequerimiento.SetFocus();
 	}
 	else
 	{
@@ -94,6 +98,8 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 			ponerVisibleElementos(true);
 			lbFolio.Visible = false;
 			tbxFolio.Visible = false;
+			lbRequerimiento.Visible = true;
+			ddRequerimiento.Visible = true;
 			reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
 			ddDepartamento.SetSelectedIndex(0);
 			_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
@@ -107,6 +113,7 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 			ddRequerimiento.SetSelectedIndex(0);
 			_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 			generarReporte(ddTipoReporte.Text);
+			ddDepartamento.SetFocus();
 		}
 		else
 		{
@@ -115,6 +122,8 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 				ponerVisibleElementos(true);
 				lbDepartamento.Visible = false;
 				ddDepartamento.Visible = false;
+				lbRequerimiento.Visible = true;
+				ddRequerimiento.Visible = true;
 				lbFolio.Visible = false;
 				tbxFolio.Visible = false;
 				reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
@@ -130,6 +139,7 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 				ddRequerimiento.SetSelectedIndex(0);
 				_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 				generarReporte(ddTipoReporte.Text);
+				ddCiudad.SetFocus();
 			}
 			else
 			{
@@ -138,6 +148,7 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 				ddRequerimiento.Visible = false;
 				lbFolio.Visible = true;
 				tbxFolio.Visible = true;
+				tbxFolio.SetFocus();
 				generarReporte(ddTipoReporte.Text);
 			}
 			
@@ -151,7 +162,7 @@ void reportesVentasDlg::ddRegion_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
-	if (ddRegion.Text == L"Todas las regiones")
+	if (ddRegion.Text == L"Todas")
 	{
 		reporteVentasObj.llenarCiudad(ddCiudad, 200);
 		ddCiudad.SetSelectedIndex(0);
