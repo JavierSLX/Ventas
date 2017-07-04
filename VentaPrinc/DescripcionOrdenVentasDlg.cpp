@@ -38,15 +38,6 @@ void DescripcionOrdenVentasDlg::Window_Open(Win::Event& e)
 		MessageBoxW(L"No existe ningún artículo con esa combinación", L"Articulo", MB_OK | MB_ICONERROR);
 		ddColor.DeleteAllItems();
 	}
-<<<<<<< HEAD
-	//________________________________________________________ lvTabla
-	lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Day");
-	lvTabla.Cols.Add(1, LVCFMT_RIGHT, 200, L"Activity");
-	lvTabla.Items.Add(0, L"Monday");
-	lvTabla.Items[0][1].Text = L"Math Class";
-=======
-	
->>>>>>> origin/Fabi03
 }
 
 void DescripcionOrdenVentasDlg::radioArticulo_Click(Win::Event& e)
@@ -342,8 +333,4 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 	}
 }
 
-void DescripcionOrdenVentasDlg::tbxCantidad_Change(Win::Event& e)
-{
-
-}
 
