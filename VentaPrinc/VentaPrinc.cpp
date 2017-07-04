@@ -59,6 +59,8 @@ void VentaPrinc::Cmd_Abonocredito(Win::Event& e)
 //Opción "Registrar Comisión" del menú
 void VentaPrinc::Cmd_Regcomision(Win::Event& e)
 {
+	ComisionVentasDlg comisionObj;
+	comisionObj.BeginDialog(hWnd);
 }
 
 //Opción "Rango Comisión" del menú
