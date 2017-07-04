@@ -96,7 +96,7 @@ public:
 		wstring LibreriaAdDll::ordenNueva::sacarUltimoFolio(void);
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorFecha(wstring cadena);
 		int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena);
-		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv);
+		void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv, int usuario);
 		int LibreriaAdDll::ordenNueva::sacarIDCliente(wstring clave_cliente, wstring pv);
 		void  LibreriaAdDll::ordenNueva::llenarDDServicio(Win::DropDownList ddServicio, int large, bool activo);
 		void LibreriaAdDll::ordenNueva::insertOrdenDescripcion(int tipoVentaId, int cantidad, double precioSugerido, double precioFinal, int orden, int requerimiento);
@@ -124,7 +124,13 @@ public:
 			void LibreriaAdDll::ordenNueva::insertarCantidadRequerimiento(int cantidad, int requerimiento);
 			void LibreriaAdDll::ordenNueva::insertarServicioRequerimiento(int servicio, int requerimiento);
 			void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, int large, bool activo, wstring folio);
-		
+			void LibreriaAdDll::ordenNueva::updateCantidaDescrOreden(int descr_id, int cantidad);
+			void LibreriaAdDll::ordenNueva::updatePrecioDescrOreden(int descr_id, double cantidad);
+			int LibreriaAdDll::ordenNueva::sacarCantidad(int id);
+			void LibreriaAdDll::ordenNueva::updateCantidadInventario(int cantidad_id, int valor);
+			void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id);
+			/*void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id);*/
+			int LibreriaAdDll::ordenNueva::sacarIDUsuario(int pv, wstring nombre);
 
 
 	};

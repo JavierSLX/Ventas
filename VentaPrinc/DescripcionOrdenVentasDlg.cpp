@@ -210,17 +210,31 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			if (tbxCantidad.IntValue > cantidadExistenteVP)
 			{
 				MessageBoxW(L"No se puede realizar", L"Articulo", MB_OK | MB_ICONERROR);
+				tbxCantidad.Text = L"";
+				tbxPrecio.Text = L"";
+				tbxFinal.Text = L"";
 
 			}
 			else
 			{
+				//inserta en la tabla cantidad requerimienti
 				ordenObj.insertarCantidadRequerimiento(movObj.sacarIDCantidad(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
+					//insertar en orden descripcion
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP)), ordenObj.sacarIDRequerimiento(L"Articulo"));
-
+				int cantidadOrden = Sys::Convert::ToInt(tbxCantidad.Text);
 				ordenObj.insertOrdenDescripcion(ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, ordenObj.sacarUltIDOrden(), ordenObj.sacarIDRequerimiento(L"Articulo"));
 				MessageBoxW(L"Ya inserto", L"Articulo", MB_OK | MB_ICONERROR);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
+				//Descontar cantidad de inventario
+				int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+				int cantidadActualizar = cantidadExistenteVP - cantidadOrden;
+				articuloObj.updateCantidad(idCantidad, cantidadActualizar);
+				//insertar comisiones
+
+
+				
+
 			}
 		}
 		else  if (radioServicio.IsChecked()  == true)
@@ -249,10 +263,41 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 void DescripcionOrdenVentasDlg::btEditar_Click(Win::Event& e)
 {
+	bool cambio;
+	LibreriaAdDll::ordenNueva ordenObj;
+	//Cuando se hizo un cambio de codigo
+	if (tbxCantidad.Text != CantidadVP)
+	{
+	
+		int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+		ordenObj.updateCantidaDescrOreden(idDetalles, cantidad);
+		cambio = true;
+	}
+	if (tbxFinal.Text != PFinalVP)
+	{
+		int articulo_id = idDetalles;
+		double precio = Sys::Convert::ToInt(tbxFinal.Text);
+		ordenObj.updatePrecioDescrOreden(idDetalles, precio);
+		cambio = true;
+	}
+	if (cambio == true) {
+
+		MessageBoxW(L"Se guardaron los cambios", L"", MB_OK | MB_ICONINFORMATION);
+
+	}
+	else {
+		MessageBoxW(L"No se realizó ningun cambio", L"", MB_OK | MB_ICONINFORMATION);
+	}
+	ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 }
 
 void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 {
+	LibreriaAdDll::articulo articuloObj;
+	LibreriaAdDll::ordenNueva ordenObj;
+	int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+	int cantidadInventario = ordenObj.sacarCantidad(idCantidad);
+
 	if (MessageBoxW(L"La compra es al CONTADO", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
 	{
 	}
@@ -275,7 +320,6 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 
 	idDetalles = consultasObj.sacarIDOcultoLV(lvTabla);
 	wstring requerimiento = consultasObj.sacarTextoLV(lvTabla, 0);
-	lb8.SetText(requerimiento);
 	if (requerimiento == L"Articulo")
 	{
 		
@@ -311,6 +355,10 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 		lbMarca.Visible = true;
 		lb3.Visible = true;
 		lbColor.Visible = true;
+		ddMarca.Enabled = true;
+		ddModelo.Enabled = true;
+		ddColor.Enabled = true;
+		ddTipo.Enabled = true;
 		
 	}
 	else if (requerimiento == L"Servicio")
@@ -327,6 +375,7 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 		lbMarca.Visible = false;
 		lb3.Visible = false;
 		lbColor.Visible = false;
+		ddTipo.Enabled = true;
 		tbxCantidad.SetText(CantidadVP);
 		tbxPrecio.SetText(PSugeridoVP);
 		tbxFinal.SetText(PFinalVP);
