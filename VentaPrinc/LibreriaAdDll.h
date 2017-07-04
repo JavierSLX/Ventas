@@ -114,13 +114,16 @@ public:
 			void  LibreriaAdDll::ordenNueva::llenarDDModelo(Win::DropDownList ddModelo, wstring marca, int large, bool activo);
 			double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id);
 			int LibreriaAdDll::ordenNueva::sacarIDPuntoVenta(wstring PV);
-			double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int pv);
+			double LibreriaAdDll::ordenNueva::sacarPrecioArticulo(int articulo_id, int ClaveCliente);
 			int LibreriaAdDll::ordenNueva::sacarIDOcultoLV(Win::ListView lv2);
 			wstring LibreriaAdDll::ordenNueva::sacarTextoLV(Win::ListView lvTabla, int columna);
 			void LibreriaAdDll::ordenNueva::updateTipoArticulo(int articulo_id, wstring tipoArticulo);
 			void LibreriaAdDll::ordenNueva::updateMarca(int articulo_id, wstring marca);
 			void LibreriaAdDll::ordenNueva::updateModelo(int articulo_id, wstring modelo);
 			int LibreriaAdDll::ordenNueva::sacarIDArticuloUpdate(wstring tipo, wstring modelo, wstring marca);
+			void LibreriaAdDll::ordenNueva::insertarCantidadRequerimiento(int cantidad, int requerimiento);
+			void LibreriaAdDll::ordenNueva::insertarServicioRequerimiento(int servicio, int requerimiento);
+			void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, int large, bool activo, wstring folio);
 		
 
 
