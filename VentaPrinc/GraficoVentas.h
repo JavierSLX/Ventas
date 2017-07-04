@@ -1,5 +1,6 @@
 #pragma once   //_____________________________________________ GraficoVentas.h  
 #include "resource.h"
+#include "LibreriaJRDll.h"
 
 class GraficoVentas: public Win::Dialog
 {

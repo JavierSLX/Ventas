@@ -20,15 +20,14 @@ void GraficoVentas::Window_Open(Win::Event& e)
 
 	//Hace invisible la gráfica de barras
 	bchartBarras.Visible = false;
-	//________________________________________________________ ddTipo
-	ddTipo.Items.Add(L"Item 0 with value 10", 10);
-	ddTipo.Items.Add(L"Item 1 with value 20", 20);
-	//________________________________________________________ ddDepartamento
-	ddDepartamento.Items.Add(L"Item 0 with value 10", 10);
-	ddDepartamento.Items.Add(L"Item 1 with value 20", 20);
-	//________________________________________________________ ddArticulo
-	ddArticulo.Items.Add(L"Item 0 with value 10", 10);
-	ddArticulo.Items.Add(L"Item 1 with value 20", 20);
+
+	//Activa la primera checkbox para poder imprimir
+	ckPastel.Checked = true;
+
+	//Llena las drop down list
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	wintemplaObj.llenarDdPuntoVenta(ddDepartamento, 100);
+	wintemplaObj.llenarDdTipoArticulo(ddArticulo, 100);
 	
 }
 
@@ -47,10 +46,12 @@ void GraficoVentas::tabVenta_SelChange(Win::Event& e)
 	}
 }
 
+//El botón Generar
 void GraficoVentas::btGenerar_Click(Win::Event& e)
 {
 }
 
+//El botón Imprimir
 void GraficoVentas::btImprimir_Click(Win::Event& e)
 {
 }
