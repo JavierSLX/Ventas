@@ -10,7 +10,9 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddTipoReporte.Items.Add(L"Departamento");
 	ddTipoReporte.Items.Add(L"Ciudad");
 	ddTipoReporte.Items.Add(L"Orden de Compra");
+	//ddTipoReporte.Items.Add(L"Servicios");
 	ddTipoReporte.SetSelectedIndex(0);
+	//Inicializar en false los elemetos del dialogo que no se necesitan visualizar
 	ponerVisibleElementos(false);
 	tbxCabecera.Visible = false;
 	tbxEspacio.Visible = false;
@@ -25,6 +27,7 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddCiudad.Items.Add(L"Todas las ciudades");
 	//________________________________________________________ ddRequerimiento
 	ddRequerimiento.Items.Add(L"Todos");
+	//Reporte inicial
 	reporteVentasObj.llenarRequerimiento(ddRequerimiento, 10);
 	ddRequerimiento.SetSelectedIndex(0);
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
@@ -36,6 +39,7 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
+	//Reporte general con margen de fechas y requerimiento
 	if (tipoReporte == L"Ventas General")
 	{
 		_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
@@ -44,18 +48,21 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 	}
 	else
 	{
+		//Reporte por departamento con margen de fecha,región,ciudad y requerimiento
 		if (tipoReporte == L"Departamento")
 		{
 			reporteVentasObj.llenarReporteVentasDepartamento(lvReporte, _idDepartamento, _idRegion, _idCiudad, _idRequerimiento, 300, dtboxInicial.GetSelectedDateTime(), dtboxFinal.GetSelectedDateTime(),true);
 		}
 		else
 		{
+			//Reporte por ciudad con margen de fechas y requerimiento
 			if (tipoReporte == L"Ciudad")
 			{
 				reporteVentasObj.llenarReporteVentasCiudad(lvReporte, _idRegion, _idCiudad, _idRequerimiento, 300, dtboxInicial.GetSelectedDateTime(), dtboxFinal.GetSelectedDateTime(),true);
 			}
 			else
 			{
+				//Reporte por orden de compra
 				if (tipoReporte == L"Orden de Compra")
 				{
 					reporteVentasObj.llenarReporteVentasOrdenCompra(lvReporte, tbxFolio.Text, 300, true);
@@ -83,6 +90,7 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 {
 	LibreriaAngelDll::reporteVentasCLS reporteVentasObj;
 	LibreriaAngelDll::reportesCLS reportesObj;
+	//Ventas generales(genera el reporte general y pone en setfocus el requerimiento)
 	if (ddTipoReporte.Text == L"Ventas General")
 	{
 		ponerVisibleElementos(false);
@@ -93,6 +101,7 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 	}
 	else
 	{
+		//Ventas por departamento, 
 		if (ddTipoReporte.Text == L"Departamento")
 		{
 			ponerVisibleElementos(true);
@@ -143,13 +152,24 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 			}
 			else
 			{
-				ponerVisibleElementos(false);
-				lbRequerimiento.Visible = false;
-				ddRequerimiento.Visible = false;
-				lbFolio.Visible = true;
-				tbxFolio.Visible = true;
-				tbxFolio.SetFocus();
-				generarReporte(ddTipoReporte.Text);
+				if (ddTipoReporte.Text == L"Orden de Compra")
+				{
+					ponerVisibleElementos(false);
+					lbRequerimiento.Visible = false;
+					ddRequerimiento.Visible = false;
+					lbFolio.Visible = true;
+					tbxFolio.Visible = true;
+					tbxFolio.SetFocus();
+					generarReporte(ddTipoReporte.Text);
+				}
+				else
+				{
+					//if (ddTipoReporte.Text == L"Servicios")
+					//{
+
+					//}
+				}
+				
 			}
 			
 		}

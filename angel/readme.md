@@ -87,3 +87,9 @@ Actividades realizadas durante el día 03 de Julio del 2017:
 * Programación del focus dentro del formulario dependiendo del tipo de reporte seleccionado.
 * Pruebas de humo con usuario para verificar el funcionamiento del software.
 * Cambios en los mensajes de error en las ventas de `ServicioDlg` y `rangoDlg`.
+
+<h5>04/07/2017</h5>
+Actividades realizadas durante el día 04 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
+* Se agregaron creo el dialogo RangosDlg para administrar los rangos por artículo.

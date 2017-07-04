@@ -107,6 +107,7 @@ public:
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::ListView lvReporte, int idPuntoVenta, int idRegion, int idCiudad,int idRequerimiento, int longuitud, Sys::Time inicial, Sys::Time termino,bool activo);
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView lvReporte, int idRegion, int idCiudad, int idRequerimiento, int longuitud, Sys::Time inicial, Sys::Time termino, bool activo);
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, wstring folio, int longuitud, bool activo);
+		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, int idPuntoVenta,int longuitud, bool activo);
 	private:
 	};
 private:
