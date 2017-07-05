@@ -3,6 +3,7 @@
 
 void Eliminar_RestaurarCiudadVentasDlg::Window_Open(Win::Event& e)
 {
+	this->SetWindowTextW(L"Eliminar/Restaurar Ciudad");
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadObj.llenarLVCiudad(lvE_Rciudades, 100);
 	//________________________________________________________ tabCiudades

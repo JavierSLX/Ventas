@@ -3,6 +3,7 @@
 
 void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 {
+	this->SetWindowTextW(L"Agregar/Actualizar Ciudad");
 	tbxNombre.SetFocus();
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadObj.llenarLVCiudad(lvCiudades, 100);
