@@ -93,3 +93,13 @@ Actividades realizadas durante el día 04 de Julio del 2017:
 
 * Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
 * Se agregaron creo el dialogo RangosDlg para administrar los rangos por artículo.
+
+<h5>05/07/2017</h5>
+Actividades realziadas durante el día 05 de Julio del 2017.
+
+* Creación del método para mostrar los servicios y artículos con rango asignado.
+* Creación del método para mostrar los servicios y artículos sin rango asignado.
+* Creación del método para asignar un rango a un artículo.
+* Creación del método para asignar un rango a un servicio.
+* Creación del método para editar un rango de un servicio.
+* Creación del método para editar un rango de un artículo.

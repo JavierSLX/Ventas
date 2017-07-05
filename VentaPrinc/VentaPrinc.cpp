@@ -66,7 +66,7 @@ void VentaPrinc::Cmd_Regcomision(Win::Event& e)
 //Opción "Rango Comisión" del menú
 void VentaPrinc::Cmd_Rangocomision(Win::Event& e)
 {
-	RangoDlg rangoObj;
+	RangosDlg rangoObj;
 	rangoObj.BeginDialog(hWnd);
 }
 

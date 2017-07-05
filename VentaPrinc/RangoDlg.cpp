@@ -150,3 +150,8 @@ void RangoDlg::btLimpiar_Click(Win::Event& e)
 	tbxMinimo.SetFocus();
 }
 
+void RangoDlg::btRegresar_Click(Win::Event& e)
+{
+	Close();
+}
+
