@@ -3,7 +3,11 @@
 
 void ComisionVentasDlg::Window_Open(Win::Event& e)
 {
+
 	this->SetWindowTextW(L"Comisiones");
+	Sys::Icon buscar;
+	buscar.Load(hInstance, IDI_SEARCH);
+	btBuscar.SetImage(buscar);
 	LibreriaJRDll::WintemplaCLS jrdObj;
 	jrdObj.llenarDdRutasExclusiva(ddPuntoVenta, true, 100);
 	ddPuntoVenta.SetSelectedIndex(0);

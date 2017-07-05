@@ -4,9 +4,19 @@
 void bonoCreditoVentasDlg::Window_Open(Win::Event& e)
 {
 	this->SetWindowTextW(L"Credito");
+
+	Sys::Icon buscar;
+	buscar.Load(hInstance, IDI_SEARCH);
+	btBuscar.SetImage(buscar);
+
+	Sys::Icon iconoRestaurar;
+	iconoRestaurar.Load(hInstance, IDI_CARGAR);
+	btLimpiar.SetImage(iconoRestaurar);
+
 	radioFolio.Checked = true;
 	tbxOpcion.SetFocus();
 	ddPuntosVenta.Visible = false;
+
 }
 
 
@@ -15,6 +25,11 @@ void bonoCreditoVentasDlg::btBuscar_Click(Win::Event& e)
 {
 	LibreriaFBDll::bonoCredito bonoObj;
 	LibreriaFBDll::Movimiento movimientoObj;
+	if (tbxOpcion.GetTextLength() == 0)
+	{
+		tbxOpcion.ShowBalloonTip(L"Casilla vacía", L"Nombre", TTI_ERROR);
+		return;
+	}
 	if (radioClave.IsChecked() == true)
 	{
 		int puntoVentaId=movimientoObj.sacarIDpuntoVenta(ddPuntosVenta.Text);
@@ -110,5 +125,6 @@ void bonoCreditoVentasDlg::btLimpiar_Click(Win::Event& e)
 	lvCredito.Items.DeleteAll();
 	lvCredito.SetRedraw(true);
 	tbxOpcion.SetText(L"");
+	tbxOpcion.SetFocus();
 }
 

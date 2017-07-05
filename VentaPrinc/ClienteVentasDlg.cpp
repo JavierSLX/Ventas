@@ -3,6 +3,13 @@
 
 void ClienteVentasDlg::Window_Open(Win::Event& e)
 {
+	Sys::Icon iconoAgregar;
+	iconoAgregar.Load(hInstance, IDI_AGREGAR);
+	btRegistrar.SetImage(iconoAgregar);
+	
+	Sys::Icon editar;
+	editar.Load(hInstance, IDI_EDITAR);
+	btActualizar.SetImage(editar);
 	//Llena la ddlist de punto de venta
 	LibreriaJRDll::WintemplaCLS YopObj;
 	YopObj.llenarDdRutasExclusiva(ddPuntoVenta, true, 100);

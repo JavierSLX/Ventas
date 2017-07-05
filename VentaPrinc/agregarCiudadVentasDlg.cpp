@@ -3,7 +3,20 @@
 
 void agregarCiudadVentasDlg::Window_Open(Win::Event& e)
 {
+
 	this->SetWindowTextW(L"Agregar/Actualizar Ciudad");
+	Sys::Icon iconoAgregar;
+	iconoAgregar.Load(hInstance, IDI_AGREGAR);
+	btAgregar.SetImage(iconoAgregar);
+	btAgregarLada.SetImage(iconoAgregar);
+
+	Sys::Icon editar;
+	editar.Load(hInstance, IDI_EDITAR);
+	btEditar.SetImage(editar);
+
+
+
+
 	tbxNombre.SetFocus();
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadObj.llenarLVCiudad(lvCiudades, 100);
@@ -29,7 +42,12 @@ void agregarCiudadVentasDlg::btAgregar_Click(Win::Event& e)
 	LibreriaFBDll::Ciudad ciudadObj;
 	int ladaId = ciudadObj.sacarIDLada(ddLadas.Text);
 	wstring ciudadConsulta=ciudadObj.sacarCiudad(tbxNombre.Text,ladaId);
-	
+	if (tbxNombre.GetTextLength() == 0)
+	{
+		tbxNombre.ShowBalloonTip(L"Casilla vacía", L"Nombre", TTI_ERROR);
+		return;
+	}
+
 	if (ciudadConsulta == tbxNombre.Text)
 	{
 		if (MessageBoxW(L"Ya existe este registro", L"ERROR", MB_OK | MB_ICONERROR) == IDYES)
@@ -62,6 +80,11 @@ void agregarCiudadVentasDlg::btAgregar_Click(Win::Event& e)
 void agregarCiudadVentasDlg::btEditar_Click(Win::Event& e)
 {
 	LibreriaFBDll::Ciudad ciudadObj;
+	if (tbxNombre.GetTextLength() == 0)
+	{
+		tbxNombre.ShowBalloonTip(L"Casilla vacía", L"Nombre", TTI_ERROR);
+		return;
+	}
 	if (nombreCiudadVP == tbxNombre.Text)
 	{
 		if (MessageBoxW(L"No hay cambios que guardar", L"ERROR", MB_OK | MB_ICONERROR) == IDYES)

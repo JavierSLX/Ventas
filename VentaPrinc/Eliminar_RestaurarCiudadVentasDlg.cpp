@@ -4,12 +4,22 @@
 void Eliminar_RestaurarCiudadVentasDlg::Window_Open(Win::Event& e)
 {
 	this->SetWindowTextW(L"Eliminar/Restaurar Ciudad");
+
+	Sys::Icon iconoEliminar;
+	iconoEliminar.Load(hInstance,IDI_BORRAR);
+	btEliminar.SetImage(iconoEliminar);
+
+	Sys::Icon iconoRestaurar;
+	iconoRestaurar.Load(hInstance,IDI_CARGAR);
+	btRestaurar.SetImage(iconoRestaurar);
+
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadObj.llenarLVCiudad(lvE_Rciudades, 100);
 	//________________________________________________________ tabCiudades
 	tabCiudades.Items.Add(0, L"Eliminar");
 	tabCiudades.Items.Add(1, L"Restaurar");
 	btRestaurar.Enabled = false;
+
 }
 
 

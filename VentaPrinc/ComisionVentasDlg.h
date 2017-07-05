@@ -20,12 +20,11 @@ private:
 	Win::Button btBuscar;
 	Win::ListView lvDetalles;
 	Win::DateTimeBox dtboxFecha;
-	Win::Label lb4;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(17.99167);
+		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(14.89604);
 		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(10.63625);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -38,7 +37,6 @@ protected:
 		btBuscar.CreateX(NULL, L"Buscar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 11.61521, 1.21708, 2.98979, 0.68792, hWnd, 1003);
 		lvDetalles.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.74083, 2.35479, 13.97000, 8.09625, hWnd, 1004);
 		dtboxFecha.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | DTS_RIGHTALIGN, 0.60854, 1.32292, 5.74146, 0.60854, hWnd, 1005);
-		lb4.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 15.34583, 1.27000, 2.46062, 0.60854, hWnd, 1006);
 		lvDetalles.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btBuscar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -48,7 +46,6 @@ protected:
 		btBuscar.Font = fontArial009A;
 		lvDetalles.Font = fontArial009A;
 		dtboxFecha.Font = fontArial009A;
-		lb4.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void btBuscar_Click(Win::Event& e);

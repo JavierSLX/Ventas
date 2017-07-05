@@ -240,6 +240,11 @@
     <ResourceCompile Include="VentaPrinc.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="aceptar.ico" />
+    <Image Include="agregar.ico" />
+    <Image Include="cargar.ico" />
+    <Image Include="editar.ico" />
+    <Image Include="erase.ico" />
     <Image Include="VentaPrinc.ico" />
     <Image Include="about.ico" />
     <Image Include="add.ico" />
