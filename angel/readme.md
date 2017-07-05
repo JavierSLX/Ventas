@@ -95,7 +95,7 @@ Actividades realizadas durante el día 04 de Julio del 2017:
 * Se agregaron creo el dialogo RangosDlg para administrar los rangos por artículo.
 
 <h5>05/07/2017</h5>
-Actividades realziadas durante el día 05 de Julio del 2017.
+Actividades realizadas durante el día 05 de Julio del 2017.
 
 * Creación del método para mostrar los servicios y artículos con rango asignado.
 * Creación del método para mostrar los servicios y artículos sin rango asignado.
@@ -103,3 +103,5 @@ Actividades realziadas durante el día 05 de Julio del 2017.
 * Creación del método para asignar un rango a un servicio.
 * Creación del método para editar un rango de un servicio.
 * Creación del método para editar un rango de un artículo.
+* Se agregó la opción Resumen, en la que se muestra el resumen por artículo y servicio de cada departamento.
+* Creación del método para mostrar el resumen del reporte de venta dependiendo del departamento y del rango de fechas.

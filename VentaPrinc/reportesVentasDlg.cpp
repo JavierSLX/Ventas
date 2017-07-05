@@ -10,7 +10,7 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddTipoReporte.Items.Add(L"Departamento");
 	ddTipoReporte.Items.Add(L"Ciudad");
 	ddTipoReporte.Items.Add(L"Orden de Compra");
-	//ddTipoReporte.Items.Add(L"Servicios");
+	ddTipoReporte.Items.Add(L"Resumen");
 	ddTipoReporte.SetSelectedIndex(0);
 	//Inicializar en false los elemetos del dialogo que no se necesitan visualizar
 	ponerVisibleElementos(false);
@@ -32,6 +32,8 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddRequerimiento.SetSelectedIndex(0);
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 	generarReporte(ddTipoReporte.Text);
+	reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
+	ddDepartamento.SetSelectedIndex(0);
 }
 
 //Metodo que envia los parametros para el reporte que se muetsra en el listview
@@ -66,6 +68,13 @@ void reportesVentasDlg::generarReporte(wstring tipoReporte)
 				if (tipoReporte == L"Orden de Compra")
 				{
 					reporteVentasObj.llenarReporteVentasOrdenCompra(lvReporte, tbxFolio.Text, 300, true);
+				}
+				else
+				{
+					if (tipoReporte == L"Resumen")
+					{
+						reporteVentasObj.llenarReporteResumen(lvReporte, _idDepartamento, 300, dtboxInicial.GetSelectedDateTime(), dtboxFinal.GetSelectedDateTime(), true);
+					}
 				}
 			}
 		}
@@ -164,10 +173,15 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 				}
 				else
 				{
-					//if (ddTipoReporte.Text == L"Servicios")
-					//{
-
-					//}
+					if (ddTipoReporte.Text == L"Resumen")
+					{
+						lbDepartamento.Visible = true;
+						ddDepartamento.Visible = true;
+						lbRequerimiento.Visible = false;
+						ddRequerimiento.Visible = false;
+						_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+						generarReporte(ddTipoReporte.Text);
+					}
 				}
 				
 			}
@@ -302,7 +316,7 @@ void reportesVentasDlg::btImprimir_Click(Win::Event& e)
 		documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
 		//Imprimir un espacio
 		documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
-		titulo = L"Periodo: De";
+		titulo = L"Periodo: De ";
 		titulo += dtboxInicial.Text;
 		titulo += L" A ";
 		titulo += dtboxFinal.Text;
@@ -330,7 +344,7 @@ void reportesVentasDlg::btImprimir_Click(Win::Event& e)
 			documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxEspecifico);
 			//Imprimir un espacio
 			documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
-			titulo = L"Periodo: De";
+			titulo = L"Periodo: De ";
 			titulo += dtboxInicial.Text;
 			titulo += L" A ";
 			titulo += dtboxFinal.Text;
@@ -349,7 +363,7 @@ void reportesVentasDlg::btImprimir_Click(Win::Event& e)
 				documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
 				//Imprimir un espacio
 				documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
-				titulo = L"Periodo: De";
+				titulo = L"Periodo: De ";
 				titulo += dtboxInicial.Text;
 				titulo += L" A ";
 				titulo += dtboxFinal.Text;
@@ -366,6 +380,26 @@ void reportesVentasDlg::btImprimir_Click(Win::Event& e)
 					tbxTitulo.Text = titulo;
 					tbxTitulo.SetFont(_negritas);
 					documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
+				}
+				else
+				{
+					if (tipoReporte == L"Resumen")
+					{
+						titulo = L"Resumen de Ventas Departamento: ";
+						titulo += ddDepartamento.Text;
+						tbxTitulo.Text = titulo;
+						tbxTitulo.SetFont(_negritas);
+						documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxTitulo);
+						//Imprimir un espacio
+						documento.Add(600, tbxEspacio.GetPrintLineCount(documento, 600) + 1, tbxEspacio);
+						titulo = L"Periodo: De ";
+						titulo += dtboxInicial.Text;
+						titulo += L" A ";
+						titulo += dtboxFinal.Text;
+						tbxFecha.Text = titulo;
+						tbxFecha.SetFont(_negritas);
+						documento.Add(700, tbxTitulo.GetPrintLineCount(documento, 700) + 1, tbxFecha);
+					}
 				}
 			}
 		}
