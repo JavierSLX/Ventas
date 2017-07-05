@@ -226,23 +226,81 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, ordenObj.sacarUltIDOrden(), ordenObj.sacarIDRequerimiento(L"Articulo"));
 				MessageBoxW(L"Ya inserto", L"Articulo", MB_OK | MB_ICONERROR);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
+				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+				double precio = Sys::Convert::ToDouble(tbxFinal.Text);
+
+				double Total= (double)cantidad * precio;
+				TotalArticulosVP =+ Total;
+
 				//Descontar cantidad de inventario
 				int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
 				int cantidadActualizar = cantidadExistenteVP - cantidadOrden;
 				articuloObj.updateCantidad(idCantidad, cantidadActualizar);
 				//insertar comisiones
 
+				int idArticulo = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
+					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 
+				int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idArticulo);
+
+				if (id != 0)
+				{
+					
+					double comision = ordenObj.sacarComision(idRango);
+					int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+					double totalComision = (double)cantidad * comision;
+					int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+					ordenObj.insertarArticuloComision(totalComision, true, idRango, IdOrdenDesc);
+					totalComision += totalComision;
+
+				}
+				else
+				{
+					contadorVP = 0;
+					
+					int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+					ordenObj.insertarArticuloComision(0 , true, 1, IdOrdenDesc);
+					contadorVP++;
+
+				}
 				
 
 			}
 		}
-		else  if (radioServicio.IsChecked()  == true)
+		else  if (radioServicio.IsChecked() == true)
 		{
 			ordenObj.insertarServicioRequerimiento(ordenObj.sacarIDServicio(ddTipo.Text), ordenObj.sacarIDRequerimiento(L"Servicio"));
 			ordenObj.insertOrdenDescripcion(ordenObj.sacarIDServicio(ddTipo.Text), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, ordenObj.sacarUltIDOrden(), ordenObj.sacarIDRequerimiento(L"Servicio"));
 			MessageBoxW(L"Ya inserto", L"Articulo", MB_OK | MB_ICONERROR);
+			int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+			double precio = Sys::Convert::ToDouble(tbxFinal.Text);
 			ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
+			double Total = (double)cantidad * precio;
+			TotalServiciosVP = +Total;
+
+			int idServicio = ordenObj.sacarIDServicio(ddTipo.Text);
+			int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idServicio);
+
+			if (id != 0)
+			{
+
+				double comision = ordenObj.sacarComision(idServicio);
+				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
+				double totalComision = (double)cantidad * comision;
+				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+				ordenObj.insertarServicioComision(totalComision, true, idRango, IdOrdenDesc);
+				totalComision += totalComision;
+
+			}
+			else
+			{
+				contadorVP = 0;
+
+				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+				ordenObj.insertarArticuloComision(0, true, 2, IdOrdenDesc);
+				contadorVP++;
+
+			}
 		}
 		
 	}
@@ -297,11 +355,18 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	LibreriaAdDll::ordenNueva ordenObj;
 	int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
 	int cantidadInventario = ordenObj.sacarCantidad(idCantidad);
-
+	double totalOrden = TotalServiciosVP + TotalArticulosVP;
+	int orden = ordenObj.sacarUltIDOrden();
 	if (MessageBoxW(L"La compra es al CONTADO", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
 	{
+		ordenObj.insertarOrdenCompleta(totalOrden, orden);
+		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP);
+		ventana.BeginDialog(hWnd);
 	}
 	else {
+		ordenObj.insertarCredito(totalOrden, orden);
+		OrdenCompletaDlg ventana(totalOrden, L"Credito", folioVP);
+		ventana.BeginDialog(hWnd);
 
 	}
 }

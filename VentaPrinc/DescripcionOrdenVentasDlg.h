@@ -2,6 +2,7 @@
 #include "resource.h"
 #include "LibreriaAdDll.h"
 #include "LibreriaFBDll.h"
+#include "OrdenCompletaDlg.h"
 
 class DescripcionOrdenVentasDlg: public Win::Dialog
 {
@@ -16,6 +17,10 @@ public:
 	{
 	}
 private:
+	double TotalArticulosVP;
+	double TotalServiciosVP;
+	double TotalComisionOrdenVP;
+	int contadorVP;
 	wstring folioVP;
 	wstring puntoVentaVP;
 	wstring CClienteVP;

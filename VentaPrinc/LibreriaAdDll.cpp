@@ -1733,29 +1733,6 @@ int LibreriaAdDll::ordenNueva::sacarIDRequerimiento(wstring requerimiento)
 	conn.CloseSession();
 	return pv_id;
 }
-int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
-{
-	wstring consulta;
-	Sql::SqlConnection conn;
-	int orden_id = 0;
-
-	try
-	{
-		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT id\
-			FROM orden\
-			ORDER BY id DESC limit 1;");
-
-		orden_id = conn.GetInt(consulta);
-	}
-	catch (Sql::SqlException e)
-	{
-		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
-	}
-
-	conn.CloseSession();
-	return orden_id;
-}
 int LibreriaAdDll::ordenNueva::sacarIDArticulo(int color, int departamento_id, int modelo, int marca, int ta)
 {
 	wstring consulta;
@@ -2481,4 +2458,254 @@ int LibreriaAdDll::ordenNueva::sacarIDUsuario(int pv, wstring nombre)
 
 	conn.CloseSession();
 	return marca_id;
+}
+int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT ran.id\
+			FROM rango ran, articulo art, articulo_rango ar\
+			WHERE ar.rango_id = ran.id\
+			AND ar.articulo_id = art.id\
+			AND ar.id = %d\
+			AND minimo <= %d\
+			AND %d <= maximo", pFinal, pFinal);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+
+
+double LibreriaAdDll::ordenNueva::sacarComision(int id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT comision \
+			FROM rango\
+			WHERE id = %d", id);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int articulos_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM orden_descripcion\
+			ORDER BY id DESC limit 1;");
+		articulos_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return articulos_id;
+}
+void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exito, int rango, int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO articulo_comision (total, exito, rango_id, ordenDescripcion_id) \
+								VALUES('%lf',%d, %d, %d);", total, exito, rango, orden );
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+int LibreriaAdDll::ordenNueva::sacarIDrangoSetvicio(int pFinal, int servicio)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT ran.id\
+			FROM rango ran, servicio_venta sv, servicio_rango sr\
+			WHERE sr.rango_id = ran.id\
+			AND sr.servicioVenta_id = sv.id\
+			AND sv.id = %d\
+			AND minimo <= %d\
+			AND %d <= maximo", pFinal, pFinal);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+void LibreriaAdDll::ordenNueva::insertarServicioComision(double total, bool exito, int rango, int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO servicio_comision (total, exito, rango_id, ordenDescripcion_id) \
+								VALUES('%lf',%d, %d, %d);", total, exito, rango, orden);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+
+void LibreriaAdDll::ordenNueva::insertarOrdenCompleta(double total, int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO orden_completa (fecha, total, estado, orden_id) \
+								VALUES(now(),'%lf',true, %d);", total, orden);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+
+void LibreriaAdDll::ordenNueva::insertarCredito(double total, int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO credito (total, estado, orden_id) \
+								VALUES('%lf',true, %d);", total, orden);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int rango, int OrdenDesc)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO totalservicio_comision (total, exito, rango_id, ordenDescripcion_id) \
+								VALUES(%d,true, %d, %d);", total, rango, OrdenDesc);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int articuloComision)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO totalarticulo_comision (total, articuloComision_id) \
+								VALUES(%lf, %d);", total, articuloComision);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
 }
