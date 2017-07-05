@@ -32,11 +32,17 @@ void OrdenVentasDlg::Window_Open(Win::Event& e)
 	//llenar dropdown
 	consultasObj.llenarDDPuntoVenta(ddPuntoVenta, 100, true);
 	ddPuntoVenta.SetSelectedIndex(3);
+
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int puntoVenta_id = consultasObj.sacarIDpuntoVenta(puntoVenta);
+
+	consultasObj.llenarDDNombreR(ddNombreResponsable, 100, puntoVenta_id);
+	ddNombreResponsable.SetSelectedIndex(0);
 	wstring clave_cliente = ddCliente.Text;
 	consultasObj.llenarDDCliente(ddCliente, puntoVenta_id, 100, true);
 	ddCliente.SetSelectedIndex(0);
+
+
 	tbxFolio.Enabled = false;
 	tbxNombreCliente.Enabled = false;
 	tbxIdentificador.Enabled = false;
@@ -55,8 +61,10 @@ void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 	wstring folio = tbxFolio.Text;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
+	int idResponsable = consultasObj.sacarIDUsuario(idPuntoVenta, ddNombreResponsable.Text);
 	int cliente_id = consultasObj.sacarIDCliente(ddCliente.Text, puntoVenta);
-	consultasObj.insertOrden(folio, cliente_id, idPuntoVenta);
+
+	consultasObj.insertOrden(folio, cliente_id, idPuntoVenta, idResponsable);
 	/*MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);*/
 	//ventana.BeginDialog(hWnd);
 
@@ -70,6 +78,8 @@ void OrdenVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
 	LibreriaAdDll::ordenNueva consultasObj;
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int idPuntoVenta = consultasObj.sacarIDpuntoVenta(puntoVenta);
+	consultasObj.llenarDDNombreR(ddNombreResponsable, 100, idPuntoVenta);
+	ddNombreResponsable.SetSelectedIndex(0);
 	consultasObj.llenarDDCliente(ddCliente, idPuntoVenta, 100, true);
 	ddCliente.SetSelectedIndex(0);
 	wstring clave_cliente = ddCliente.Text;

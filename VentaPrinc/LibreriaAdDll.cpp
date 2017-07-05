@@ -1638,7 +1638,7 @@ int LibreriaAdDll::ordenNueva::sacarIdentificadorNumerico(wstring cadena)
 	return Sys::Convert::ToInt(cadena.substr(0, guion));
 }
 //insertar orden
-void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv)
+void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv, int usuario)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -1646,8 +1646,8 @@ void LibreriaAdDll::ordenNueva::insertOrden(wstring folio, int cliente, int pv)
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"INSERT INTO orden (folio, fecha, cliente_id, puntoVenta_id) \
-				VALUES('%s',now(),%d, %d);", folio.c_str(), cliente, pv);
+		Sys::Format(consulta, L"INSERT INTO orden (folio, fecha, cliente_id, puntoVenta_id, usuario_id) \
+				VALUES('%s',now(),%d, %d, %d);", folio.c_str(), cliente, pv, usuario);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -2191,6 +2191,7 @@ void LibreriaAdDll::ordenNueva::updateModelo(int articulo_id, wstring modelo)
 
 	conn.CloseSession();
 }
+
 int LibreriaAdDll::ordenNueva::sacarIDArticuloUpdate(wstring tipo, wstring modelo, wstring marca )
 {
 	wstring consulta;
@@ -2336,4 +2337,148 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 }
 
 
-	
+void LibreriaAdDll::ordenNueva::updateCantidaDescrOreden(int descr_id, int cantidad)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE orden_descripcion \
+		SET cantidad = %d\
+		WHERE id = %d", cantidad,descr_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+void LibreriaAdDll::ordenNueva::updatePrecioDescrOreden(int descr_id, double cantidad)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE orden_descripcion \
+		SET precio_final = %lf\
+		WHERE id = %d", cantidad, descr_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+int LibreriaAdDll::ordenNueva::sacarCantidad(int id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT cantidad\
+			FROM cantidad\
+			WHERE id = %d", id);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+
+void LibreriaAdDll::ordenNueva::updateCantidadInventario(int cantidad_id, int valor)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE cantidad \
+		SET valor = %d\
+		WHERE id = %d", valor, cantidad_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	ddNombre.DeleteAllItems();
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT us.nombre\
+			FROM punto_venta pv, usuario us, puntoVenta_usuario pvu\
+			WHERE pvu.puntoVenta_id = pv.id\
+			AND pvu.usuario_id = us.id\
+			AND pv.id =  %d ", pv_id);
+
+		conn.ExecuteSelect(consulta, large, ddNombre);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+int LibreriaAdDll::ordenNueva::sacarIDUsuario(int pv, wstring nombre)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int marca_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT us.id\
+			FROM punto_venta pv, usuario us, puntoVenta_usuario pvu\
+			WHERE pvu.puntoVenta_id = pv.id\
+			AND pvu.usuario_id = us.id\
+			AND pv.id = %d\
+			AND us.nombre = '%s' ", pv, nombre.c_str());
+		marca_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		marca_id = 0;
+	}
+
+	conn.CloseSession();
+	return marca_id;
+}
