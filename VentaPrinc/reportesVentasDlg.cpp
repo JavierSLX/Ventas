@@ -264,6 +264,7 @@ void reportesVentasDlg::dtboxInicial_DatetimeChange(Win::Event& e)
 	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
 	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+	_idDepartamento= reportesObj.obtenerIdOculto(ddDepartamento);
 	generarReporte(ddTipoReporte.Text);
 }
 
@@ -275,6 +276,7 @@ void reportesVentasDlg::dtboxFinal_DatetimeChange(Win::Event& e)
 	_idCiudad = reportesObj.obtenerIdOculto(ddCiudad);
 	_idRegion = reportesObj.obtenerIdOculto(ddRegion);
 	_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
+	_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
 	generarReporte(ddTipoReporte.Text);
 }
 
