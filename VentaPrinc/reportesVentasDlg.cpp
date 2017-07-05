@@ -179,6 +179,8 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 						ddDepartamento.Visible = true;
 						lbRequerimiento.Visible = false;
 						ddRequerimiento.Visible = false;
+						lbFolio.Visible = false;
+						tbxFolio.Visible = false;
 						_idRequerimiento = reportesObj.obtenerIdOculto(ddRequerimiento);
 						generarReporte(ddTipoReporte.Text);
 					}
