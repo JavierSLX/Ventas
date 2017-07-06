@@ -20,6 +20,7 @@
 #include "GraficoVentas.h"
 #include "ComisionVentasDlg.h"
 #include "RangosDlg.h"
+#include "PrecioClienteDlg.h"
 
 class VentaPrinc: public Win::Window
 {
