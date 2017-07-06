@@ -3,6 +3,10 @@
 
 void OrdenVentasDlg::Window_Open(Win::Event& e)
 {
+	Sys::Icon terminar;
+	terminar.Load(hInstance, IDI_ACEPTAR);
+	btAceptar.SetImage(terminar);
+
 	LibreriaAdDll::ordenNueva consultasObj;
 	LibreriaAdDll::articulo consultasArtObj;
 

@@ -3,6 +3,7 @@
 
 void busquedaVentasDlg::Window_Open(Win::Event& e)
 {
+	this->SetWindowTextW(L"Busqueda");
 	LibreriaJRDll::WintemplaCLS javObj;
 	dtboxFecha.Visible = false;
 	radioFolio.Checked = true;
@@ -42,8 +43,8 @@ void busquedaVentasDlg::btBuscar_Click(Win::Event& e)
 	}
 	if (radioFecha.IsChecked() == true)
 	{
-		wstring fecha;
-		Sys::Format(fecha, L"%02d/%02d/%d ",dtboxFecha.GetSelectedDateTime().wYear,dtboxFecha.GetSelectedDateTime().wMonth,dtboxFecha.GetSelectedDateTime().wDay);
+		/*wstring fecha;
+		Sys::Format(fecha, L"%02d/%02d/%d ",dtboxFecha.GetSelectedDateTime().wYear,dtboxFecha.GetSelectedDateTime().wMonth,dtboxFecha.GetSelectedDateTime().wDay);*/
 		bonoObj.llenarFecha(lvOrden, dtboxFecha.GetSelectedDateTime(), 100);
 		
 		
@@ -67,6 +68,7 @@ void busquedaVentasDlg::radioFolio_Click(Win::Event& e)
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
+	tbxOpcionBusqueda.SetFocus();
 }
 
 void busquedaVentasDlg::radioClaveCliente_Click(Win::Event& e)
@@ -80,6 +82,7 @@ void busquedaVentasDlg::radioClaveCliente_Click(Win::Event& e)
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
+	tbxOpcionBusqueda.SetFocus();
 }
 
 void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
@@ -93,6 +96,7 @@ void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
+	tbxOpcionBusqueda.SetFocus();
 }
 
 void busquedaVentasDlg::lvOrden_ItemActivate(Win::Event& e)
@@ -110,13 +114,14 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 	LibreriaJRDll::WintemplaCLS javObj;
 	javObj.llenarDdRutasExclusiva(ddDepartamentos, true, 100);
 	ddDepartamentos.SetSelectedIndex(0);
+	dtboxFecha.Visible = false;
 	tbxOpcionBusqueda.Enabled = false;
 	tbxOpcionBusqueda.SetFocus();
 	lvOrden.SetRedraw(false);
 	lvOrden.Cols.DeleteAll();
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
-
+	tbxOpcionBusqueda.SetFocus();
 
 }
 

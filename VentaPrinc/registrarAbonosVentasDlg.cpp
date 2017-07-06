@@ -4,6 +4,7 @@
 
 void registrarAbonosVentasDlg::Window_Open(Win::Event& e)
 {
+	this->SetWindowTextW(L"Registrar un Abono");
 	LibreriaFBDll::bonoCredito bonoObj;
 	bonoObj.llenarLVCreditoAbonos(lvAbonos, idCreditoVP, folioOrdenVP, 100);
 	tbxFolio.SetText(folioOrdenVP);

@@ -360,6 +360,21 @@
     <Image Include="xy_graph.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="erase.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="cargar.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="agregar.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="editar.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="aceptar.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="VentaPrinc.exe.manifest">

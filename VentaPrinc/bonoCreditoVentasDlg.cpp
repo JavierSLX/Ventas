@@ -3,9 +3,20 @@
 
 void bonoCreditoVentasDlg::Window_Open(Win::Event& e)
 {
+	this->SetWindowTextW(L"Credito");
+
+	Sys::Icon buscar;
+	buscar.Load(hInstance, IDI_SEARCH);
+	btBuscar.SetImage(buscar);
+
+	Sys::Icon iconoRestaurar;
+	iconoRestaurar.Load(hInstance, IDI_CARGAR);
+	btLimpiar.SetImage(iconoRestaurar);
+
 	radioFolio.Checked = true;
 	tbxOpcion.SetFocus();
 	ddPuntosVenta.Visible = false;
+
 }
 
 
@@ -14,25 +25,30 @@ void bonoCreditoVentasDlg::btBuscar_Click(Win::Event& e)
 {
 	LibreriaFBDll::bonoCredito bonoObj;
 	LibreriaFBDll::Movimiento movimientoObj;
+	if (tbxOpcion.GetTextLength() == 0)
+	{
+		tbxOpcion.ShowBalloonTip(L"Casilla vacía", L"Nombre", TTI_ERROR);
+		return;
+	}
 	if (radioClave.IsChecked() == true)
 	{
 		int puntoVentaId=movimientoObj.sacarIDpuntoVenta(ddPuntosVenta.Text);
 		bonoObj.llenarLVCreditoCCliente(lvCredito, tbxOpcion.Text,puntoVentaId,100);
-		tbxOpcion.SetText(L"");
 		tbxOpcion.SetFocus();
+		tbxOpcion.SetText(L"");
 
 	}
 	else if (radioFolio.IsChecked() == true)
 	{
 		bonoObj.llenarLVCreditoFolio(lvCredito, tbxOpcion.Text, 100);
-		tbxOpcion.SetText(L"");
 		tbxOpcion.SetFocus();
+		tbxOpcion.SetText(L"");
 	}
 	else if (radioNombre.IsChecked() == true)
 	{
 		bonoObj.llenarLVCreditoNombre(lvCredito, tbxOpcion.Text, 100);
-		tbxOpcion.SetText(L"");
 		tbxOpcion.SetFocus();
+		tbxOpcion.SetText(L"");
 	}
 	
 }
@@ -85,17 +101,20 @@ void bonoCreditoVentasDlg::radioClave_Click(Win::Event& e)
 	LibreriaJRDll::WintemplaCLS jrdObj;;
 	jrdObj.llenarDdRutasExclusiva(ddPuntosVenta, true, 100);
 	ddPuntosVenta.SetSelectedIndex(0);
+	tbxOpcion.SetFocus();
 
 }
 
 void bonoCreditoVentasDlg::radioFolio_Click(Win::Event& e)
 {
 	ddPuntosVenta.Visible = false;
+	tbxOpcion.SetFocus();
 }
 
 void bonoCreditoVentasDlg::radioNombre_Click(Win::Event& e)
 {
 	ddPuntosVenta.Visible = false;
+	tbxOpcion.SetFocus();
 }
 
 void bonoCreditoVentasDlg::btLimpiar_Click(Win::Event& e)
@@ -106,5 +125,6 @@ void bonoCreditoVentasDlg::btLimpiar_Click(Win::Event& e)
 	lvCredito.Items.DeleteAll();
 	lvCredito.SetRedraw(true);
 	tbxOpcion.SetText(L"");
+	tbxOpcion.SetFocus();
 }
 

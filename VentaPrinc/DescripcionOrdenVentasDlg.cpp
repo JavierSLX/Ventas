@@ -3,6 +3,18 @@
 
 void DescripcionOrdenVentasDlg::Window_Open(Win::Event& e)
 {
+	Sys::Icon iconoAgregar;
+	iconoAgregar.Load(hInstance, IDI_AGREGAR);
+	btAgregar.SetImage(iconoAgregar);
+
+	Sys::Icon editar;
+	editar.Load(hInstance, IDI_EDITAR);
+	btEditar.SetImage(editar);
+
+	Sys::Icon terminar;
+	terminar.Load(hInstance, IDI_ACEPTAR);
+	btTerminar.SetImage(terminar);
+
 	radioArticulo.Checked = true;
 
 	//Llena la ddlist de tipo de articulo

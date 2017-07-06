@@ -168,6 +168,22 @@ public:
 
 	};
 
+	class Comisiones : public Win::Dialog
+	{
+	public:
+		Comisiones()
+		{
+
+		}
+		~Comisiones()
+		{
+
+		}
+		void LibreriaFBDll::Comisiones::llenarComisiones(Win::ListView lvTabla, wstring puntoVenta, Sys::Time fecha, int large);
+
+	private:
+
+	};
 
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
