@@ -151,6 +151,10 @@ void ClienteVentasDlg::ddPuntoVenta_SelChange(Win::Event& e)
 
 	//Llena la listview
 	wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, true, 200);
+
+	//Limpia los campos del cliente
+	limpiarCampos();
+	ddCiudad.SetSelected(L"S/R");
 }
 
 //Limpia todos los campos de la ventana para poder registrar un nuevo registro
