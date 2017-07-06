@@ -131,6 +131,15 @@ public:
 			void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id);
 			/*void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id);*/
 			int LibreriaAdDll::ordenNueva::sacarIDUsuario(int pv, wstring nombre);
+			int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo);
+			double LibreriaAdDll::ordenNueva::sacarComision(int id);
+			void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exito, int rango, int orden);
+			int LibreriaAdDll::ordenNueva::sacarIDrangoSetvicio(int pFinal, int servicio);
+			void LibreriaAdDll::ordenNueva::insertarServicioComision(double total, bool exito, int rango, int orden);
+			void LibreriaAdDll::ordenNueva::insertarOrdenCompleta(double total, int orden);
+			void LibreriaAdDll::ordenNueva::insertarCredito(double total, int orden);
+			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int rango, int OrdenDesc);
+			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int articuloComision);
 
 
 	};
