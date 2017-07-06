@@ -2208,20 +2208,22 @@ void LibreriaFBDll::Comisiones::llenarComisiones(Win::ListView lvTabla, wstring 
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT distinct o.id, o.folio,pv.tipo,u.nombre,tac.total + tsc.total\
+		Sys::Format(consulta, L" SELECT distinct o.id, o.folio,pv.tipo,u.nombre,tac.total + tsc.total\
 			FROM orden o, punto_venta pv, usuario u, puntoventa_usuario pvu, totalarticulo_comision tac,\
-			totalservicio_comision tsc, orden_descripcion od, articulo_comision ac, servicio_comision sc\
+			totalservicio_comision tsc, orden_descripcion od, articulo_comision ac, servicio_comision sc, puesto pu\
 			WHERE o.puntoVenta_id = pv.id\
+			AND o.id = tac.orden_id\
+			AND o.id = tsc.orden_id\
 			AND pvu.usuario_id = u.id\
+			AND u.puesto_id = pu.id\
 			AND pvu.puntoVenta_id = pv.id\
-			AND tac.articuloComision_id = ac.id\
 			AND ac.ordenDescripcion_id = od.id\
 			AND od.orden_id = o.id\
-			AND tsc.servicioComision_id = sc.id\
 			AND sc.ordenDescripcion_id = od.id\
-			AND o.fecha >= '%d-%d-%d 00:00:00'\
+			and o.fecha >= '%d-%d-%d 00:00:00'\
 			and o.fecha <= '%d-%d-%d 23:59:59'\
-			AND pv.tipo = '%s'; ", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay,puntoVenta.c_str());
+			AND pv.tipo = '%s'\
+			AND pu.tipo = 'Responsable';", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay,puntoVenta.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
 	}

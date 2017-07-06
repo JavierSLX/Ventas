@@ -113,7 +113,6 @@ void agregarCiudadVentasDlg::lvCiudades_ItemChanged(Win::Event& e)
 	ciudadIdVP = modeloObj.sacarIDOculto(lvCiudades);
 	nombreCiudadVP = ciudadObj.sacarTextoLV(lvCiudades, 0);
 	wstring lada = ciudadObj.sacarLada(nombreCiudadVP);
-	lb3.SetText(lada);
 	tbxNombre.SetText(nombreCiudadVP);
 	ddLadas.SetSelected(lada);
 
