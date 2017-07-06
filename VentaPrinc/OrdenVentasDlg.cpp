@@ -74,6 +74,7 @@ void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 
 	//Esta ventana es para probar de nuevo todo el proceso de detalles
 	DescripcionOrdenVentasDlg dlg(ddPuntoVenta.Text, tbxFolio.Text, ddCliente.Text);
+	this->EndDialog(IDOK);
 	dlg.BeginDialog(hWnd);
 }
 

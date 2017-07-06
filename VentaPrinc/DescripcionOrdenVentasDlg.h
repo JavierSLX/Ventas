@@ -3,6 +3,7 @@
 #include "LibreriaAdDll.h"
 #include "LibreriaFBDll.h"
 #include "OrdenCompletaDlg.h"
+#include "RangosDlg.h"
 
 class DescripcionOrdenVentasDlg: public Win::Dialog
 {
@@ -12,6 +13,7 @@ public:
 		this->puntoVentaVP = punto_venta;
 		this->folioVP = folio;
 		this->CClienteVP = claveCliente;
+		contadorVP = 0;
 	}
 	~DescripcionOrdenVentasDlg()
 	{
