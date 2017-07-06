@@ -138,10 +138,9 @@ public:
 			void LibreriaAdDll::ordenNueva::insertarServicioComision(double total, bool exito, int rango, int orden);
 			void LibreriaAdDll::ordenNueva::insertarOrdenCompleta(double total, int orden);
 			void LibreriaAdDll::ordenNueva::insertarCredito(double total, int orden);
-			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int rango, int OrdenDesc);
-			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int articuloComision);
-
-
+			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int orden);
+			void LibreriaAdDll::ordenNueva::insertarTotalArticuloComision(double total, int orden);
+			
 	};
 private:
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE

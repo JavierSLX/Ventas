@@ -2659,7 +2659,7 @@ void LibreriaAdDll::ordenNueva::insertarCredito(double total, int orden)
 
 
 }
-void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int rango, int OrdenDesc)
+void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int orden)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -2667,8 +2667,8 @@ void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int 
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"INSERT INTO totalservicio_comision (total, exito, rango_id, ordenDescripcion_id) \
-								VALUES(%d,true, %d, %d);", total, rango, OrdenDesc);
+		Sys::Format(consulta, L"INSERT INTO totalservicio_comision (total, servicioComision_id) \
+								VALUES(%d,true, %d, %d);", total, orden);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -2684,7 +2684,7 @@ void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int 
 
 
 }
-void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int articuloComision)
+void LibreriaAdDll::ordenNueva::insertarTotalArticuloComision(double total, int orden)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -2693,7 +2693,7 @@ void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int 
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"INSERT INTO totalarticulo_comision (total, articuloComision_id) \
-								VALUES(%lf, %d);", total, articuloComision);
+								VALUES(%lf, %d);", total, orden);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{

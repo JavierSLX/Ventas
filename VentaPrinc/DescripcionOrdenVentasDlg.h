@@ -17,8 +17,10 @@ public:
 	{
 	}
 private:
-	double TotalArticulosVP;
-	double TotalServiciosVP;
+	double TotalPrecioArticulosVP;
+	double TotalPrecioServiciosVP;
+	double TotalComisionArticulosVP;
+	double TotalComisionServiciosVP;
 	double TotalComisionOrdenVP;
 	int contadorVP;
 	wstring folioVP;
