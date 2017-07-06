@@ -234,8 +234,10 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					//insertar en orden descripcion
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP)), ordenObj.sacarIDRequerimiento(L"Articulo"));
 				int cantidadOrden = Sys::Convert::ToInt(tbxCantidad.Text);
+				int orden_id = ordenObj.sacarUltIDOrden();
+				lb8.SetText(Sys::Convert::ToString(orden_id));
 				ordenObj.insertOrdenDescripcion(ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
-					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, ordenObj.sacarUltIDOrden(), ordenObj.sacarIDRequerimiento(L"Articulo"));
+					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
 				MessageBoxW(L"Ya inserto", L"Articulo", MB_OK | MB_ICONERROR);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
@@ -298,6 +300,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			MessageBoxW(L"Ya inserto", L"Servicio", MB_OK | MB_ICONERROR);
 			int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 			double precio = Sys::Convert::ToDouble(tbxFinal.Text);
+
 			ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 			//sacar el total por pagar en los servicios
 			double Total = (double)cantidad * precio;
@@ -381,9 +384,6 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 {
 	LibreriaAdDll::articulo articuloObj;
 	LibreriaAdDll::ordenNueva ordenObj;
-	//saca el id del artic
-	int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
-	int cantidadInventario = ordenObj.sacarCantidad(idCantidad);
 	//saca el total a pagar de esa orden
 	double totalOrden = TotalPrecioServiciosVP + TotalPrecioArticulosVP;
 	int orden = ordenObj.sacarUltIDOrden();
@@ -480,4 +480,10 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 	}
 }
 
+
+void DescripcionOrdenVentasDlg::Window_Close(Win::Event& e)
+{
+	//this->Destroy(); // Use this to close and destroy the Window
+
+}
 

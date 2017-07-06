@@ -62,15 +62,13 @@ private:
 	Win::Button btEditar;
 	Win::Button btTerminar;
 	Win::Button btEliminar;
-	Win::Label lb9;
-	Win::Label lb10;
-	Win::Label lb11;
+	Win::Label lb8;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
 		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(30.98271);
-		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(12.91167);
+		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(13.01750);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
 	//_________________________________________________
@@ -98,9 +96,7 @@ protected:
 		btEditar.CreateX(NULL, L"Editar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 26.53771, 8.38729, 4.02167, 0.68792, hWnd, 1019);
 		btTerminar.CreateX(NULL, L"Terminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 26.59062, 9.39271, 3.96875, 0.68792, hWnd, 1020);
 		btEliminar.CreateX(NULL, L"Eliminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 29.21000, 10.66271, 1.42875, 0.92604, hWnd, 1021);
-		lb9.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 0.37042, 12.11792, 3.46604, 0.60854, hWnd, 1022);
-		lb10.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 4.78896, 11.95917, 3.51896, 0.60854, hWnd, 1023);
-		lb11.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 9.31333, 11.98563, 4.97417, 0.60854, hWnd, 1024);
+		lb8.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 1.11125, 12.22375, 4.55083, 0.60854, hWnd, 1022);
 		lvTabla.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btAgregar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -126,9 +122,7 @@ protected:
 		btEditar.Font = fontArial009A;
 		btTerminar.Font = fontArial009A;
 		btEliminar.Font = fontArial009A;
-		lb9.Font = fontArial009A;
-		lb10.Font = fontArial009A;
-		lb11.Font = fontArial009A;
+		lb8.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioArticulo_Click(Win::Event& e);
@@ -141,6 +135,7 @@ protected:
 	void btEditar_Click(Win::Event& e);
 	void btTerminar_Click(Win::Event& e);
 	void btEliminar_Click(Win::Event& e);
+	void Window_Close(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)

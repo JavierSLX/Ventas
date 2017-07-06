@@ -2519,7 +2519,7 @@ int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT id\
-			FROM orden_descripcion\
+			FROM orden\
 			ORDER BY id DESC limit 1;");
 		articulos_id = conn.GetInt(consulta);
 	}
