@@ -26,11 +26,12 @@ private:
 	Win::Label lbMaximo;
 	Win::Label lbComision;
 	Win::Button btLimpiar;
+	Win::Button btRegresar;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(11.66813);
+		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(13.59958);
 		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(12.96458);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -48,6 +49,7 @@ protected:
 		lbMaximo.CreateX(NULL, L"Rango Máximo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 4.25979, 0.18521, 3.33375, 0.60854, hWnd, 1008);
 		lbComision.CreateX(NULL, L"Comisión", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 7.91104, 0.18521, 3.22792, 0.60854, hWnd, 1009);
 		btLimpiar.CreateX(NULL, L"Limpiar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 7.46125, 2.01083, 2.51354, 0.68792, hWnd, 1010);
+		btRegresar.CreateX(NULL, L"Regresar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 11.53583, 0.10583, 1.87854, 0.68792, hWnd, 1011);
 		lvRango.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		tbxMinimo.Font = fontArial009A;
@@ -61,6 +63,7 @@ protected:
 		lbMaximo.Font = fontArial009A;
 		lbComision.Font = fontArial009A;
 		btLimpiar.Font = fontArial009A;
+		btRegresar.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void btAgregar_Click(Win::Event& e);
@@ -69,6 +72,7 @@ protected:
 	void lvRango_DblClk(Win::Event& e);
 	void btEliminar_Click(Win::Event& e);
 	void btLimpiar_Click(Win::Event& e);
+	void btRegresar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -79,6 +83,7 @@ protected:
 		if (lvRango.IsEvent(e, NM_DBLCLK)) {lvRango_DblClk(e); return true;}
 		if (btEliminar.IsEvent(e, BN_CLICKED)) {btEliminar_Click(e); return true;}
 		if (btLimpiar.IsEvent(e, BN_CLICKED)) {btLimpiar_Click(e); return true;}
+		if (btRegresar.IsEvent(e, BN_CLICKED)) {btRegresar_Click(e); return true;}
 		return false;
 	}
 };

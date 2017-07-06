@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AsignarRangoDlg.h" />
     <ClInclude Include="bonoCreditoVentasDlg.h" />
     <ClInclude Include="busquedaVentasDlg.h" />
     <ClInclude Include="ClienteVentasDlg.h" />
@@ -199,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AboutDlg.cpp" />
+    <ClCompile Include="AsignarRangoDlg.cpp" />
     <ClCompile Include="bonoCreditoVentasDlg.cpp" />
     <ClCompile Include="busquedaVentasDlg.cpp" />
     <ClCompile Include="ClienteVentasDlg.cpp" />

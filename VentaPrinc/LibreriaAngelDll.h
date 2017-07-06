@@ -90,7 +90,13 @@ public:
 		void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, int longuitud, bool activo);
 		wstring LibreriaAngelDll::rangoCLS::sacarRangoSiExiste(double minimo, double maximo, double comision);
 		void LibreriaAngelDll::rangoCLS::insertaRango(double minimo, double maximo, double comision, bool rangoActivo);
+		void LibreriaAngelDll::rangoCLS::insertaRangoArticulo(int articuloId,int rangoId,int requerimientoId);
+		void LibreriaAngelDll::rangoCLS::insertaRangoServicio(int servicioId, int rangoId, int requerimientoId);
+		void LibreriaAngelDll::rangoCLS::actualizarRangoServicio(int servicioRangoId, int rangoId, int requerimientoId);
+		void LibreriaAngelDll::rangoCLS::actualizarRangoArticulo(int articuloRangoId, int rangoId, int requerimientoId);
 		void LibreriaAngelDll::rangoCLS::actualizarRango(int id, double minimo, double maximo, double comision, bool servicioActivo);
+		void LibreriaAngelDll::rangoCLS::mostrarRangoAsignado(Win::ListView lvRango, int longuitud, bool activo);
+		void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, int longuitud, bool activo);
 		void LibreriaAngelDll::rangoCLS::cambiarEstadoRango(int idRango, bool rangoActivo);
 	private:
 	};
@@ -107,7 +113,7 @@ public:
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::ListView lvReporte, int idPuntoVenta, int idRegion, int idCiudad,int idRequerimiento, int longuitud, Sys::Time inicial, Sys::Time termino,bool activo);
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView lvReporte, int idRegion, int idCiudad, int idRequerimiento, int longuitud, Sys::Time inicial, Sys::Time termino, bool activo);
 		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, wstring folio, int longuitud, bool activo);
-		void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, int idPuntoVenta,int longuitud, bool activo);
+		void LibreriaAngelDll::reporteVentasCLS::llenarReporteResumen(Win::ListView lvReporte, int idPuntoVenta, int longuitud, Sys::Time inicial, Sys::Time termino,bool activo);
 	private:
 	};
 private:

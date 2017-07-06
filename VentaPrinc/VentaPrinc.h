@@ -19,6 +19,7 @@
 #include "EliminarClienteVentasDlg.h"
 #include "GraficoVentas.h"
 #include "ComisionVentasDlg.h"
+#include "RangosDlg.h"
 
 class VentaPrinc: public Win::Window
 {

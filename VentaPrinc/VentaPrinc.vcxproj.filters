@@ -121,6 +121,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OrdenCompletaDlg.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AsignarRangoDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -225,6 +228,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OrdenCompletaDlg.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AsignarRangoDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

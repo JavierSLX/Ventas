@@ -2221,7 +2221,6 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 
 	coneccion.CloseSession();
 }
-
 //LLenar reporte por orden de compra en una listview dependiendo del folio introducido por el usuario
 void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::ListView lvReporte, wstring folio, int longuitud, bool activo)
 {
@@ -2284,9 +2283,242 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::Lis
 					AND mo.marca_id = ma.id\
 					AND a.tipoArticulo_id = ta.id\
 					AND a.id = od.tipoVentaId\
-					AND o.folio='%s';",folio.c_str(),folio.c_str());
+					AND o.folio='%s';", folio.c_str(), folio.c_str());
 
 		coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+
+//LLenar reporte por orden de compra en una listview dependiendo del folio introducido por el usuario
+void LibreriaAngelDll::reporteVentasCLS::llenarReporteResumen(Win::ListView lvReporte, int idPuntoVenta, int longuitud, Sys::Time inicial, Sys::Time termino, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvReporte.DeleteAllItems();
+	int rows = 0;
+	lvReporte.SetRedraw(false);
+	lvReporte.Cols.DeleteAll();
+	lvReporte.Items.DeleteAll();
+	lvReporte.SetRedraw(true);
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 120, L"Departamento");
+	lvReporte.Cols.Add(1, LVCFMT_CENTER, 120, L"Requerimiento");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 85, L"Marca");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 100, L"Modelo");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Total Venta");
+	//reporte general de todos los requerimientos
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+		Sys::Format(consulta, L"SELECT DISTINCT sv.id,pv.tipo,sv.nombre,'NA','NA',SUM(od.cantidad)\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			servicio_requerimiento sr, servicio_venta sv, usuario usu\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND pv.id = %d\
+			AND od.requerimiento_id = r.id\
+			AND sr.requerimiento_id = r.id\
+			AND sr.servicioVenta_id = sv.id\
+			AND sv.id = od.tipoVentaId\
+			AND DATE(o.fecha) >= '%d-%d-%d'\
+			AND DATE(o.fecha) <= '%d-%d-%d'\
+			GROUP BY sv.id\
+			UNION\
+			SELECT DISTINCT  a.id, pv.tipo, ta.nombre, ma.nombre, mo.nombre, SUM(od.cantidad)\
+			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
+			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta,\
+			 color col, usuario usu\
+			WHERE od.orden_id = o.id\
+			AND o.cliente_id = c.id\
+			AND cc.cliente_id = c.id\
+			AND o.puntoVenta_id = pv.id\
+			AND pv.id = %d\
+			AND od.requerimiento_id = r.id\
+			AND cr.requerimiento_id = r.id\
+			AND cr.cantidad_id = can.id\
+			AND can.articulo_id = a.id\
+			AND a.modelo_id = mo.id\
+			AND mo.marca_id = ma.id\
+			AND a.tipoArticulo_id = ta.id\
+			AND a.id = od.tipoVentaId\
+			AND o.usuario_id = usu.id\
+			AND DATE(o.fecha) >= '%d-%d-%d'\
+			AND DATE(o.fecha) <= '%d-%d-%d'\
+			GROUP BY a.id; ",idPuntoVenta, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay, idPuntoVenta, inicial.wYear, inicial.wMonth, inicial.wDay, termino.wYear, termino.wMonth, termino.wDay);
+
+		coneccion.ExecuteSelect(consulta, longuitud, lvReporte);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+//
+void LibreriaAngelDll::rangoCLS::mostrarRangoAsignado(Win::ListView lvRango, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvRango.DeleteAllItems();
+	int rows = 0;
+	lvRango.SetRedraw(false);
+	lvRango.Cols.DeleteAll();
+	lvRango.Items.DeleteAll();
+	lvRango.SetRedraw(true);
+	lvRango.Cols.Add(0, LVCFMT_CENTER, 60, L"S/A");
+	lvRango.Cols.Add(1, LVCFMT_CENTER, 120, L"Requerimiento");
+	lvRango.Cols.Add(2, LVCFMT_CENTER, 100, L"Marca");
+	lvRango.Cols.Add(3, LVCFMT_CENTER, 100, L"Modelo");
+	lvRango.Cols.Add(4, LVCFMT_CENTER, 60, L"Mínimo");
+	lvRango.Cols.Add(5, LVCFMT_CENTER, 60, L"Máximo");
+	lvRango.Cols.Add(6, LVCFMT_CENTER, 80, L"Comisión");
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+		Sys::Format(consulta, L"SELECT sr.id,'Servicio',sv.nombre,'NA','NA',ran.minimo,ran.maximo,ran.comision\
+				FROM servicio_venta sv, servicio_rango sr, rango ran\
+				WHERE sr.servicio_id = sv.id\
+					AND sr.rango_id = ran.id\
+				UNION\
+				SELECT ar.id, 'Artículo', ta.nombre, ma.nombre, mo.nombre, ran.minimo, ran.maximo, ran.comision\
+				FROM articulo a, tipo_articulo ta, marca ma, modelo mo, articulo_rango ar, rango ran\
+				WHERE ar.articulo_id = a.id\
+					AND ar.rango_id = ran.id\
+					AND a.tipoArticulo_id = ta.id\
+					AND a.modelo_id = mo.id\
+					AND mo.marca_id = ma.id;");
+		coneccion.ExecuteSelect(consulta, longuitud, lvRango);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+
+//
+void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, int longuitud, bool activo)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	lvRango.DeleteAllItems();
+	int rows = 0;
+	lvRango.SetRedraw(false);
+	lvRango.Cols.DeleteAll();
+	lvRango.Items.DeleteAll();
+	lvRango.SetRedraw(true);
+	lvRango.Cols.Add(0, LVCFMT_CENTER, 60, L"S/A");
+	lvRango.Cols.Add(1, LVCFMT_CENTER, 120, L"Requerimiento");
+	lvRango.Cols.Add(2, LVCFMT_CENTER, 100, L"Marca");
+	lvRango.Cols.Add(3, LVCFMT_CENTER, 100, L"Modelo");
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
+		Sys::Format(consulta, L"SELECT sv.id,'Servicio',sv.nombre,'NA','NA'\
+				FROM servicio_venta sv\
+				WHERE sv.id\
+					NOT IN(SELECT servicio_id FROM servicio_rango)\
+				UNION\
+				SELECT a.id, 'Artículo', ta.nombre, mo.nombre, ma.nombre\
+				FROM articulo a, tipo_articulo ta, marca ma, modelo mo\
+				WHERE a.id\
+					NOT IN(SELECT articulo_id FROM articulo_rango)\
+					AND a.tipoArticulo_id = ta.id\
+					AND a.modelo_id = mo.id\
+					AND mo.marca_id = ma.id;");
+		coneccion.ExecuteSelect(consulta, longuitud, lvRango);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	coneccion.CloseSession();
+}
+
+//
+void LibreriaAngelDll::rangoCLS::insertaRangoArticulo(int articuloId, int rangoId, int requerimientoId)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO articulo_rango(articulo_id,rango_id,requerimiento_id)VALUES('%d','%d','%d')",articuloId,rangoId,requerimientoId);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+
+//
+void LibreriaAngelDll::rangoCLS::insertaRangoServicio(int servicioId, int rangoId, int requerimientoId)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO servicio_rango(servicio_id,rango_id,requerimiento_id)VALUES('%d','%d','%d')", servicioId, rangoId, requerimientoId);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+
+//
+void LibreriaAngelDll::rangoCLS::actualizarRangoServicio(int servicioRangoId, int rangoId, int requerimientoId)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE servicio_rango SET rango_id=%d WHERE id=%d", rangoId,servicioRangoId);
+		coneccion.ExecuteNonQuery(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+	coneccion.CloseSession();
+}
+
+//
+void LibreriaAngelDll::rangoCLS::actualizarRangoArticulo(int articuloRangoId, int rangoId, int requerimientoId)
+{
+	Sql::SqlConnection coneccion;
+	wstring consulta;
+	try
+	{
+		coneccion.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE articulo_rango SET rango_id=%d WHERE id=%d", rangoId, articuloRangoId);
+		coneccion.ExecuteNonQuery(consulta);
 	}
 	catch (Sql::SqlException e)
 	{

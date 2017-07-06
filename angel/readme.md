@@ -7,6 +7,9 @@ Determinadas con el fin de ser desarrolladas por José Ángel Campos Alejo, sien
 * Servicio-Venta: Insertar nuevo, editar, eliminar y restaurar.
 * Rango: Insertar nuevo, editar, eliminar y restaurar.
 * Reportes.
+
+----------
+
 <h5>26/06/2017</h5>
 Actividades realizadas durante el día 26 de Junio del 2017:
 
@@ -24,6 +27,8 @@ Actividades realizadas durante el día 26 de Junio del 2017:
 * Programación del botón eliminar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>false</code>.
 * Programación del botón restaurar, el cual cambia el estado del campo de activo dentro de la tabla <code>servicio_venta</code> a <code>true</code>.
 * Creación de la clase <code>rangoCLS</code>,clase que sirve para los movimientos que son necesarios para los rangos de comisiones.
+
+----------
 
 <h5>27/06/2017</h5>
 Actividades realizadas durante el día 27 de Junio del 2017:
@@ -44,12 +49,17 @@ Actividades realizadas durante el día 27 de Junio del 2017:
 * Método que muestra las regiones en un <code>DropDownList</code>.
 * Método que muestra las ciudades en un <code>DropDownList</code> dependiendo de la opción seleccionada en el <code>DropDownList</code> de regiones.
 * Método que muestra los requerimientos en un <code>DropDownList</code>.
+
+----------
+
 <h5>28/06/2017</h5>
 Actividades realizadas durante el día 28 de Junio del 2017:
 
 * Re diseño de la tabla orden_descripcion.
 * Creación del método generación del reporte general.
 * Creación del método generación del reporte por departamento.
+
+----------
 
 <h5>29/06/2017</h5>
 Actividades realizadas durante el día 29 de Junio del 2017:
@@ -58,7 +68,9 @@ Actividades realizadas durante el día 29 de Junio del 2017:
 * Adecuación del método para la generación del reporte por departamento y general.
 * Creación del método para reporte de ventas por orden de compra.
 * Programación del evento textchange del `TextBox` de orden de compra para generar el reporte de ventas por orden.
-*
+
+----------
+
 <h5>30/06/2017</h5>
 Actividades realizadas durante el día 30 de Junio del 2017:
 
@@ -66,6 +78,8 @@ Actividades realizadas durante el día 30 de Junio del 2017:
 * Unificación de los script de la base de datos para el proyecto.
 * Reporte de ventas por departamento con filtro por fechas, se agregaron los campos de modelo y marca en caso de artículo.
 * Reporte de ventas por orden de compra al cual se le agregaron los campos de modelo y marca en caso de artículo.
+
+----------
 
 <h5>01/07/2017</h5>
 Actividades realizadas durante el día 01 de Julio del 2017:
@@ -76,6 +90,8 @@ Actividades realizadas durante el día 01 de Julio del 2017:
 * Se incluyo la carpeta logoAtc, la cual contiene el logotipo de la empresa necesario para la impresión de los reportes.
 * Creación del formato para imprimir reportes.
 * Programación del botón para imprimir el reporte de ventas.
+
+----------
 
 <h5>03/07/2017</h5>
 Actividades realizadas durante el día 03 de Julio del 2017:
@@ -88,8 +104,24 @@ Actividades realizadas durante el día 03 de Julio del 2017:
 * Pruebas de humo con usuario para verificar el funcionamiento del software.
 * Cambios en los mensajes de error en las ventas de `ServicioDlg` y `rangoDlg`.
 
+----------
+
 <h5>04/07/2017</h5>
 Actividades realizadas durante el día 04 de Julio del 2017:
 
 * Pruebas de humo del funcionamiento del sistema, las cuales arrojaron funcionamiento positivo.
-* Se agregaron creo el dialogo RangosDlg para administrar los rangos por artículo.
+* Se agregaron creo el dialogo `RangosDlg` para administrar los rangos por artículo.
+
+----------
+
+<h5>05/07/2017</h5>
+Actividades realizadas durante el día 05 de Julio del 2017.
+
+* Creación del método para mostrar los servicios y artículos con rango asignado.
+* Creación del método para mostrar los servicios y artículos sin rango asignado.
+* Creación del método para asignar un rango a un artículo.
+* Creación del método para asignar un rango a un servicio.
+* Creación del método para editar un rango de un servicio.
+* Creación del método para editar un rango de un artículo.
+* Se agregó la opción Resumen, en la que se muestra el resumen por artículo y servicio de cada departamento.
+* Creación del método para mostrar el resumen del reporte de venta dependiendo del departamento y del rango de fechas.
