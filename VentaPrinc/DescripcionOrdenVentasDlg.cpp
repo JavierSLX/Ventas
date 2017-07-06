@@ -392,14 +392,17 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	{
 		//si la orden se paga al contado se inserta en orden completa 
 		ordenObj.insertarOrdenCompleta(totalOrden, orden);
+		lb8.SetText(folioVP);
 		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP);
 		ventana.BeginDialog(hWnd);
+		this->EndDialog(IDOK);
 	}
 	else {
 		//si la orden se hizo a credito se inserta en credito
 		ordenObj.insertarCredito(totalOrden, orden);
 		OrdenCompletaDlg ventana(totalOrden, L"Credito", folioVP);
 		ventana.BeginDialog(hWnd);
+		this->EndDialog(IDOK);
 
 	}
 }

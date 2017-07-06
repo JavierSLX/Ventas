@@ -12,6 +12,7 @@ void OrdenCompletaDlg::Window_Open(Win::Event& e)
 
 void OrdenCompletaDlg::btAceptar_Click(Win::Event& e)
 {
+	this->EndDialog(IDOK);
 }
 
 void OrdenCompletaDlg::btEditar_Click(Win::Event& e)
