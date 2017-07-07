@@ -311,8 +311,16 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			int idServicio = ordenObj.sacarIDServicio(ddTipo.Text);
 			int idRango = ordenObj.sacarIDrangoServicio(Sys::Convert::ToInt(tbxFinal.Text), idServicio);
 			//verifica si el servicio tiene cio
-			if (idRango != 0)
+			if (idRango == 0)
 			{
+				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+				ordenObj.insertarServicioComision(0.0, true, 2, IdOrdenDesc);
+				contadorVP++;
+
+			}
+			else
+			{
+				
 				// si hay comision para ese servicio
 				double comision = ordenObj.sacarComision(idServicio);
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
@@ -321,18 +329,8 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 				//inserta la comision en la tabla servicio comision
 				ordenObj.insertarServicioComision(totalComision, true, idRango, IdOrdenDesc);
-			//sacar el total de comisiones de todos los servicios de esas ordenes
+				//sacar el total de comisiones de todos los servicios de esas ordenes
 				totalComision += totalComision;
-
-			}
-			else
-			{
-				
-
-				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
-				ordenObj.insertarServicioComision(0.0, true, 2, IdOrdenDesc);
-				contadorVP++;
-
 			}
 		}
 		
@@ -376,6 +374,8 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	//saca el total a pagar de esa orden
 	double totalOrden = TotalPrecioServiciosVP + TotalPrecioArticulosVP;
 	int orden = ordenObj.sacarUltIDOrden();
+	ordenObj.insertarTotalServicioComision(TotalComisionServiciosVP, ordenObj.sacarUltIDOrden());
+	ordenObj.insertarTotalArticuloComision(TotalComisionArticulosVP, ordenObj.sacarUltIDOrden());
 	if ( contadorVP != 0)
 	{
 		if (MessageBoxW(L"Existen articulos sin generar comision decea registrarlos", L"Comision", MB_YESNO | MB_ICONINFORMATION) == IDYES)

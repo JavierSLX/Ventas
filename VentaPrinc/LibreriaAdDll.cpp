@@ -2591,10 +2591,10 @@ int LibreriaAdDll::ordenNueva::sacarIDrangoServicio(int pFinal, int servicio)
 		Sys::Format(consulta, L"SELECT ran.id\
 			FROM rango ran, servicio_venta sv, servicio_rango sr\
 			WHERE sr.rango_id = ran.id\
-			AND sr.servicioVenta_id = sv.id\
+			AND sr.servicio_id = sv.id\
 			AND sv.id = %d\
 			AND minimo <= %d\
-			AND %d <= maximo", pFinal, pFinal);
+			AND %d <= maximo", servicio,pFinal, pFinal);
 		ma = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -2690,8 +2690,8 @@ void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int 
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"INSERT INTO totalservicio_comision (total, servicioComision_id) \
-								VALUES(%d,true, %d, %d);", total, orden);
+		Sys::Format(consulta, L"INSERT INTO totalservicio_comision (total, orden_id) \
+								VALUES(%lf, %d)", total, orden);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -2715,7 +2715,7 @@ void LibreriaAdDll::ordenNueva::insertarTotalArticuloComision(double total, int 
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"INSERT INTO totalarticulo_comision (total, articuloComision_id) \
+		Sys::Format(consulta, L"INSERT INTO totalarticulo_comision (total, orden_id) \
 								VALUES(%lf, %d);", total, orden);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
