@@ -2472,9 +2472,9 @@ int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo)
 			FROM rango ran, articulo art, articulo_rango ar\
 			WHERE ar.rango_id = ran.id\
 			AND ar.articulo_id = art.id\
-			AND ar.id = %d\
+			AND art.id = %d\
 			AND minimo <= %d\
-			AND %d <= maximo", pFinal, pFinal);
+			AND %d <= maximo", articulo, pFinal, pFinal);
 		ma = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)
@@ -2531,6 +2531,29 @@ int LibreriaAdDll::ordenNueva::sacarUltIDOrden()
 	conn.CloseSession();
 	return articulos_id;
 }
+
+int LibreriaAdDll::ordenNueva::sacarUltIDOrdenDesc()
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int articulos_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id\
+			FROM orden_descripcion\
+			ORDER BY id DESC limit 1;");
+		articulos_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return articulos_id;
+}
 void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exito, int rango, int orden)
 {
 	wstring consulta;
@@ -2556,7 +2579,7 @@ void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exit
 
 
 }
-int LibreriaAdDll::ordenNueva::sacarIDrangoSetvicio(int pFinal, int servicio)
+int LibreriaAdDll::ordenNueva::sacarIDrangoServicio(int pFinal, int servicio)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;

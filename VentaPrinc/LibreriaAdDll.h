@@ -134,12 +134,13 @@ public:
 			int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo);
 			double LibreriaAdDll::ordenNueva::sacarComision(int id);
 			void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exito, int rango, int orden);
-			int LibreriaAdDll::ordenNueva::sacarIDrangoSetvicio(int pFinal, int servicio);
+			int LibreriaAdDll::ordenNueva::sacarIDrangoServicio(int pFinal, int servicio);
 			void LibreriaAdDll::ordenNueva::insertarServicioComision(double total, bool exito, int rango, int orden);
 			void LibreriaAdDll::ordenNueva::insertarOrdenCompleta(double total, int orden);
 			void LibreriaAdDll::ordenNueva::insertarCredito(double total, int orden);
 			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int orden);
 			void LibreriaAdDll::ordenNueva::insertarTotalArticuloComision(double total, int orden);
+			int LibreriaAdDll::ordenNueva::sacarUltIDOrdenDesc();
 			
 	};
 private:

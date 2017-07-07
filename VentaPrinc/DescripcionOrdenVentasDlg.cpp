@@ -235,7 +235,6 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP)), ordenObj.sacarIDRequerimiento(L"Articulo"));
 				int cantidadOrden = Sys::Convert::ToInt(tbxCantidad.Text);
 				int orden_id = ordenObj.sacarUltIDOrden();
-				lb8.SetText(Sys::Convert::ToString(orden_id));
 				ordenObj.insertOrdenDescripcion(ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
 				MessageBoxW(L"Ya inserto", L"Articulo", MB_OK | MB_ICONERROR);
@@ -245,8 +244,8 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				//sacar el total del precio a pagar de ese articulo
 				double Total= (double)cantidad * precio;
 				//sacar el total del precio a pagar de todos los articulos de la orden
-				TotalPrecioArticulosVP =+ Total;
-
+				TotalPrecioArticulosVP += Total;
+				
 				//Descontar cantidad de inventario
 				int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
 				int cantidadActualizar = cantidadExistenteVP - cantidadOrden;
@@ -254,7 +253,6 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 				int idArticulo = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
-
 				//Insertar en tabla movimiento
 				int idPuntoVenta = ordenObj.sacarIDPuntoVenta(puntoVentaVP);
 				movObj.insertarMovimiento(cantidadOrden, 2, idPuntoVenta, idArticulo, 26);
@@ -263,31 +261,33 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				movObj.insertarfechaMovimiento(movimiento);
 
 				//insertar comisiones
-					
+				
 					int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idArticulo);
+					
 					//verifica si existe comision para ese articulo
-				if (id != 0)
+				if (idRango == 0)
 				{
+					//si no hay comision para ese se genera comision 0 pr default
+					contadorVP = 0;
+
+					int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
+					ordenObj.insertarArticuloComision(0.0, true, 1, IdOrdenDesc);
+					contadorVP++;
+
+				}
+				else
+				{
+					
 					//si hay comision ...
 					double comision = ordenObj.sacarComision(idRango);
 					int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 					//saca el total de la comision de un articulo
 					double totalComision = (double)cantidad * comision;
-					int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+					int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 					//inserta el total del ese articulo en la tabla articulo comision
 					ordenObj.insertarArticuloComision(totalComision, true, idRango, IdOrdenDesc);
 					//saca el total de comisiones de la orden
 					TotalComisionArticulosVP += totalComision;
-
-				}
-				else
-				{
-					//si no hay comision para ese se genera comision 0 pr default
-					contadorVP = 0;
-					
-					int IdOrdenDesc = ordenObj.sacarUltIDOrden();
-					ordenObj.insertarArticuloComision(0 , true, 1, IdOrdenDesc);
-					contadorVP++;
 
 				}
 				
@@ -306,19 +306,19 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 			//sacar el total por pagar en los servicios
 			double Total = (double)cantidad * precio;
-			TotalPrecioServiciosVP = +Total;
+			TotalPrecioServiciosVP += Total;
 
 			int idServicio = ordenObj.sacarIDServicio(ddTipo.Text);
-			int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idServicio);
-			//verifica si el servicio tiene comision
-			if (id != 0)
+			int idRango = ordenObj.sacarIDrangoServicio(Sys::Convert::ToInt(tbxFinal.Text), idServicio);
+			//verifica si el servicio tiene cio
+			if (idRango != 0)
 			{
 				// si hay comision para ese servicio
 				double comision = ordenObj.sacarComision(idServicio);
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 				//sacar la comision total de ese articulo
 				double totalComision = (double)cantidad * comision;
-				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+				int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 				//inserta la comision en la tabla servicio comision
 				ordenObj.insertarServicioComision(totalComision, true, idRango, IdOrdenDesc);
 			//sacar el total de comisiones de todos los servicios de esas ordenes
@@ -330,7 +330,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				
 
 				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
-				ordenObj.insertarServicioComision(0, true, 2, IdOrdenDesc);
+				ordenObj.insertarServicioComision(0.0, true, 2, IdOrdenDesc);
 				contadorVP++;
 
 			}
@@ -338,19 +338,6 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 		
 	}
 	
-
-
-
-//void DescripcionOrdenVentasDlg::tbxCantidad_Change(Win::Event& e)
-//{
-//	LibreriaAdDll::ordenNueva ordenObj;
-//	LibreriaAdDll::articulo articuloObj;
-//	/*int idCantidad=articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text,articuloObj.sacarIDModelo(ddModelo.Text),articuloObj.sacarIDMarca(ddMarca.Text),puntoVentaVP));
-//	;*/
-//	LibreriaFBDll::Movimiento movObj;
-//	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
-//	
-//}
 
 void DescripcionOrdenVentasDlg::btEditar_Click(Win::Event& e)
 {
@@ -393,8 +380,7 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	{
 		if (MessageBoxW(L"Existen articulos sin generar comision decea registrarlos", L"Comision", MB_YESNO | MB_ICONINFORMATION) == IDYES)
 		{
-			RangosDlg ventana;
-			ventana.BeginDialog(hWnd);
+			
 		}
 	}
 
@@ -402,7 +388,6 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	{
 		//si la orden se paga al contado se inserta en orden completa 
 		ordenObj.insertarOrdenCompleta(totalOrden, orden);
-		lb8.SetText(folioVP);
 		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP);
 		this->EndDialog(IDOK);
 		ventana.BeginDialog(hWnd);
