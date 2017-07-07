@@ -58,6 +58,7 @@ protected:
 	void btAgregar_Click(Win::Event& e);
 	void btActualizar_Click(Win::Event& e);
 	void lvLada_DblClk(Win::Event& e);
+	void Window_Activate(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
