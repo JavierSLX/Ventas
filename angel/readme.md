@@ -126,8 +126,19 @@ Actividades realizadas durante el día 05 de Julio del 2017:
 * Se agregó la opción Resumen, en la que se muestra el resumen por artículo y servicio de cada departamento.
 * Creación del método para mostrar el resumen del reporte de venta dependiendo del departamento y del rango de fechas.
 
+----------
+
 <h5>06/07/2017</h5>
 Actividades realizadas durante el día 06 de Julio del 2017:
 
 * Pruebas de humo del funcionamiento del proyecto.
 * Creación de ejemplos para probar los reportes de ventas.
+
+----------
+
+<h5>07/07/2017</h5>
+Actividades realizadas durante el día 07 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del proyecto, se encontraron problemas en la presentación de los rangos y servicios.
+* Corrección de la presentación de los rangos en la ventana `asignarRangoDlg`.
+* Validación al insertar un servicio existente.
