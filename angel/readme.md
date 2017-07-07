@@ -115,7 +115,7 @@ Actividades realizadas durante el día 04 de Julio del 2017:
 ----------
 
 <h5>05/07/2017</h5>
-Actividades realizadas durante el día 05 de Julio del 2017.
+Actividades realizadas durante el día 05 de Julio del 2017:
 
 * Creación del método para mostrar los servicios y artículos con rango asignado.
 * Creación del método para mostrar los servicios y artículos sin rango asignado.
@@ -125,3 +125,9 @@ Actividades realizadas durante el día 05 de Julio del 2017.
 * Creación del método para editar un rango de un artículo.
 * Se agregó la opción Resumen, en la que se muestra el resumen por artículo y servicio de cada departamento.
 * Creación del método para mostrar el resumen del reporte de venta dependiendo del departamento y del rango de fechas.
+
+<h5>06/07/2017</h5>
+Actividades realizadas durante el día 06 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del proyecto.
+* Creación de ejemplos para probar los reportes de ventas.

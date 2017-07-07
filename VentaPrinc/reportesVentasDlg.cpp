@@ -10,7 +10,7 @@ void reportesVentasDlg::Window_Open(Win::Event& e)
 	ddTipoReporte.Items.Add(L"Departamento");
 	ddTipoReporte.Items.Add(L"Ciudad");
 	ddTipoReporte.Items.Add(L"Orden de Compra");
-	ddTipoReporte.Items.Add(L"Resumen");
+	//ddTipoReporte.Items.Add(L"Resumen");
 	ddTipoReporte.SetSelectedIndex(0);
 	//Inicializar en false los elemetos del dialogo que no se necesitan visualizar
 	ponerVisibleElementos(false);
