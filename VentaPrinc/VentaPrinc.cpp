@@ -94,6 +94,8 @@ void VentaPrinc::Cmd_Delcliente(Win::Event& e)
 //Opción "Precio Cliente" del menú
 void VentaPrinc::Cmd_Preciocliente(Win::Event& e)
 {
+	PrecioClienteDlg precioObj;
+	precioObj.BeginDialog(hWnd);
 }
 
 //Opción "Nueva Ciudad" del menú

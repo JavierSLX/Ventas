@@ -183,6 +183,7 @@
     <ClInclude Include="LibreriaJesusDll.h" />
     <ClInclude Include="LibreriaJRDll.h" />
     <ClInclude Include="OrdenCompletaDlg.h" />
+    <ClInclude Include="PrecioClienteDlg.h" />
     <ClInclude Include="RangosDlg.h" />
     <ClInclude Include="RegionDlg.h" />
     <ClInclude Include="OrdenVentasDlg.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="LibreriaJesusDll.cpp" />
     <ClCompile Include="LibreriaJRDll.cpp" />
     <ClCompile Include="OrdenCompletaDlg.cpp" />
+    <ClCompile Include="PrecioClienteDlg.cpp" />
     <ClCompile Include="RangosDlg.cpp" />
     <ClCompile Include="RegionDlg.cpp" />
     <ClCompile Include="OrdenVentasDlg.cpp" />
