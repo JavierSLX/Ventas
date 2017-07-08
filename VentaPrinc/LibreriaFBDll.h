@@ -128,6 +128,7 @@ public:
 		wstring LibreriaFBDll::Ciudad::sacarCiudad(wstring ciudad, int lada);
 		wstring LibreriaFBDll::Ciudad::sacarTextoLV(Win::ListView lvTabla, int columna);
 		void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre, int ciudad_id);
+		void LibreriaFBDll::Ciudad::actualizarLadaCiudad(int ciudad_id, int lada_id);
 		void LibreriaFBDll::Ciudad::eliminarRecuperarCiudad(int modelo_id, bool estado);
 		void LibreriaFBDll::Ciudad::llenarDDLada(Win::DropDownList ddLada, int large);
 		int LibreriaFBDll::Ciudad::sacarIDLada(wstring tipo);
