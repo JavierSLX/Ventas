@@ -97,6 +97,7 @@ void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
 	tbxOpcionBusqueda.SetFocus();
+	tbxOpcionBusqueda.SetText(L"");
 }
 
 void busquedaVentasDlg::lvOrden_ItemActivate(Win::Event& e)

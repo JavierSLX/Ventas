@@ -125,6 +125,10 @@ void bonoCreditoVentasDlg::btLimpiar_Click(Win::Event& e)
 	lvCredito.Items.DeleteAll();
 	lvCredito.SetRedraw(true);
 	tbxOpcion.SetText(L"");
+	ddPuntosVenta.Visible = false;
+	radioFolio.Checked = true;
+	radioClave.Checked = false;
+	radioNombre.Checked = false;
 	tbxOpcion.SetFocus();
 }
 

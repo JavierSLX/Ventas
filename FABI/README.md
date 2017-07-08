@@ -12,3 +12,5 @@ Ademas se comenzo con la ventana de busquedas.
 ### 30/06/2017 Se empezo con los detalles de las ordenes existentes, ademas de que se diseñaron los dialogos, se agregaron metodos, y se corrigieron errores y se hicieron modificaciones en la ventana de ciudad.
 
 ### 01/07/2017 Se corrigieron detalles esteticos en la ventana de busquedas y detalles de busquedas, ademas se trabajo en las venatanas de orden y en consultas para algunas de las ventanas ya mencionadas
+
+### 06/07/2017 En el transcurso de esta semana se trabajo en la ventana de comisiones, asi como los metodos para poder calcular dichas comisiones en los diferentes departamentos, ademas de que se corrigieron errores y/o detalles en lo ya trabajado
