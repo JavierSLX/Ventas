@@ -69,3 +69,13 @@ void LadaDlg::lvLada_DblClk(Win::Event& e)
 	tbxLada.Text = ladaObj.obtenerlada(lvLada, 0);
 }
 
+void LadaDlg::Window_Activate(Win::Event& e)
+{
+	const bool activated = (e.wParam != WA_INACTIVE);
+	e.returnValue = 0;
+	LibreriaJesusDll::datosLadaCLS ladaObj;
+	ladaObj.MostrarLada(lvLada, 200, true);
+	ladaObj.llenarLadaDD(ddRegion, 10);
+	ddRegion.SetSelectedIndex(0);
+}
+
