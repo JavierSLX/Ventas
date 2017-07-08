@@ -29,7 +29,7 @@ void ServicioDlg::btAgregar_Click(Win::Event& e)
 		else
 		{
 			//Validación que el servicio no existe en la base de datos
-			wstring servicio = servicioVentaObj.sacarServicioSiExiste(tbxServicio.Text);
+			wstring servicio = servicioVentaObj.sacarServicioSiExiste(tbxServicio.Text,tbxPrecio.IntValue);
 			if (servicio == tbxServicio.Text)
 			{
 				if (MessageBoxW(L"Ya existe el tipo de articulo", L"Error", MB_OK | MB_ICONERROR) == IDYES)
@@ -75,7 +75,7 @@ void ServicioDlg::btActualizar_Click(Win::Event& e)
 		else
 		{
 			//Valor que el servicio no exista en la base de datos
-			wstring servicio = servicioVentaObj.sacarServicioSiExiste(tbxServicio.Text);
+			wstring servicio = servicioVentaObj.sacarServicioSiExiste(tbxServicio.Text,tbxPrecio.IntValue);
 			if (servicio == tbxServicio.Text)
 			{
 				if (MessageBoxW(L"Ya existe el tipo de articulo", L"Error", MB_OK | MB_ICONERROR) == IDYES)
@@ -91,7 +91,7 @@ void ServicioDlg::btActualizar_Click(Win::Event& e)
 				//Actualiza el servicio en la base de datos y actualiza la ListView
 				servicioVentaObj.actualizarServicio(_idServicio, tbxServicio.Text, tbxPrecio.IntValue, true);
 				servicioVentaObj.mostrarServiciosExistentes(lvServicio, 200, true);
-				this->MessageBoxW(L"Se agrego correctamente", L"Nuevo servicio", MB_OK);
+				this->MessageBoxW(L"Se actualizó correctamente", L"Nuevo servicio", MB_OK);
 				tbxServicio.Text = L"";
 				tbxPrecio.Text = L"";
 				tbxServicio.SetFocus();

@@ -4,7 +4,7 @@
 void AsignarRangoDlg::Window_Open(Win::Event& e)
 {
 	//________________________________________________________ lvRangos
-	tbxRequerimiento.Text = requerimientoVP;
+	tbxRequerimiento.Text = tipoVP;
 	tbxMarca.Text = marcaVP;
 	tbxModelo.Text = modeloVP;
 	LibreriaAngelDll::rangoCLS rangoObj;

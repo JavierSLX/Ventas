@@ -78,7 +78,7 @@ public:
 	{
 	public:
 		void LibreriaAngelDll::servicioVentaCLS::mostrarServiciosExistentes(Win::ListView lvServicio, int longuitud, bool activo);
-		wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring tipoArticulo);
+		wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring tipoArticulo,int precio);
 		void LibreriaAngelDll::servicioVentaCLS::insertarServicio(wstring servicio, int precio, bool servicioActivo);
 		void LibreriaAngelDll::servicioVentaCLS::actualizarServicio(int id, wstring servicio, int precio, bool servicioActivo);
 		void LibreriaAngelDll::servicioVentaCLS::cambiarEstadoServicio(int idServicio, bool servicioActivo);

@@ -681,7 +681,7 @@ void LibreriaAngelDll::servicioVentaCLS::mostrarServiciosExistentes(Win::ListVie
 }
 
 //Metodo para verificar si un servicio ya existe en la base de datos
-wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring servicioVenta)
+wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring servicioVenta,int precio)
 {
 	wstring consulta;
 	Sql::SqlConnection coneccion;
@@ -692,7 +692,8 @@ wstring LibreriaAngelDll::servicioVentaCLS::sacarServicioSiExiste(wstring servic
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT nombre\
 			FROM servicio_venta\
-			WHERE nombre = '%s'", servicioVenta.c_str());
+			WHERE nombre = '%s'\
+			AND precio=%d", servicioVenta.c_str(),precio);
 		coneccion.GetString(consulta, existeServicioVenta, 50);
 	}
 	catch (Sql::SqlException e)
@@ -2438,7 +2439,7 @@ void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, i
 				WHERE sv.id\
 					NOT IN(SELECT servicio_id FROM servicio_rango)\
 				UNION\
-				SELECT a.id, 'Artículo', ta.nombre, mo.nombre, ma.nombre\
+				SELECT a.id, 'Artículo', ta.nombre, ma.nombre, mo.nombre\
 				FROM articulo a, tipo_articulo ta, marca ma, modelo mo\
 				WHERE a.id\
 					NOT IN(SELECT articulo_id FROM articulo_rango)\
