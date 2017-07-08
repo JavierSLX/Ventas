@@ -58,6 +58,9 @@ public:
 		//Método que llena todos los clientes de un determinado punto de venta
 		void llenarLVClientes(Win::ListView lvTabla, wstring punto_venta, bool activoCliente, bool activoClaveCliente, int size);
 
+		//Método que llena todas las claves de cliente de un determinado punto de venta
+		void llevarLVClaveClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size);
+
 		//Método que llena la drop down list con los tipos de punto de venta registrados
 		void llenarDdPuntoVenta(Win::DropDownList ddVenta, int size);
 

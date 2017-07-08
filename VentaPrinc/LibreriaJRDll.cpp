@@ -482,6 +482,42 @@ void LibreriaJRDll::WintemplaCLS::llenarLVClientes(Win::ListView lvTabla, wstrin
 	conn.CloseSession();
 }
 
+//Método que llena todas las claves de cliente de un determinado punto de venta
+void LibreriaJRDll::WintemplaCLS::llevarLVClaveClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Se define los nombres de las columnas
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 200, L"Clave");
+
+		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
+		Sys::Format(consulta, L"SELECT cc.id, CONCAT(pv.tipo, '-', cc.numero)\
+		FROM clave_cliente cc, punto_venta pv\
+		WHERE cc.puntoVenta_id = pv.id\
+		AND pv.tipo = '%s'\
+		AND cc.activo = %d\
+		ORDER BY cc.numero ASC;", punto_venta.c_str(), activo);
+		conn.ExecuteSelect(consulta, size, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
 //Método que llena la drop down list con los tipos de punto de venta registrados
 void LibreriaJRDll::WintemplaCLS::llenarDdPuntoVenta(Win::DropDownList ddVenta, int size)
 {

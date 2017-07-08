@@ -64,6 +64,7 @@ protected:
 	void lvTabla_ItemChanged(Win::Event& e);
 	void btRegistrar_Click(Win::Event& e);
 	void lvClientes_ItemChanged(Win::Event& e);
+	void ddRuta_SelChange(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -75,6 +76,7 @@ protected:
 		if (lvTabla.IsEvent(e, LVN_ITEMCHANGED)) {lvTabla_ItemChanged(e); return true;}
 		if (btRegistrar.IsEvent(e, BN_CLICKED)) {btRegistrar_Click(e); return true;}
 		if (lvClientes.IsEvent(e, LVN_ITEMCHANGED)) {lvClientes_ItemChanged(e); return true;}
+		if (ddRuta.IsEvent(e, CBN_SELCHANGE)) {ddRuta_SelChange(e); return true;}
 		return false;
 	}
 };
