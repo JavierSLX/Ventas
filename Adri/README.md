@@ -24,12 +24,22 @@
 			o menor a la existente).
 ##30 - junio - 2017
 	- Se detecto un problema con una consulta que no se mostraba en el listView, este problema afecto con el....
-##3-julio-2017
 	- llenar precio sugerido y precio final (Para llenar estos tbx se utilizaron metodos para sacar los precios de determinado articulo con si determinado cliente
 		 ).
 	- metodo para insertar una descripcion de la venta
 	-Para insertar una orden descripcion se tuvieron en cuenta muchas restricciones, si lo que se registraba era articulo o servicio, si la cantidad era menor o igual a la existente
 	tener en cuenta el id del ultimo folio, su precio sugerido, su cantidad su total.
+##3-julio-2017
+	- A la hora de berificar las inserciones de una orden, se tuvo un conflicto que se visualizo el dia de hoy, no se mostraban los articulos preciamente insertados,
+		con ninguno de los metodos ya funcionales entonces se decidio realizar toda la ventana de nuevo, cono cada cosa que se habia echo
 ##4-julio-2017
+	- Se continuo con la creacion de la ventana y el dia de hoy el metodo para que el usuiario vea el articulo agregado a la venta es funcional
 ##5-julio-2017
+	- ya realizadas las insercciones en la tabla orden descripcion, pasamos a descontar de inventario los articulos ventidos, y agregar el movimiento de venta.
+	tambien se comenzo a visualizar como se crarian las comisiones el dia de hoy pero solo en teoria
 ##6-julio-2017
+	- Se crearon los metodos para la calcular las comisiones de cada articulo.
+
+##7-julio-2017
+	- Las comisiones por orden de cada departamento fueron calculada, y se inserto en las tablas de los totales, para esta parte del proyecto solo se estaran revisando las funcionalidades
+		de cada boton y pequeños detalles con la base de datos.
