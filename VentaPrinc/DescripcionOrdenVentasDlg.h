@@ -3,7 +3,7 @@
 #include "LibreriaAdDll.h"
 #include "LibreriaFBDll.h"
 #include "OrdenCompletaDlg.h"
-#include "RangosDlg.h"
+
 
 class DescripcionOrdenVentasDlg: public Win::Dialog
 {

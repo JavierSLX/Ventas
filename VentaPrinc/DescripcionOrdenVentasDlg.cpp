@@ -237,7 +237,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				int orden_id = ordenObj.sacarUltIDOrden();
 				ordenObj.insertOrdenDescripcion(ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
-				MessageBoxW(L"Ya inserto", L"Articulo", MB_OK | MB_ICONERROR);
+				MessageBoxW(L"Se agregó correctamente", L"Articulo", MB_YESNO | MB_ICONINFORMATION);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 				double precio = Sys::Convert::ToDouble(tbxFinal.Text);
@@ -273,7 +273,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 					ordenObj.insertarArticuloComision(0.0, true, 1, IdOrdenDesc);
 					contadorVP++;
-
+					lb8.SetText(Sys::Convert::ToString(contadorVP));
 				}
 				else
 				{
@@ -298,7 +298,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 		{
 			ordenObj.insertarServicioRequerimiento(ordenObj.sacarIDServicio(ddTipo.Text), ordenObj.sacarIDRequerimiento(L"Servicio"));
 			ordenObj.insertOrdenDescripcion(ordenObj.sacarIDServicio(ddTipo.Text), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, ordenObj.sacarUltIDOrden(), ordenObj.sacarIDRequerimiento(L"Servicio"));
-			MessageBoxW(L"Ya inserto", L"Servicio", MB_OK | MB_ICONERROR);
+			MessageBoxW(L"Se agregó correctamente", L"Servicio", MB_YESNO | MB_ICONINFORMATION);
 
 			int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 			double precio = Sys::Convert::ToDouble(tbxFinal.Text);
@@ -376,19 +376,13 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	int orden = ordenObj.sacarUltIDOrden();
 	ordenObj.insertarTotalServicioComision(TotalComisionServiciosVP, ordenObj.sacarUltIDOrden());
 	ordenObj.insertarTotalArticuloComision(TotalComisionArticulosVP, ordenObj.sacarUltIDOrden());
-	if ( contadorVP != 0)
-	{
-		if (MessageBoxW(L"Existen articulos sin generar comision decea registrarlos", L"Comision", MB_YESNO | MB_ICONINFORMATION) == IDYES)
-		{
-			
-		}
-	}
+	
 
 	if (MessageBoxW(L"La compra es al CONTADO", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
 	{
 		//si la orden se paga al contado se inserta en orden completa 
 		ordenObj.insertarOrdenCompleta(totalOrden, orden);
-		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP);
+		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP, contadorVP);
 		this->EndDialog(IDOK);
 		ventana.BeginDialog(hWnd);
 		
@@ -396,7 +390,7 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	else {
 		//si la orden se hizo a credito se inserta en credito
 		ordenObj.insertarCredito(totalOrden, orden);
-		OrdenCompletaDlg ventana(totalOrden, L"Credito", folioVP);
+		OrdenCompletaDlg ventana(totalOrden, L"Credito", folioVP, contadorVP);
 		this->EndDialog(IDOK);
 		ventana.BeginDialog(hWnd);
 		

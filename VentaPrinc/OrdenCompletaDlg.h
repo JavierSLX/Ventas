@@ -1,12 +1,13 @@
 #pragma once   //_____________________________________________ OrdenCompletaDlg.h  
 #include "resource.h"
 #include "LibreriaAdDll.h"
+#include "RangosDlg.h"
 
 
 class OrdenCompletaDlg: public Win::Dialog
 {
 public:
-	OrdenCompletaDlg( double Total, wstring nombre, wstring folio)
+	OrdenCompletaDlg( double Total, wstring nombre, wstring folio, int contador)
 	{
 		this->CantidadPagarVP = Total;
 		this->nombreVP = nombre;
@@ -16,6 +17,7 @@ public:
 	{
 	}
 private:
+	int contadorVP;
 	double CantidadPagarVP;
 	wstring nombreVP;
 	wstring folioVP;
