@@ -1448,8 +1448,34 @@ void LibreriaFBDll::Ciudad::actualizarCiudad(wstring nombre,int ciudad_id)
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"UPDATE ciudad \
-		SET nombre = '%s'\
+		SET nombre = '%s' \
 		WHERE id = %d",nombre.c_str(),ciudad_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+}
+
+
+void LibreriaFBDll::Ciudad::actualizarLadaCiudad( int ciudad_id,int lada_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE ciudad \
+		SET lada_id = %d \
+		WHERE id = %d", lada_id, ciudad_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows > 1)
 		{

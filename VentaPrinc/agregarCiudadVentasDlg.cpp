@@ -85,7 +85,7 @@ void agregarCiudadVentasDlg::btEditar_Click(Win::Event& e)
 		tbxNombre.ShowBalloonTip(L"Casilla vacía", L"Nombre", TTI_ERROR);
 		return;
 	}
-	if (nombreCiudadVP == tbxNombre.Text)
+	if (nombreCiudadVP == tbxNombre.Text &&  ladaVP == ddLadas.Text)
 	{
 		if (MessageBoxW(L"No hay cambios que guardar", L"ERROR", MB_OK | MB_ICONERROR) == IDYES)
 		{
@@ -95,14 +95,18 @@ void agregarCiudadVentasDlg::btEditar_Click(Win::Event& e)
 	}
 	else
 	{
-		ciudadObj.actualizarCiudad(tbxNombre.Text, ciudadIdVP);
-		if (MessageBoxW(L"Se guardaron los cambios",L"",MB_OK | MB_ICONINFORMATION) == IDYES)
-		{
+			int ladaid = ciudadObj.sacarIDLada(ddLadas.Text);
+			ciudadObj.actualizarLadaCiudad( ciudadIdVP,ladaid);
+			ciudadObj.actualizarCiudad(tbxNombre.Text, ciudadIdVP);
+			if (MessageBoxW(L"Se guardaron los cambios", L"", MB_OK | MB_ICONINFORMATION) == IDYES)
+			{
 
-		}
-		tbxNombre.SetText(L"");
-		tbxNombre.SetFocus();
-		ciudadObj.llenarLVCiudad(lvCiudades, 100);
+			}
+			tbxNombre.SetText(L"");
+			tbxNombre.SetFocus();
+			ddLadas.SetSelectedIndex(0);
+			ciudadObj.llenarLVCiudad(lvCiudades, 100);
+		
 	}
 }
 
@@ -112,9 +116,10 @@ void agregarCiudadVentasDlg::lvCiudades_ItemChanged(Win::Event& e)
 	LibreriaFBDll::Ciudad ciudadObj;
 	ciudadIdVP = modeloObj.sacarIDOculto(lvCiudades);
 	nombreCiudadVP = ciudadObj.sacarTextoLV(lvCiudades, 0);
-	wstring lada = ciudadObj.sacarLada(nombreCiudadVP);
+	ladaVP = ciudadObj.sacarLada(nombreCiudadVP);
+	idLadaVP = ciudadObj.sacarIDLada(ladaVP);
 	tbxNombre.SetText(nombreCiudadVP);
-	ddLadas.SetSelected(lada);
+	ddLadas.SetSelected(ladaVP);
 
 }
 

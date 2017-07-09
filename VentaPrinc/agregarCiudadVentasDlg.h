@@ -14,10 +14,11 @@ public:
 	{
 	}
 private:
+	wstring ladaVP;
 	wstring opcionSeleccionadaVP;
 	int ciudadIdVP;
 	wstring nombreCiudadVP;
-	
+	int idLadaVP;
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Label lbNombre;
 	Win::Textbox tbxNombre;
