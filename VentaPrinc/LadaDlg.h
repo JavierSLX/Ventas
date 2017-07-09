@@ -28,7 +28,7 @@ protected:
 	Win::Gdi::Font fontArial012A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(10.47750);
+		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(8.67833);
 		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(9.57792);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -41,7 +41,7 @@ protected:
 		btRegion.CreateX(NULL, L"+", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 2.83104, 2.24896, 1.00542, 0.68792, hWnd, 1003);
 		btAgregar.CreateX(NULL, L"Agregar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 0.07938, 3.25438, 2.40771, 0.68792, hWnd, 1004);
 		btActualizar.CreateX(NULL, L"Actualizar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 0.07938, 4.25979, 2.40771, 0.68792, hWnd, 1005);
-		lvLada.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 4.15396, 0.18521, 6.13833, 9.20750, hWnd, 1006);
+		lvLada.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 4.15396, 0.18521, 4.33917, 9.20750, hWnd, 1006);
 		lvLada.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		fontArial012A.CreateX(L"Arial", 0.423333, false, false, false, false);

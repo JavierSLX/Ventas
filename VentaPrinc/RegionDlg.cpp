@@ -36,7 +36,7 @@ void RegionDlg::btActualizar_Click(Win::Event& e)
 {
 	if (this->tbxRegion.GetTextLength() == 0)
 	{
-		this->tbxRegion.ShowBalloonTip(L"Region", L"Ingrese una Región", TTI_ERROR);
+		this->tbxRegion.ShowBalloonTip(L"Region", L"Seleccione una Región", TTI_ERROR);
 	}
 	else
 	{
