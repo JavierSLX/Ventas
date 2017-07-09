@@ -12,7 +12,7 @@ void LibreriaJesusDll::datosRegionCLS::MostrarRegion(Win::ListView lvRegion, int
 	lvRegion.Cols.DeleteAll();
 	lvRegion.Items.DeleteAll();
 	lvRegion.SetRedraw(true);
-	lvRegion.Cols.Add(0, LVCFMT_CENTER, 100, L"nombre");
+	lvRegion.Cols.Add(0, LVCFMT_CENTER, 100, L"Nombre");
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
@@ -116,8 +116,8 @@ void LibreriaJesusDll::datosLadaCLS::MostrarLada(Win::ListView lvLada, int longu
 	lvLada.Cols.DeleteAll();
 	lvLada.Items.DeleteAll();
 	lvLada.SetRedraw(true);
-	lvLada.Cols.Add(0, LVCFMT_CENTER, 80, L"lada");
-	lvLada.Cols.Add(1, LVCFMT_CENTER, 100, L"region");
+	lvLada.Cols.Add(0, LVCFMT_CENTER, 50, L"Lada");
+	lvLada.Cols.Add(1, LVCFMT_CENTER, 70, L"Región");
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
@@ -225,7 +225,7 @@ void LibreriaJesusDll::datosLadaCLS::MostrarLadaEliminar(Win::ListView lvLada, i
 	lvLada.Cols.DeleteAll();
 	lvLada.Items.DeleteAll();
 	lvLada.SetRedraw(true);
-	lvLada.Cols.Add(0, LVCFMT_CENTER, 80, L"lada");
+	lvLada.Cols.Add(0, LVCFMT_CENTER, 80, L"Lada");
 	//lvLada.Cols.Add(1, LVCFMT_CENTER, 100, L"region");
 	try
 	{
