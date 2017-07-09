@@ -782,9 +782,9 @@ void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, in
 	lvRango.Cols.DeleteAll();
 	lvRango.Items.DeleteAll();
 	lvRango.SetRedraw(true);
-	lvRango.Cols.Add(0, LVCFMT_CENTER, 100, L"Mínimo");
-	lvRango.Cols.Add(1, LVCFMT_CENTER,100 , L"Máximo");
-	lvRango.Cols.Add(2, LVCFMT_CENTER, 100, L"Comisión");
+	lvRango.Cols.Add(0, LVCFMT_CENTER, 70, L"Mínimo");
+	lvRango.Cols.Add(1, LVCFMT_CENTER,70 , L"Máximo");
+	lvRango.Cols.Add(2, LVCFMT_CENTER, 70, L"Comisión");
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
@@ -2365,7 +2365,8 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteResumen(Win::ListView lvRe
 	}
 	coneccion.CloseSession();
 }
-//
+
+//Metodo que muestra los articulos y servicios que ya cuentan con una rango asignado
 void LibreriaAngelDll::rangoCLS::mostrarRangoAsignado(Win::ListView lvRango, int longuitud, bool activo)
 {
 	Sql::SqlConnection coneccion;
@@ -2412,7 +2413,7 @@ void LibreriaAngelDll::rangoCLS::mostrarRangoAsignado(Win::ListView lvRango, int
 	coneccion.CloseSession();
 }
 
-//
+//Muestra los artículos y servicios que no tienen un rango asignado
 void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, int longuitud, bool activo)
 {
 	Sql::SqlConnection coneccion;
@@ -2456,7 +2457,7 @@ void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, i
 	coneccion.CloseSession();
 }
 
-//
+//Metodo que asigna un rango a un artículo
 void LibreriaAngelDll::rangoCLS::insertaRangoArticulo(int articuloId, int rangoId, int requerimientoId)
 {
 	Sql::SqlConnection coneccion;
@@ -2474,7 +2475,7 @@ void LibreriaAngelDll::rangoCLS::insertaRangoArticulo(int articuloId, int rangoI
 	coneccion.CloseSession();
 }
 
-//
+//Metodo que asigna un rango a un servicio
 void LibreriaAngelDll::rangoCLS::insertaRangoServicio(int servicioId, int rangoId, int requerimientoId)
 {
 	Sql::SqlConnection coneccion;
@@ -2492,7 +2493,7 @@ void LibreriaAngelDll::rangoCLS::insertaRangoServicio(int servicioId, int rangoI
 	coneccion.CloseSession();
 }
 
-//
+//Metodo que actualiza el rango asignado a un servicio
 void LibreriaAngelDll::rangoCLS::actualizarRangoServicio(int servicioRangoId, int rangoId, int requerimientoId)
 {
 	Sql::SqlConnection coneccion;
@@ -2510,7 +2511,7 @@ void LibreriaAngelDll::rangoCLS::actualizarRangoServicio(int servicioRangoId, in
 	coneccion.CloseSession();
 }
 
-//
+//Metodo que actualiza el rango asignado a un artículo
 void LibreriaAngelDll::rangoCLS::actualizarRangoArticulo(int articuloRangoId, int rangoId, int requerimientoId)
 {
 	Sql::SqlConnection coneccion;
