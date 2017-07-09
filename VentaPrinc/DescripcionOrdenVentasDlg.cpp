@@ -237,7 +237,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				int orden_id = ordenObj.sacarUltIDOrden();
 				ordenObj.insertOrdenDescripcion(ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
-				MessageBoxW(L"Se agregó correctamente", L"Articulo", MB_YESNO | MB_ICONINFORMATION);
+				MessageBoxW(L"Se agregó correctamente", L"Articulo", MB_OK | MB_ICONINFORMATION);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 				double precio = Sys::Convert::ToDouble(tbxFinal.Text);
@@ -298,7 +298,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 		{
 			ordenObj.insertarServicioRequerimiento(ordenObj.sacarIDServicio(ddTipo.Text), ordenObj.sacarIDRequerimiento(L"Servicio"));
 			ordenObj.insertOrdenDescripcion(ordenObj.sacarIDServicio(ddTipo.Text), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, ordenObj.sacarUltIDOrden(), ordenObj.sacarIDRequerimiento(L"Servicio"));
-			MessageBoxW(L"Se agregó correctamente", L"Servicio", MB_YESNO | MB_ICONINFORMATION);
+			MessageBoxW(L"Se agregó correctamente", L"Servicio", MB_OK | MB_ICONINFORMATION);
 
 			int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 			double precio = Sys::Convert::ToDouble(tbxFinal.Text);
@@ -339,14 +339,21 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 void DescripcionOrdenVentasDlg::btEditar_Click(Win::Event& e)
 {
-	bool cambio;
+
+	bool cambio =false;
+	LibreriaFBDll::Movimiento movObj;
 	LibreriaAdDll::ordenNueva ordenObj;
+	LibreriaAdDll::articulo  articuloObj;
+	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+	int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
 	//Cuando se hizo un cambio de codigo
 	if (tbxCantidad.Text != CantidadVP)
 	{
 	
-		int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
-		ordenObj.updateCantidaDescrOreden(idDetalles, cantidad);
+		int cantidadNueva = Sys::Convert::ToInt(tbxCantidad.Text);
+		ordenObj.updateCantidaDescrOreden(idDetalles, cantidadNueva);
+		int cantidadInventario = Sys::Convert::ToInt(CantidadVP) - cantidadNueva;
+		ordenObj.updateCantidadInventario(idCantidad, cantidadExistenteVP + cantidadInventario);
 		cambio = true;
 	}
 	if (tbxFinal.Text != PFinalVP)
@@ -371,14 +378,16 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 {
 	LibreriaAdDll::articulo articuloObj;
 	LibreriaAdDll::ordenNueva ordenObj;
-	//saca el total a pagar de esa orden
-	double totalOrden = TotalPrecioServiciosVP + TotalPrecioArticulosVP;
+
+	
 	int orden = ordenObj.sacarUltIDOrden();
+	//saca el total a pagar de esa orden
+	double totalOrden = ordenObj.sacarTotalOrdenDescripcion(orden);
 	ordenObj.insertarTotalServicioComision(TotalComisionServiciosVP, ordenObj.sacarUltIDOrden());
 	ordenObj.insertarTotalArticuloComision(TotalComisionArticulosVP, ordenObj.sacarUltIDOrden());
 	
 
-	if (MessageBoxW(L"La compra es al CONTADO", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
+	if (MessageBoxW(L"¿La compra es al CONTADO?", L"Opcion compra", MB_YESNO | MB_ICONINFORMATION) == IDYES)
 	{
 		//si la orden se paga al contado se inserta en orden completa 
 		ordenObj.insertarOrdenCompleta(totalOrden, orden);

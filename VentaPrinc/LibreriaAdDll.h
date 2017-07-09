@@ -141,6 +141,7 @@ public:
 			void LibreriaAdDll::ordenNueva::insertarTotalServicioComision(double total, int orden);
 			void LibreriaAdDll::ordenNueva::insertarTotalArticuloComision(double total, int orden);
 			int LibreriaAdDll::ordenNueva::sacarUltIDOrdenDesc();
+			double LibreriaAdDll::ordenNueva::sacarTotalOrdenDescripcion(int idOrden);
 			
 	};
 private:

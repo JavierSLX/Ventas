@@ -2244,12 +2244,12 @@ void LibreriaFBDll::Comisiones::llenarComisiones(Win::ListView lvTabla, wstring 
 			AND u.puesto_id = pu.id\
 			AND pvu.puntoVenta_id = pv.id\
 			AND ac.ordenDescripcion_id = od.id\
-			AND od.orden_id = o.id\
-			AND sc.ordenDescripcion_id = od.id\
 			and o.fecha >= '%d-%d-%d 00:00:00'\
 			and o.fecha <= '%d-%d-%d 23:59:59'\
 			AND pv.tipo = '%s'\
-			AND pu.tipo = 'Responsable';", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay,puntoVenta.c_str());
+			and u.activo = true\
+			AND pu.tipo = 'Responsable'\
+			AND tac.total + tsc.total > 0 ;", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay,puntoVenta.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
 	}

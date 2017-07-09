@@ -883,6 +883,30 @@ double LibreriaAdDll::articulo::sacarPrecioSiCodigo(wstring codigo)
 	conn.CloseSession();
 	return ma;
 }
+//saca el precio de una orden 
+double LibreriaAdDll::ordenNueva::sacarTotalOrdenDescripcion(int idOrden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT SUM(od.precio_final*od.cantidad)\
+			from orden o, orden_descripcion od\
+		where od.orden_id = o.id\
+		and o.id = %d ",idOrden);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
 wstring LibreriaAdDll::articulo::sacarModeloSiCodigo(wstring codigo)
 {
 	wstring consulta;
