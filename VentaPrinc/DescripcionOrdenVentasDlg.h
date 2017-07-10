@@ -13,18 +13,24 @@ public:
 		this->puntoVentaVP = punto_venta;
 		this->folioVP = folio;
 		this->CClienteVP = claveCliente;
-		contadorVP = 0;
+		
 	}
 	~DescripcionOrdenVentasDlg()
 	{
 	}
 private:
+	vector<int>articulosSinRangoVP;
+	vector<int>articuloSinRangoOdVP;
+	vector<int>cantidadArticuloSinRangoVP;
+	vector<int>serviciosSinRangoVP;
+	vector<int>serviciosSinRangoOdVP;
+	vector<int>cantidadServiciosSinRangoVP;
 	double TotalPrecioArticulosVP;
 	double TotalPrecioServiciosVP;
 	double TotalComisionArticulosVP;
 	double TotalComisionServiciosVP;
 	double TotalComisionOrdenVP;
-	int contadorVP;
+	int contadorVP = 0;
 	wstring folioVP;
 	wstring puntoVentaVP;
 	wstring CClienteVP;
@@ -140,6 +146,7 @@ protected:
 	void btEditar_Click(Win::Event& e);
 	void btTerminar_Click(Win::Event& e);
 	void btEliminar_Click(Win::Event& e);
+	void Window_Activate(Win::Event& e);
 	void Window_Close(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________

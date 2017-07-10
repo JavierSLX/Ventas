@@ -263,16 +263,20 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				//insertar comisiones
 				
 					int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idArticulo);
+					/*lb9.SetText(Sys::Convert::ToString(idRango));*/
 					
 					//verifica si existe comision para ese articulo
 				if (idRango == 0)
 				{
 					//si no hay comision para ese se genera comision 0 pr default
-					contadorVP = 0;
-
+					/*contadorVP = 0;*/
+					MessageBoxW(L"Si entro", L"Articulo", MB_OK | MB_ICONINFORMATION);
 					int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 					ordenObj.insertarArticuloComision(0.0, true, 1, IdOrdenDesc);
 					contadorVP++;
+					articulosSinRangoVP.push_back(idArticulo);
+					articuloSinRangoOdVP.push_back(IdOrdenDesc);
+					cantidadArticuloSinRangoVP.push_back(tbxCantidad.IntValue);
 					lb8.SetText(Sys::Convert::ToString(contadorVP));
 				}
 				else
@@ -310,17 +314,21 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 			int idServicio = ordenObj.sacarIDServicio(ddTipo.Text);
 			int idRango = ordenObj.sacarIDrangoServicio(Sys::Convert::ToInt(tbxFinal.Text), idServicio);
+			lb8.SetText(Sys::Convert::ToString(idRango));
 			//verifica si el servicio tiene cio
 			if (idRango == 0)
 			{
 				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
 				ordenObj.insertarServicioComision(0.0, true, 2, IdOrdenDesc);
 				contadorVP++;
+				serviciosSinRangoVP.push_back(idServicio);
+				serviciosSinRangoOdVP.push_back(IdOrdenDesc);
+				cantidadServiciosSinRangoVP.push_back(tbxCantidad.IntValue);
+				lb9.SetText(Sys::Convert::ToString(contadorVP));
 
 			}
 			else
 			{
-				
 				// si hay comision para ese servicio
 				double comision = ordenObj.sacarComision(idServicio);
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
@@ -336,7 +344,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 		
 	}
 	
-
+	
 void DescripcionOrdenVentasDlg::btEditar_Click(Win::Event& e)
 {
 
@@ -378,7 +386,7 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 {
 	LibreriaAdDll::articulo articuloObj;
 	LibreriaAdDll::ordenNueva ordenObj;
-
+	lb8.SetText(Sys::Convert::ToString(contadorVP));
 	
 	int orden = ordenObj.sacarUltIDOrden();
 	//saca el total a pagar de esa orden
@@ -391,16 +399,16 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	{
 		//si la orden se paga al contado se inserta en orden completa 
 		ordenObj.insertarOrdenCompleta(totalOrden, orden);
+		lb9.SetText(Sys::Convert::ToString(contadorVP));
 		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP, contadorVP);
-		this->EndDialog(IDOK);
 		ventana.BeginDialog(hWnd);
+		this->EndDialog(IDOK);
 		
 	}
 	else {
 		//si la orden se hizo a credito se inserta en credito
 		ordenObj.insertarCredito(totalOrden, orden);
 		OrdenCompletaDlg ventana(totalOrden, L"Credito", folioVP, contadorVP);
-		this->EndDialog(IDOK);
 		ventana.BeginDialog(hWnd);
 		
 
@@ -488,5 +496,30 @@ void DescripcionOrdenVentasDlg::Window_Close(Win::Event& e)
 {
 	//this->Destroy(); // Use this to close and destroy the Window
 
+}
+
+void DescripcionOrdenVentasDlg::Window_Activate(Win::Event& e)
+{
+	LibreriaAdDll::ordenNueva ordenObj;
+	const bool activated = (e.wParam != WA_INACTIVE);
+	e.returnValue = 0;
+	if (contadorVP != 0)
+	{
+		int rangoVectorContador = articulosSinRangoVP.size();
+		for (int i = 0; i < rangoVectorContador; i++)
+		{
+			int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), articulosSinRangoVP[i]);
+			//Hacer la operacion para calcular total del articulo-comision
+			//si hay comision ...
+			double comision = ordenObj.sacarComision(idRango);
+			int cantidad = cantidadArticuloSinRangoVP[i];
+			//saca el total de la comision de un articulo
+			double totalComision = (double)cantidad * comision;
+			int IdOrdenDesc = articuloSinRangoOdVP[i];
+			//update el total del ese articulo en la tabla articulo comision
+			ordenObj.actualizarArticuloComision(totalComision, true, idRango, IdOrdenDesc);
+			
+		}
+	}
 }
 

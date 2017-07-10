@@ -2447,7 +2447,8 @@ void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int
 			FROM punto_venta pv, usuario us, puntoVenta_usuario pvu\
 			WHERE pvu.puntoVenta_id = pv.id\
 			AND pvu.usuario_id = us.id\
-			AND pv.id =  %d ", pv_id);
+			AND pv.id =  %d\
+			AND us.activo = true ", pv_id);
 
 		conn.ExecuteSelect(consulta, large, ddNombre);
 	}
@@ -2588,6 +2589,33 @@ void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exit
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"INSERT INTO articulo_comision (total, exito, rango_id, ordenDescripcion_id) \
 								VALUES('%lf',%d, %d, %d);", total, exito, rango, orden );
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+void LibreriaAdDll::ordenNueva::actualizarArticuloComision(double total, bool exito, int rango, int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE articulo_comision\
+								SET total = '%lf' , \
+								rango_id = %d \
+								WHERE ordenDescripcion_id = %d ;", total, rango, orden);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{

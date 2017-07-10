@@ -12,6 +12,7 @@ public:
 		this->CantidadPagarVP = Total;
 		this->nombreVP = nombre;
 		this->folioVP = folio;
+		this->contadorVP = contador;
 	}
 	~OrdenCompletaDlg()
 	{

@@ -35,7 +35,7 @@ void OrdenVentasDlg::Window_Open(Win::Event& e)
 	}
 	//llenar dropdown
 	consultasObj.llenarDDPuntoVenta(ddPuntoVenta, 100, true);
-	ddPuntoVenta.SetSelectedIndex(3);
+	ddPuntoVenta.SetSelectedIndex(0);
 
 	wstring puntoVenta = ddPuntoVenta.Text;
 	int puntoVenta_id = consultasObj.sacarIDpuntoVenta(puntoVenta);
