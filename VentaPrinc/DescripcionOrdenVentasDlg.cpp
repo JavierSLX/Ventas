@@ -277,6 +277,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					articulosSinRangoVP.push_back(idArticulo);
 					articuloSinRangoOdVP.push_back(IdOrdenDesc);
 					cantidadArticuloSinRangoVP.push_back(tbxCantidad.IntValue);
+					precioArticuloSinRangoVP.push_back(tbxFinal.DoubleValue);
 					lb8.SetText(Sys::Convert::ToString(contadorVP));
 				}
 				else
@@ -318,12 +319,13 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			//verifica si el servicio tiene cio
 			if (idRango == 0)
 			{
-				int IdOrdenDesc = ordenObj.sacarUltIDOrden();
+				int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 				ordenObj.insertarServicioComision(0.0, true, 2, IdOrdenDesc);
 				contadorVP++;
 				serviciosSinRangoVP.push_back(idServicio);
 				serviciosSinRangoOdVP.push_back(IdOrdenDesc);
 				cantidadServiciosSinRangoVP.push_back(tbxCantidad.IntValue);
+				precioservicioSinRangoVP.push_back(tbxFinal.DoubleValue);
 				lb9.SetText(Sys::Convert::ToString(contadorVP));
 
 			}
@@ -503,12 +505,13 @@ void DescripcionOrdenVentasDlg::Window_Activate(Win::Event& e)
 	LibreriaAdDll::ordenNueva ordenObj;
 	const bool activated = (e.wParam != WA_INACTIVE);
 	e.returnValue = 0;
+
 	if (contadorVP != 0)
 	{
 		int rangoVectorContador = articulosSinRangoVP.size();
 		for (int i = 0; i < rangoVectorContador; i++)
 		{
-			int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), articulosSinRangoVP[i]);
+			int idRango = ordenObj.sacarIDrango(precioArticuloSinRangoVP[i], articulosSinRangoVP[i]);
 			//Hacer la operacion para calcular total del articulo-comision
 			//si hay comision ...
 			double comision = ordenObj.sacarComision(idRango);
@@ -520,6 +523,25 @@ void DescripcionOrdenVentasDlg::Window_Activate(Win::Event& e)
 			ordenObj.actualizarArticuloComision(totalComision, true, idRango, IdOrdenDesc);
 			
 		}
+		int ultimaOrden = ordenObj.sacarUltIDOrden();
+		ordenObj.actualizarTotalArticuloComision(ultimaOrden);
+
+		 rangoVectorContador = serviciosSinRangoVP.size();
+		for (int i = 0; i < rangoVectorContador; i++)
+		{
+			int idRango = ordenObj.sacarIDrangoServicio(precioservicioSinRangoVP[i], serviciosSinRangoVP[i]);
+			//Hacer la operacion para calcular total del articulo-comision
+			//si hay comision ...
+			double comision = ordenObj.sacarComision(idRango);
+			int cantidad = cantidadServiciosSinRangoVP[i];
+			//saca el total de la comision de un articulo
+			double totalComision = (double)cantidad * comision;
+			int IdOrdenDesc = serviciosSinRangoOdVP[i];
+			//update el total del ese articulo en la tabla articulo comision
+			ordenObj.actualizarServicioComision(totalComision, true, idRango, IdOrdenDesc);
+
+		}
+		ordenObj.actualizarTotalServicioComision(ultimaOrden);
 	}
 }
 

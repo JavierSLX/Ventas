@@ -2631,6 +2631,93 @@ void LibreriaAdDll::ordenNueva::actualizarArticuloComision(double total, bool ex
 
 
 }
+
+void LibreriaAdDll::ordenNueva::actualizarServicioComision(double total, bool exito, int rango, int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE servicio_comision\
+								SET total = '%lf' , \
+								rango_id = %d \
+								WHERE ordenDescripcion_id = %d ;", total, rango, orden);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+void LibreriaAdDll::ordenNueva::actualizarTotalArticuloComision(int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"update totalarticulo_comision set total=(select sum(ac.total) \
+			from orden o, orden_descripcion od, articulo_comision ac\
+		where ac.ordenDescripcion_id = od.id\
+		and od.orden_id = o.id\
+			and o.id = %d)\
+		where orden_id = %d; ;",orden, orden);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+void LibreriaAdDll::ordenNueva::actualizarTotalServicioComision(int orden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"update totalservicio_comision set total=(select sum(sc.total) \
+			from orden o, orden_descripcion od, servicio_comision sc\
+		where sc.ordenDescripcion_id = od.id\
+		and od.orden_id = o.id\
+			and o.id = %d)\
+		where orden_id = %d;", orden, orden);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+
+
+}
+
 int LibreriaAdDll::ordenNueva::sacarIDrangoServicio(int pFinal, int servicio)
 {
 	wstring consulta;

@@ -22,9 +22,11 @@ private:
 	vector<int>articulosSinRangoVP;
 	vector<int>articuloSinRangoOdVP;
 	vector<int>cantidadArticuloSinRangoVP;
+	vector<double>precioArticuloSinRangoVP;
 	vector<int>serviciosSinRangoVP;
 	vector<int>serviciosSinRangoOdVP;
 	vector<int>cantidadServiciosSinRangoVP;
+	vector<double>precioservicioSinRangoVP;
 	double TotalPrecioArticulosVP;
 	double TotalPrecioServiciosVP;
 	double TotalComisionArticulosVP;
