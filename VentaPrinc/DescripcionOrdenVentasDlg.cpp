@@ -270,7 +270,6 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				{
 					//si no hay comision para ese se genera comision 0 pr default
 					/*contadorVP = 0;*/
-					MessageBoxW(L"Si entro", L"Articulo", MB_OK | MB_ICONINFORMATION);
 					int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
 					ordenObj.insertarArticuloComision(0.0, true, 1, IdOrdenDesc);
 					contadorVP++;
@@ -412,13 +411,10 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 		ordenObj.insertarCredito(totalOrden, orden);
 		OrdenCompletaDlg ventana(totalOrden, L"Credito", folioVP, contadorVP);
 		ventana.BeginDialog(hWnd);
+		this->EndDialog(IDOK);
 		
 
 	}
-}
-
-void DescripcionOrdenVentasDlg::btEliminar_Click(Win::Event& e)
-{
 }
 
 void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
