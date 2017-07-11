@@ -178,6 +178,8 @@ Actividades realizadas durante el día 10 de Julio del 2017:
 	* Creación de ejemplos de artículo y cantidades en cada punto de venta en la base de datos `pruebasmarquesada` para verificar el funcionamiento del software.
 	* Corrida del sistema en un equipo en el cual se manipularon las operaciones del sistema, al mismo tiempo en otro equipo se verifico que las operaciones se reflejaran de manera correcta en la base de datos.
 
+----------
+
 <h5>11/07/2017</h5>
 Actividades realizadas durante el día 11 de Julio del 2017:
 
