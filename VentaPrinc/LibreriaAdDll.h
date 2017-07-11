@@ -146,6 +146,13 @@ public:
 			void LibreriaAdDll::ordenNueva::actualizarServicioComision(double total, bool exito, int rango, int orden);
 			void LibreriaAdDll::ordenNueva::actualizarTotalServicioComision(int orden);
 			void LibreriaAdDll::ordenNueva::actualizarTotalArticuloComision(int orden);
+			int LibreriaAdDll::ordenNueva::sacarIDTipoVenta(int ordenDesc);
+			double LibreriaAdDll::ordenNueva::sacarTotalComision(int ordenDesc);
+			double LibreriaAdDll::ordenNueva::sacarComisionArticulo(int id);
+			void LibreriaAdDll::ordenNueva::updateTotalArticuloComision(int id, double total);
+			double LibreriaAdDll::ordenNueva::sacarComisionServicio(int id);
+			double LibreriaAdDll::ordenNueva::sacarTotalComisionServicio(int ordenDesc);
+			void LibreriaAdDll::ordenNueva::updateTotalServicioComision(int id, double totalOrden);
 			
 	};
 private:

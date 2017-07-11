@@ -3,6 +3,8 @@
 
 void DescripcionOrdenVentasDlg::Window_Open(Win::Event& e)
 {
+
+	
 	Sys::Icon iconoAgregar;
 	iconoAgregar.Load(hInstance, IDI_AGREGAR);
 	btAgregar.SetImage(iconoAgregar);
@@ -215,7 +217,10 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 	LibreriaAdDll::ordenNueva ordenObj;
 	LibreriaAdDll::articulo articuloObj;
 	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
-		
+	if (this->tbxCantidad.GetTextLength() < 1) {
+		this->tbxCantidad.ShowBalloonTip(L"Cantidad", L"Ingrese una cantidad", TTI_ERROR);
+		return;
+	}
 
 		if (radioArticulo.IsChecked() == true)
 		{
@@ -239,6 +244,9 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
 				MessageBoxW(L"Se agregó correctamente", L"Articulo", MB_OK | MB_ICONINFORMATION);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
+
+
+
 				int cantidad = Sys::Convert::ToInt(tbxCantidad.Text);
 				double precio = Sys::Convert::ToDouble(tbxFinal.Text);
 				//sacar el total del precio a pagar de ese articulo
@@ -277,7 +285,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					articuloSinRangoOdVP.push_back(IdOrdenDesc);
 					cantidadArticuloSinRangoVP.push_back(tbxCantidad.IntValue);
 					precioArticuloSinRangoVP.push_back(tbxFinal.DoubleValue);
-					lb8.SetText(Sys::Convert::ToString(contadorVP));
+					
 				}
 				else
 				{
@@ -294,6 +302,42 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					TotalComisionArticulosVP += totalComision;
 
 				}
+				//Llena la ddlist de tipo de articulo
+				LibreriaAdDll::ordenNueva ordenObj;
+				ordenObj.llenarDDTipoArticulo(ddTipo, 100, true, puntoVentaVP);
+				ddTipo.SetSelectedIndex(0);
+
+				//Llena la ddlist de marca
+				ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+				ddMarca.SetSelectedIndex(0);
+
+				//Llena la ddlist de modelo
+				ordenObj.llenarDDModelo(ddModelo, ddMarca.Text, 100, true);
+				ddModelo.SetSelectedIndex(0);
+
+				//Saca el articulo_id y llena la ddlist de color
+				LibreriaAdDll::articulo articuloObj;
+				int articulo_id = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
+					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
+				double precioCliente = ordenObj.sacarPrecioArticulo(articulo_id, ordenObj.sacarIDCliente(CClienteVP, puntoVentaVP));
+
+				tbxPrecio.SetText(Sys::Convert::ToString(precioCliente));
+				tbxPrecio.Enabled = false;
+				tbxFinal.SetText(Sys::Convert::ToString(precioCliente));
+
+				if (articulo_id != 0)
+				{
+					ordenObj.llenarDDcolor(ddColor, 100, articulo_id, puntoVentaVP);
+					ddColor.SetSelectedIndex(0);
+				}
+				else
+				{
+					MessageBoxW(L"No existe ningún artículo con esa combinación", L"Articulo", MB_OK | MB_ICONERROR);
+					ddColor.DeleteAllItems();
+				}
+				tbxCantidad.Text = L"";
+				tbxPrecio.Text = L"";
+				tbxFinal.Text = L"";
 				
 			}
 
@@ -314,7 +358,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 			int idServicio = ordenObj.sacarIDServicio(ddTipo.Text);
 			int idRango = ordenObj.sacarIDrangoServicio(Sys::Convert::ToInt(tbxFinal.Text), idServicio);
-			lb8.SetText(Sys::Convert::ToString(idRango));
+			
 			//verifica si el servicio tiene cio
 			if (idRango == 0)
 			{
@@ -325,7 +369,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				serviciosSinRangoOdVP.push_back(IdOrdenDesc);
 				cantidadServiciosSinRangoVP.push_back(tbxCantidad.IntValue);
 				precioservicioSinRangoVP.push_back(tbxFinal.DoubleValue);
-				lb9.SetText(Sys::Convert::ToString(contadorVP));
+				
 
 			}
 			else
@@ -341,6 +385,11 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				//sacar el total de comisiones de todos los servicios de esas ordenes
 				totalComision += totalComision;
 			}
+			ordenObj.llenarDDServicio(ddTipo, 100, true);
+			ddTipo.SetSelectedIndex(0);
+			tbxCantidad.Text = L"";
+			tbxPrecio.Text = L"";
+			tbxFinal.Text = L"";
 		}
 		
 	}
@@ -387,7 +436,7 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 {
 	LibreriaAdDll::articulo articuloObj;
 	LibreriaAdDll::ordenNueva ordenObj;
-	lb8.SetText(Sys::Convert::ToString(contadorVP));
+	
 	
 	int orden = ordenObj.sacarUltIDOrden();
 	//saca el total a pagar de esa orden
@@ -400,7 +449,6 @@ void DescripcionOrdenVentasDlg::btTerminar_Click(Win::Event& e)
 	{
 		//si la orden se paga al contado se inserta en orden completa 
 		ordenObj.insertarOrdenCompleta(totalOrden, orden);
-		lb9.SetText(Sys::Convert::ToString(contadorVP));
 		OrdenCompletaDlg ventana(totalOrden,L"Contado", folioVP, contadorVP);
 		ventana.BeginDialog(hWnd);
 		this->EndDialog(IDOK);
@@ -426,8 +474,8 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 	LibreriaAdDll::articulo articuloObj;
 
 	idDetalles = consultasObj.sacarIDOcultoLV(lvTabla);
-	wstring requerimiento = consultasObj.sacarTextoLV(lvTabla, 0);
-	if (requerimiento == L"Articulo")
+	requerimientoVP = consultasObj.sacarTextoLV(lvTabla, 0);
+	if (requerimientoVP == L"Articulo")
 	{
 		
 		TipoArticuloVP = consultasObj.sacarTextoLV(lvTabla, 1);
@@ -468,7 +516,7 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 		ddTipo.Enabled = true;
 		
 	}
-	else if (requerimiento == L"Servicio")
+	else if (requerimientoVP == L"Servicio")
 	{
 		TipoArticuloVP = consultasObj.sacarTextoLV(lvTabla, 1);
 		CantidadVP = consultasObj.sacarTextoLV(lvTabla, 5);
@@ -538,6 +586,47 @@ void DescripcionOrdenVentasDlg::Window_Activate(Win::Event& e)
 
 		}
 		ordenObj.actualizarTotalServicioComision(ultimaOrden);
+	}
+}
+
+void DescripcionOrdenVentasDlg::btEliminar_Click(Win::Event& e)
+{
+
+	LibreriaFBDll::Movimiento movObj;
+	LibreriaAdDll::ordenNueva ordenObj;
+	LibreriaAdDll::articulo  articuloObj;
+	
+	
+	int idArticulo = ordenObj.sacarIDTipoVenta(idDetalles);
+	lb8.SetText(requerimientoVP);
+	if (requerimientoVP == L"Articulo")
+	{
+		//actualiza la cantidad del inventario
+		int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ColorVP), articuloObj.sacarIDPuntoVenta(puntoVentaVP), idArticulo);
+		int cantidadActualizar = cantidadExistenteVP + Sys::Convert::ToInt(CantidadVP);
+		articuloObj.updateCantidad(idCantidad, cantidadActualizar);
+
+		//actualiza la cantidad de la tabla orden descripcion
+		ordenObj.updateCantidaDescrOreden(idDetalles, 0);
+
+		double comisionarticulo = ordenObj.sacarComisionArticulo(idDetalles);
+		double comisionTotalArticulo = ordenObj.sacarTotalComision((ordenObj.sacarUltIDOrden()));
+		//actualiza el id del la comision
+		ordenObj.actualizarArticuloComision(0.0, false, 1, idDetalles);
+		double updateTotalArticuloComision = comisionTotalArticulo - comisionarticulo;
+		//actualiza el total comision de la orden
+		ordenObj.updateTotalArticuloComision(ordenObj.sacarUltIDOrden(), updateTotalArticuloComision);
+		MessageBoxW(L"Se elimino Registro", L"Eliminar", MB_OK | MB_ICONERROR);
+	}
+	else if (TipoArticuloVP == L"Servicio")
+	{
+		ordenObj.updateCantidaDescrOreden(idDetalles, 0);
+		double comisionservicio = ordenObj.sacarComisionServicio(idDetalles);
+		double comisionTotalServicio = ordenObj.sacarTotalComisionServicio((ordenObj.sacarUltIDOrden()));
+		ordenObj.actualizarServicioComision(0.0, false, 1, idDetalles);
+		double updateTotalServicioComision = comisionTotalServicio - comisionservicio;
+		ordenObj.updateTotalServicioComision(ordenObj.sacarUltIDOrden(), updateTotalServicioComision);
+		MessageBoxW(L"Se elimino Registro", L"Eliminar", MB_OK | MB_ICONERROR);
 	}
 }
 

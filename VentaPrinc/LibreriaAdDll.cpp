@@ -2285,17 +2285,17 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 	lvDetalles.Cols.Add(1, LVCFMT_CENTER, 100, L"Tipo");
 	lvDetalles.Cols.Add(2, LVCFMT_CENTER, 100, L"Marca");
 	lvDetalles.Cols.Add(3, LVCFMT_CENTER, 100, L"Modelo");
-	lvDetalles.Cols.Add(4, LVCFMT_CENTER, 100, L"Color");
-	lvDetalles.Cols.Add(5, LVCFMT_CENTER, 100, L"Cantidad");
-	lvDetalles.Cols.Add(6, LVCFMT_CENTER, 100, L"P. Sugerido");
-	lvDetalles.Cols.Add(7, LVCFMT_CENTER, 100, L"P. Final");
-	lvDetalles.Cols.Add(8, LVCFMT_CENTER, 100, L"Total");
-	lvDetalles.Cols.Add(9, LVCFMT_CENTER, 100, L"Fecha");
+	lvDetalles.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
+	lvDetalles.Cols.Add(6, LVCFMT_CENTER, 100, L"Cantidad");
+	lvDetalles.Cols.Add(7, LVCFMT_CENTER, 100, L"P. Sugerido");
+	lvDetalles.Cols.Add(8, LVCFMT_CENTER, 100, L"P. Final");
+	lvDetalles.Cols.Add(9, LVCFMT_CENTER, 100, L"Total");
+	lvDetalles.Cols.Add(10, LVCFMT_CENTER, 100, L"Fecha");
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT DISTINCT od.id, r.tipo, sv.nombre\
-			, 'NA', 'NA', 'NA', od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad * od.precio_final, o.fecha\
+			, 'NA', 'NA',, 'NA' od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad * od.precio_final, o.fecha\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
 			servicio_requerimiento sr, servicio_venta sv\
 			WHERE od.orden_id = o.id\
@@ -2309,7 +2309,7 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 			AND o.folio = '%s'\
 			UNION\
 			SELECT DISTINCT od.id, r.tipo, ta.nombre, ma.nombre, mo.nombre, \
-			col.nombre, od.cantidad, od.precio_sugerido, od.precio_final,od.cantidad * od.precio_final, o.fecha\
+			co.nombre,od.cantidad, od.precio_sugerido, od.precio_final,od.cantidad * od.precio_final, o.fecha\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
 			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta, color col\
 			WHERE od.orden_id = o.id\
@@ -2870,4 +2870,163 @@ void LibreriaAdDll::ordenNueva::insertarTotalArticuloComision(double total, int 
 	conn.CloseSession();
 
 
+}
+int LibreriaAdDll::ordenNueva::sacarIDTipoVenta(int ordenDesc)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int categoria_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT tipoVentaId\
+			FROM orden_descripcion\
+			WHERE id = %d", ordenDesc);
+		categoria_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return categoria_id;
+}
+
+
+
+double LibreriaAdDll::ordenNueva::sacarTotalComision(int ordenDesc)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int categoria_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT total\
+			FROM totalArticulo_comision\
+			WHERE orden_id = %d", ordenDesc);
+		categoria_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return categoria_id;
+}
+double LibreriaAdDll::ordenNueva::sacarTotalComisionServicio(int ordenDesc)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int categoria_id = 0;
+
+	try {
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT total\
+			FROM totalServicio_comision\
+			WHERE orden_id = %d", ordenDesc);
+		categoria_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return categoria_id;
+}
+double LibreriaAdDll::ordenNueva::sacarComisionArticulo(int id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT total \
+			FROM articulo_comision\
+			WHERE ordenDescripcion_id = %d", id);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+double LibreriaAdDll::ordenNueva::sacarComisionServicio(int id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT total \
+			FROM servicio_comision\
+			WHERE ordenDescripcion_id = %d", id);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}
+void LibreriaAdDll::ordenNueva::updateTotalArticuloComision(int id, double totalOrden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE totalArticulo_comision\
+		SET total = '%s'\
+		WHERE orden_id = %d", totalOrden, id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+void LibreriaAdDll::ordenNueva::updateTotalServicioComision(int id, double totalOrden)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE totalServicion_comision\
+		SET total = '%s'\
+		WHERE orden_id = %d", totalOrden, id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows > 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
 }
