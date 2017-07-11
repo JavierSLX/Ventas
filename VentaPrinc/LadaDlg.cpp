@@ -30,7 +30,9 @@ void LadaDlg::btActualizar_Click(Win::Event& e)
 		ladaObj.ActualizarLada(_id, tbxLada.Text, idRegion);
 		tbxLada.Text = L"";
 		ladaObj.MostrarLada(lvLada, 200, true);
-		tbxLada.ShowBalloonTip(L"Lada", L"Se actualizo lada", TTI_NONE);
+		//tbxLada.ShowBalloonTip(L"Lada", L"Se actualizo lada", TTI_NONE);
+		MessageBox(L"Se actualizo lada", L"Lada", MB_OK);
+		tbxLada.SetFocus();
 	}
 }
 //Metodo que permite agragar ladas
@@ -56,7 +58,9 @@ void LadaDlg::btAgregar_Click(Win::Event& e)
 			tbxLada.Text = L"";
 			ladaObj.MostrarLada(lvLada, 200, true);
 			ladaBool = true;
-			tbxLada.ShowBalloonTip(L"Lada", L"Se agrego lada", TTI_NONE);
+			//tbxLada.ShowBalloonTip(L"Lada", L"Se agrego lada", TTI_NONE);
+			MessageBox(L"Se agrego lada", L"Lada", MB_OK);
+			tbxLada.SetFocus();
 		}
 
 	}

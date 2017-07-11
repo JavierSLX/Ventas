@@ -19,14 +19,16 @@ void RegionDlg::btAgregar_Click(Win::Event& e)
 		wstring rango = regionObj.verificarSiExisteRegion(tbxRegion.Text);
 		if (rango == tbxRegion.Text)
 		{
-			this->tbxRegion.ShowBalloonTip(L"Region", L"Ya existe esta region", TTI_ERROR);
+			this->tbxRegion.ShowBalloonTip(L"Region", L"Ya existe esta Region", TTI_ERROR);
 		}
 		else
 		{
 			regionObj.InsertarRegion(tbxRegion.Text, true);
 			tbxRegion.Text = L"";
 			regionObj.MostrarRegion(lvRegion, 200, true);
-			tbxRegion.ShowBalloonTip(L"Region", L"Se agrego la region", TTI_NONE);
+			MessageBox(L"Se agrego Región", L"Lada", MB_OK);
+			tbxRegion.SetFocus();
+			//tbxRegion.ShowBalloonTip(L"Region", L"Se agrego la region", TTI_NONE);
 		}
 
 	}
@@ -44,7 +46,9 @@ void RegionDlg::btActualizar_Click(Win::Event& e)
 		regionObj.ActualizarRegion(_id, tbxRegion.Text);
 		tbxRegion.Text = L"";
 		regionObj.MostrarRegion(lvRegion, 200, true);
-		tbxRegion.ShowBalloonTip(L"Region", L"Se actualizo region", TTI_NONE);
+		MessageBox(L"Se actualizo Región", L"Lada", MB_OK);
+		tbxRegion.SetFocus();
+		//tbxRegion.ShowBalloonTip(L"Region", L"Se actualizo region", TTI_NONE);
 	}
 }
 //Metodo que nos permite optener los valores dentro del listview
