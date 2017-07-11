@@ -45,11 +45,6 @@ void PrecioClienteDlg::ddMarca_SelChange(Win::Event& e)
 	ddModelo.SetSelectedIndex(0);
 }
 
-//Cuando cambia la ddlist de Modelo
-void PrecioClienteDlg::ddModelo_SelChange(Win::Event& e)
-{
-}
-
 //Cuando se selecciona un elemento de la tabla
 void PrecioClienteDlg::lvTabla_ItemChanged(Win::Event& e)
 {
@@ -75,6 +70,12 @@ void PrecioClienteDlg::lvTabla_ItemChanged(Win::Event& e)
 //Cuando se le da click al botón Registrar
 void PrecioClienteDlg::btRegistrar_Click(Win::Event& e)
 {
+	LibreriaJRDll::SqlCLS sqlObj;
+
+	if (articuloIDVP > 0)
+	{
+
+	}
 }
 
 //Cuando se selecciona un cliente específico

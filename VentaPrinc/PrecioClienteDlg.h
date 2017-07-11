@@ -74,7 +74,6 @@ protected:
 	//_________________________________________________
 	void ddTipo_SelChange(Win::Event& e);
 	void ddMarca_SelChange(Win::Event& e);
-	void ddModelo_SelChange(Win::Event& e);
 	void lvTabla_ItemChanged(Win::Event& e);
 	void btRegistrar_Click(Win::Event& e);
 	void lvClientes_ItemChanged(Win::Event& e);
@@ -85,7 +84,6 @@ protected:
 	{
 		if (ddTipo.IsEvent(e, CBN_SELCHANGE)) {ddTipo_SelChange(e); return true;}
 		if (ddMarca.IsEvent(e, CBN_SELCHANGE)) {ddMarca_SelChange(e); return true;}
-		if (ddModelo.IsEvent(e, CBN_SELCHANGE)) {ddModelo_SelChange(e); return true;}
 		if (lvTabla.IsEvent(e, LVN_ITEMCHANGED)) {lvTabla_ItemChanged(e); return true;}
 		if (btRegistrar.IsEvent(e, BN_CLICKED)) {btRegistrar_Click(e); return true;}
 		if (lvClientes.IsEvent(e, LVN_ITEMCHANGED)) {lvClientes_ItemChanged(e); return true;}

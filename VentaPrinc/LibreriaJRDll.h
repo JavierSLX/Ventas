@@ -166,6 +166,9 @@ public:
 
 		//Método que inserta un registro en la tabla clave_cliente
 		void insertarClaveCliente(wstring numero, int cliente_id, int puntoVenta_id);
+
+		//Método que inserta un registro en la tabla precio_cliente
+		void insertarPrecioCliente(double precio, int claveCliente, int articulo_id);
 	};
 
 	//Clase que contiene todo lo referente a color
