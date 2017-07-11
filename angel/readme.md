@@ -142,3 +142,51 @@ Actividades realizadas durante el día 07 de Julio del 2017:
 * Pruebas de humo del funcionamiento del proyecto, se encontraron problemas en la presentación de los rangos y servicios.
 * Corrección de la presentación de los rangos en la ventana `asignarRangoDlg`.
 * Validación al insertar un servicio existente.
+
+----------
+
+<h5>08/07/2017</h5>
+Actividades realizadas durante el día 08 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del proyecto, se desarrollaron de manera eficiente.
+* Capacitación al personal de inventario sobre el uso del mismo.
+* Creación como equipo de la base de datos `pruebasmarquesada` en el servidor para verificar las operaciones de las ventanas del proyecto **Ventas**.
+
+<h5>09/07/2017</h5>
+Actividades realizadas durante el día 09 de julio del 2017:
+
+* Creación de ejemplos en la base de datos `pruebasmarquesada` en el servidor.
+* Pruebas de humo del funcionamiento del sistema.
+* Actividades en conjunto con la compañera Fabiola:
+	* Creación del método para actualizar la cantidad del artículo cuando el usuario edite la orden descripción.
+	* Creación del método para actualizar el total de `artículo_comisión` cuando el usuario edite la orden descripción.
+	* Creación del método para actualizar el del `servicio_comisión` cuando el usuario edite la orden descripción.
+
+----------
+
+<h5>10/07/2017</h5>
+Actividades realizadas durante el día 10 de Julio del 2017:
+
+* Pruebas de humo del funcionamiento del sistema.
+* Actividades realizadas en conjunto con la compañera Fabiola:
+	* Creación del método para asignar el rango a un artículo.
+	* Creación del método para asignar el rango a un servicio.
+	* Creación del bloque de código que calcule el total del `artículo_comisión` cuando el usuario edite la cantidad o se le asigne un nuevo rango.
+	* Creación del bloque de código que calcule el total del `totalartículo_comisión` cuando el usuario edite la cantidad o se le asigne un nuevo rango.
+	* Creación del bloque de código que calcule el total del `servicio_comisión` cuando el usuario edite la cantidad o se le asigne un nuevo rango.
+	* Creación del bloque de código que calcule el total del `totalservicio_comisión` cuando el usuario edite la cantidad o se le asigne un nuevo rango.
+	* Creación de ejemplos de artículo y cantidades en cada punto de venta en la base de datos `pruebasmarquesada` para verificar el funcionamiento del software.
+	* Corrida del sistema en un equipo en el cual se manipularon las operaciones del sistema, al mismo tiempo en otro equipo se verifico que las operaciones se reflejaran de manera correcta en la base de datos.
+
+<h5>11/07/2017</h5>
+Actividades realizadas durante el día 11 de Julio del 2017:
+
+* Corrida del sistema en un equipo en el cual se manipularon las operaciones del sistema, al mismo tiempo en otro equipo se verifico que las operaciones se reflejaran de manera correcta en la base de datos, las pruebas arrojaron las siguientes necesidades:
+	* Reducir el tamaño de los Headers del reporte de ventas.
+	* Ocultar los elementos del rango de fecha cuando el usuario elija reporte por orden de compra.
+	* Crear un botón para agregar un nuevo rango en la ventana `RangosDlg`.
+	* Bloquear que el usuario pueda editar la información del rango actual cuando seleccione la opción editar rango.
+* Se cambio el tamaño de los Headers del reporte de ventas de manera que en la impresión se visualicen se manera adecuada.
+* Se ocultaron los elementos del rango de fecha cuando el usuario elija la opción reporte por orden de compra debido a que en esa opción no tienen funcionalidad.
+* Se creo el botón `btAgregarNuevoRango` en el dialogo `RangosDlg` el cual abre el dialogo que permite crear un nuevo rango.
+* Se bloquearon los elementos del rango actual asignado a un artículo o servicio cuando el usuario selecciona editar.

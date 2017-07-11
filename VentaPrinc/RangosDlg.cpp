@@ -92,3 +92,9 @@ void RangosDlg::Window_Activate(Win::Event& e)
 	}
 }
 
+void RangosDlg::btCrearRango_Click(Win::Event& e)
+{
+	RangoDlg crearRangoObj;
+	crearRangoObj.BeginDialog(hWnd);
+}
+
