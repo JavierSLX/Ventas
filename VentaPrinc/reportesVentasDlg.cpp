@@ -105,6 +105,11 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 		ponerVisibleElementos(false);
 		lbRequerimiento.Visible = true;
 		ddRequerimiento.Visible = true;
+		gboxRango.Visible = true;
+		lbInicio.Visible = true;
+		lbFinal.Visible = true;
+		dtboxInicial.Visible = true;
+		dtboxFinal.Visible = true;
 		generarReporte(ddTipoReporte.Text);
 		ddRequerimiento.SetFocus();
 	}
@@ -118,6 +123,11 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 			tbxFolio.Visible = false;
 			lbRequerimiento.Visible = true;
 			ddRequerimiento.Visible = true;
+			gboxRango.Visible = true;
+			lbInicio.Visible = true;
+			lbFinal.Visible = true;
+			dtboxInicial.Visible = true;
+			dtboxFinal.Visible = true;
 			reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
 			ddDepartamento.SetSelectedIndex(0);
 			_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
@@ -144,6 +154,11 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 				ddRequerimiento.Visible = true;
 				lbFolio.Visible = false;
 				tbxFolio.Visible = false;
+				gboxRango.Visible = true;
+				lbInicio.Visible = true;
+				lbFinal.Visible = true;
+				dtboxInicial.Visible = true;
+				dtboxFinal.Visible = true;
 				reporteVentasObj.llenarDepartamento(ddDepartamento, 100);
 				ddDepartamento.SetSelectedIndex(0);
 				_idDepartamento = reportesObj.obtenerIdOculto(ddDepartamento);
@@ -168,8 +183,14 @@ void reportesVentasDlg::ddTipoReporte_SelChange(Win::Event& e)
 					ddRequerimiento.Visible = false;
 					lbFolio.Visible = true;
 					tbxFolio.Visible = true;
+					gboxRango.Visible = false;
+					lbInicio.Visible = false;
+					lbFinal.Visible = false;
+					dtboxInicial.Visible = false;
+					dtboxFinal.Visible = false;
 					tbxFolio.SetFocus();
 					generarReporte(ddTipoReporte.Text);
+
 				}
 				else
 				{

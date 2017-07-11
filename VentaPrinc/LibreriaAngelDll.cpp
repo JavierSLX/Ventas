@@ -1060,17 +1060,16 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 	lvReporte.Cols.DeleteAll();
 	lvReporte.Items.DeleteAll();
 	lvReporte.SetRedraw(true);
-	lvReporte.Cols.Add(0, LVCFMT_CENTER, 85, L"Folio");
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
 	lvReporte.Cols.Add(1, LVCFMT_CENTER, 125, L"Cliente");
-	lvReporte.Cols.Add(2, LVCFMT_CENTER, 60, L"S/A");
-	lvReporte.Cols.Add(3, LVCFMT_CENTER, 125, L"Tipo");
-	lvReporte.Cols.Add(4, LVCFMT_CENTER, 85, L"Marca");
-	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
-	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"Cant");
-	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Sug");
-	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"P/Final");
-	lvReporte.Cols.Add(9, LVCFMT_CENTER, 60, L"Total");
-	lvReporte.Cols.Add(10, LVCFMT_CENTER, 70, L"Fecha");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 125, L"Tipo");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 85, L"Marca");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 150, L"Modelo");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 60, L"Cant");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"P/Sug");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Final");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"Total");
+	lvReporte.Cols.Add(9, LVCFMT_CENTER, 90, L"Fecha");
 	//reporte general de todos los requerimientos
 	if (idRequerimiento == 0)
 	{
@@ -1079,7 +1078,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 			coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 			//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-			Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+			Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 					, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final), \
 					CONCAT('$',od.cantidad*od.precio_final), DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 				FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1095,7 +1094,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 					AND DATE(o.fecha) >= '%d-%d-%d'\
 					AND DATE(o.fecha) <= '%d-%d-%d'\
 				UNION\
-				SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+				SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 					od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 					CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 				FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1128,7 +1127,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 			coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 			//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-			Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+			Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 					, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 					CONCAT('$', od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 				FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1145,7 +1144,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasGeneral(Win::ListVie
 					AND DATE(o.fecha) >= '%d-%d-%d'\
 					AND DATE(o.fecha) <= '%d-%d-%d'\
 				UNION\
-				SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+				SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 					od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 					CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 				FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1188,17 +1187,16 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 	lvReporte.Cols.DeleteAll();
 	lvReporte.Items.DeleteAll();
 	lvReporte.SetRedraw(true);
-	lvReporte.Cols.Add(0, LVCFMT_CENTER, 85, L"Folio");
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
 	lvReporte.Cols.Add(1, LVCFMT_CENTER, 125, L"Cliente");
-	lvReporte.Cols.Add(2, LVCFMT_CENTER, 60, L"S/A");
-	lvReporte.Cols.Add(3, LVCFMT_CENTER, 125, L"Tipo");
-	lvReporte.Cols.Add(4, LVCFMT_CENTER, 85, L"Marca");
-	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
-	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"Cant");
-	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Sug");
-	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"P/Final");
-	lvReporte.Cols.Add(9, LVCFMT_CENTER, 60, L"Total");
-	lvReporte.Cols.Add(10, LVCFMT_CENTER, 70, L"Fecha");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 125, L"Tipo");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 85, L"Marca");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 150, L"Modelo");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 60, L"Cant");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"P/Sug");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Final");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"Total");
+	lvReporte.Cols.Add(9, LVCFMT_CENTER, 90, L"Fecha");
 	//Todas las regiones
 	if (idRegion == 0)
 	{
@@ -1213,7 +1211,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final), \
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1230,7 +1228,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1265,7 +1263,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido),CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1283,7 +1281,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1323,7 +1321,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1342,7 +1340,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1380,7 +1378,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1400,7 +1398,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1447,7 +1445,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1469,7 +1467,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1509,7 +1507,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1532,7 +1530,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1577,7 +1575,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1600,7 +1598,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero),ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1641,7 +1639,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1665,7 +1663,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasDepartamento(Win::Li
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1720,17 +1718,16 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 	lvReporte.Cols.DeleteAll();
 	lvReporte.Items.DeleteAll();
 	lvReporte.SetRedraw(true);
-	lvReporte.Cols.Add(0, LVCFMT_CENTER, 85, L"Folio");
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
 	lvReporte.Cols.Add(1, LVCFMT_CENTER, 125, L"Cliente");
-	lvReporte.Cols.Add(2, LVCFMT_CENTER, 60, L"S/A");
-	lvReporte.Cols.Add(3, LVCFMT_CENTER, 125, L"Tipo");
-	lvReporte.Cols.Add(4, LVCFMT_CENTER, 85, L"Marca");
-	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
-	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"Cant");
-	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Sug");
-	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"P/Final");
-	lvReporte.Cols.Add(9, LVCFMT_CENTER, 60, L"Total");
-	lvReporte.Cols.Add(10, LVCFMT_CENTER, 70, L"Fecha");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 125, L"Tipo");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 85, L"Marca");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 150, L"Modelo");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 60, L"Cant");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"P/Sug");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Final");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"Total");
+	lvReporte.Cols.Add(9, LVCFMT_CENTER, 90, L"Fecha");
 	//Todas las regiones
 	if (idRegion == 0)
 	{
@@ -1745,7 +1742,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1761,7 +1758,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1795,7 +1792,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1812,7 +1809,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1851,7 +1848,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1869,7 +1866,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1906,7 +1903,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1925,7 +1922,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1971,7 +1968,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -1992,7 +1989,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2031,7 +2028,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2053,7 +2050,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2097,7 +2094,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2119,7 +2116,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$'od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2159,7 +2156,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 					coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 					//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+					Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 						, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2182,7 +2179,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasCiudad(Win::ListView
 						AND DATE(o.fecha) >= '%d-%d-%d'\
 						AND DATE(o.fecha) <= '%d-%d-%d'\
 					UNION\
-					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+					SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 						od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 						CONCAT('$',od.cantidad*od.precio_final),  DATE_FORMAT(o.fecha, '%%d/%%b/%%y')\
 					FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2235,24 +2232,23 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::Lis
 	lvReporte.Cols.DeleteAll();
 	lvReporte.Items.DeleteAll();
 	lvReporte.SetRedraw(true);
-	lvReporte.Cols.Add(0, LVCFMT_CENTER, 85, L"Folio");
+	lvReporte.Cols.Add(0, LVCFMT_CENTER, 100, L"Folio");
 	lvReporte.Cols.Add(1, LVCFMT_CENTER, 125, L"Cliente");
-	lvReporte.Cols.Add(2, LVCFMT_CENTER, 60, L"S/A");
-	lvReporte.Cols.Add(3, LVCFMT_CENTER, 125, L"Tipo");
-	lvReporte.Cols.Add(4, LVCFMT_CENTER, 85, L"Marca");
-	lvReporte.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
-	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"Cant");
-	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Sug");
-	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"P/Final");
-	lvReporte.Cols.Add(9, LVCFMT_CENTER, 60, L"Total");
-	lvReporte.Cols.Add(10, LVCFMT_CENTER, 70, L"Fecha");
+	lvReporte.Cols.Add(2, LVCFMT_CENTER, 125, L"Tipo");
+	lvReporte.Cols.Add(3, LVCFMT_CENTER, 85, L"Marca");
+	lvReporte.Cols.Add(4, LVCFMT_CENTER, 150, L"Modelo");
+	lvReporte.Cols.Add(5, LVCFMT_CENTER, 60, L"Cant");
+	lvReporte.Cols.Add(6, LVCFMT_CENTER, 60, L"P/Sug");
+	lvReporte.Cols.Add(7, LVCFMT_CENTER, 60, L"P/Final");
+	lvReporte.Cols.Add(8, LVCFMT_CENTER, 60, L"Total");
+	lvReporte.Cols.Add(9, LVCFMT_CENTER, 90, L"Fecha");
 	//reporte general de todos los requerimientos
 	try
 	{
 		coneccion.OpenSession(hWnd, CONNECTION_STRING);
 
 		//Ejecuta la consulta en el list view (Solo muestra los tipos de rangos activos)
-		Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),r.tipo,sv.nombre\
+		Sys::Format(consulta, L"SELECT DISTINCT od.id,o.folio,CONCAT(pv.tipo,'-',cc.numero),sv.nombre\
 					, 'NA', 'NA', od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 					CONCAT('$',od.cantidad*od.precio_final), o.fecha\
 				FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
@@ -2267,7 +2263,7 @@ void LibreriaAngelDll::reporteVentasCLS::llenarReporteVentasOrdenCompra(Win::Lis
 					AND sv.id = od.tipoVentaId\
 					AND o.folio='%s'\
 				UNION\
-				SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), r.tipo, ta.nombre, ma.nombre, mo.nombre,\
+				SELECT DISTINCT od.id, o.folio, CONCAT(pv.tipo, '-', cc.numero), ta.nombre, ma.nombre, mo.nombre,\
 					od.cantidad, CONCAT('$',od.precio_sugerido), CONCAT('$',od.precio_final),\
 					CONCAT('$',od.cantidad*od.precio_final), o.fecha\
 				FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r,\
