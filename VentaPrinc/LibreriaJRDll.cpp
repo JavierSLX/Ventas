@@ -699,6 +699,70 @@ void LibreriaJRDll::WintemplaCLS::llenarDdTipoArticulo(Win::DropDownList ddTipo,
 	conn.CloseSession();
 }
 
+//Método que llena las marcas de un determinado tipo de articulo
+void LibreriaJRDll::WintemplaCLS::llenarDdMarca(Win::DropDownList ddMarca, wstring tipoArticulo, int size)
+{
+	Sql::SqlConnection conn;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddMarca.DeleteAllItems();
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT DISTINCT m.id, m.nombre\
+		FROM tipo_articulo ta, articulo a, marca m, modelo mo\
+		WHERE ta.id = a.tipoArticulo_id\
+		AND a.modelo_id = mo.id\
+		AND mo.marca_id = m.id\
+		AND ta.nombre = '%s'\
+		ORDER BY m.nombre ASC;", tipoArticulo.c_str());
+
+		conn.ExecuteSelect(consulta, size, ddMarca);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	ddMarca.SetSelectedIndex(0);
+	conn.CloseSession();
+}
+
+//Método que llena las marcas de un determinado tipo de articulo
+void LibreriaJRDll::WintemplaCLS::llenarDdModelo(Win::DropDownList ddModelo, wstring marca, int size)
+{
+	Sql::SqlConnection conn;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddModelo.DeleteAllItems();
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT m.id, m.nombre\
+		FROM modelo m, marca ma\
+		WHERE m.marca_id = ma.id\
+		AND ma.nombre = '%s'\
+		ORDER BY ma.nombre ASC;", marca.c_str());
+
+		conn.ExecuteSelect(consulta, size, ddModelo);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	ddModelo.SetSelectedIndex(0);
+	conn.CloseSession();
+}
+
 //Método que llena la drop down list con las ciudades registradas en la base de datos
 void LibreriaJRDll::WintemplaCLS::llenarDdCiudad(Win::DropDownList ddCiudad, bool activo, int size)
 {

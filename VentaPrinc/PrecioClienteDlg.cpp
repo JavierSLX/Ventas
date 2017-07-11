@@ -54,6 +54,22 @@ void PrecioClienteDlg::ddModelo_SelChange(Win::Event& e)
 void PrecioClienteDlg::lvTabla_ItemChanged(Win::Event& e)
 {
 	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	articuloIDVP = wintemplaObj.sacarIDOcultoLV(lvTabla);
+
+	if (articuloIDVP > 0)
+	{
+		//Predefine las ddlist
+		wstring tipoArticulo = wintemplaObj.sacarTextoLV(lvTabla, 0);
+		ddTipo.SetSelected(tipoArticulo);
+
+		wstring marca = wintemplaObj.sacarTextoLV(lvTabla, 1);
+		wintemplaObj.llenarDdMarca(ddMarca, tipoArticulo, 100);
+		ddMarca.SetSelected(marca);
+
+		wstring modelo = wintemplaObj.sacarTextoLV(lvTabla, 2);
+		wintemplaObj.llenarDdModelo(ddModelo, marca, 100);
+		ddModelo.SetSelected(modelo);
+	}
 }
 
 //Cuando se le da click al botón Registrar

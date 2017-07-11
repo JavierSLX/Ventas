@@ -76,6 +76,12 @@ public:
 		//Método que llena la drop down list con los tipos de artículos registrados en la base de datos
 		void llenarDdTipoArticulo(Win::DropDownList ddTipo, int size);
 
+		//Método que llena las marcas de un determinado tipo de articulo
+		void llenarDdMarca(Win::DropDownList ddMarca, wstring tipoArticulo, int size);
+
+		//Método que llena las marcas de un determinado tipo de articulo
+		void llenarDdModelo(Win::DropDownList ddModelo, wstring marca, int size);
+
 		//Método que llena la drop down list con las ciudades registradas en la base de datos
 		void llenarDdCiudad(Win::DropDownList ddCiudad, bool activo, int size);
 
