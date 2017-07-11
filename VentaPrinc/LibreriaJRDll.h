@@ -64,6 +64,9 @@ public:
 		//Método que llena todos los artículos faltantes de registrar un precio_cliente
 		void llenarLVFaltantesPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size);
 
+		//Método que llena los artículos registrados de precio_cliente
+		void llenarLVPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size);
+
 		//Método que llena la drop down list con los tipos de punto de venta registrados
 		void llenarDdPuntoVenta(Win::DropDownList ddVenta, int size);
 
@@ -121,6 +124,9 @@ public:
 
 		//Saca el email de un cliente determinado dado por su clave_cliente
 		wstring sacarEmailCliente(int claveCliente_id);
+
+		//Saca el nombre de un cliente determinado por su clave_cliente
+		wstring sacarNombreCliente(int claveCliente_id);
 
 		//Método que actualiza un registro de la tabla punto_venta dado por su id
 		void actualizarPuntoVenta(int categoria_id, wstring nombre);

@@ -20,15 +20,8 @@ void PrecioClienteDlg::Window_Open(Win::Event& e)
 	wintemplaObj.llenarDdRutasExclusiva(ddRuta, true, 100);
 	ddRuta.SetSelectedIndex(0);
 	
-	//________________________________________________________ tabTabla
-	tabTabla.Items.Add(0, L"Activos");
-	tabTabla.Items.Add(1, L"Eliminados");
-	
 	//Llena la tabla de las clave de los clientes cuando cambian
 	wintemplaObj.llevarLVClaveClientes(lvClientes, ddRuta.Text, true, 100);
-
-	//Llena la tabla de los artículos que faltan de registrar de precio cliente
-	wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, wintemplaObj.sacarTextoLV(lvClientes, 0), 200);
 }
 
 //Cuando cambia la ddlist de tipo de artículo
@@ -57,14 +50,10 @@ void PrecioClienteDlg::ddModelo_SelChange(Win::Event& e)
 {
 }
 
-//Cuando cambia la tab
-void PrecioClienteDlg::tabTabla_SelChange(Win::Event& e)
-{
-}
-
 //Cuando se selecciona un elemento de la tabla
 void PrecioClienteDlg::lvTabla_ItemChanged(Win::Event& e)
 {
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
 }
 
 //Cuando se le da click al botón Registrar
@@ -76,9 +65,23 @@ void PrecioClienteDlg::btRegistrar_Click(Win::Event& e)
 void PrecioClienteDlg::lvClientes_ItemChanged(Win::Event& e)
 {
 	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	LibreriaJRDll::SqlCLS sqlObj;
 
-	//Llena la tabla de los artículos que faltan de registrar de precio cliente
-	wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, wintemplaObj.sacarTextoLV(lvClientes, 0), 200);
+	claveClienteID = wintemplaObj.sacarIDOcultoLV(lvClientes);
+	wstring numero = wintemplaObj.sacarTextoLV(lvClientes, 0);
+
+	if (claveClienteID > 0)
+	{
+		//Llena las textbox
+		tbxNombre.Text = sqlObj.sacarNombreCliente(claveClienteID);
+		tbxClave.Text = ddRuta.Text + L"-" + numero;
+
+		//Llena la tabla de los artículos que faltan de registrar de precio cliente
+		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numero, 200);
+
+		//Llena la tabla de los registros que ya fueron realizados de precio cliente
+		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numero, 200);
+	}
 }
 
 //Cuando se cambia la opción en la ddlist de ruta
@@ -88,5 +91,9 @@ void PrecioClienteDlg::ddRuta_SelChange(Win::Event& e)
 
 	//Llena la tabla de las clave de los clientes cuando cambian
 	wintemplaObj.llevarLVClaveClientes(lvClientes, ddRuta.Text, true, 100);
+
+	//Limpia las textbox
+	tbxClave.Text = L"";
+	tbxNombre.Text = L"";
 }
 

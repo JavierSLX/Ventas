@@ -535,9 +535,9 @@ void LibreriaJRDll::WintemplaCLS::llenarLVFaltantesPrecioCliente(Win::ListView l
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 
 		//Se define los nombres de las columnas
-		lvTabla.Cols.Add(0, LVCFMT_LEFT, 150, L"Artículo");
-		lvTabla.Cols.Add(1, LVCFMT_LEFT, 150, L"Marca");
-		lvTabla.Cols.Add(2, LVCFMT_LEFT, 150, L"Modelo");
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 120, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 120, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
 
 		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
 		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, mo.nombre\
@@ -556,6 +556,49 @@ void LibreriaJRDll::WintemplaCLS::llenarLVFaltantesPrecioCliente(Win::ListView l
 		AND a.tipoArticulo_id = ta.id\
 		AND a.modelo_id = mo.id\
 		AND mo.marca_id = ma.id\
+		ORDER BY ta.nombre ASC;", punto_venta.c_str(), numero.c_str());
+		conn.ExecuteSelect(consulta, size, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que llena los artículos registrados de precio_cliente
+void LibreriaJRDll::WintemplaCLS::llenarLVPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Se define los nombres de las columnas
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 120, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 120, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
+
+		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
+		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, m.nombre\
+		FROM precio_cliente pc, clave_cliente cc, articulo a, punto_venta pv, tipo_articulo ta, modelo m, marca ma\
+		WHERE pc.articulo_id = a.id\
+		AND cc.id = pc.claveCliente_id\
+		AND pv.id = cc.puntoVenta_id\
+		AND ta.id = a.tipoArticulo_id\
+		AND m.id = a.modelo_id\
+		AND m.marca_id = ma.id\
+		AND pv.tipo = '%s'\
+		AND cc.numero = '%s'\
 		ORDER BY ta.nombre ASC;", punto_venta.c_str(), numero.c_str());
 		conn.ExecuteSelect(consulta, size, lvTabla);
 	}
@@ -980,6 +1023,31 @@ wstring LibreriaJRDll::SqlCLS::sacarEmailCliente(int claveCliente_id)
 
 	conn.CloseSession();
 	return colocacion;
+}
+
+//Saca el nombre de un cliente determinado por su clave_cliente
+wstring LibreriaJRDll::SqlCLS::sacarNombreCliente(int claveCliente_id)
+{
+	wstring cadena;
+	wstring consulta;
+	Sql::SqlConnection conn;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT c.nombre\
+		FROM cliente c, clave_cliente cc\
+		WHERE cc.cliente_id = c.id\
+		AND cc.id = %d;", claveCliente_id);
+		conn.GetString(consulta, cadena, 200);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return cadena;
 }
 
 //Método que actualiza un registro de la tabla punto_venta dado por su id
