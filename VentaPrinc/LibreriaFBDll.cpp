@@ -1941,10 +1941,11 @@ void LibreriaFBDll::bonoCredito::llenarclaveCliente(Win::ListView lvTabla, int p
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT ord.id,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y'),\
-			(select distinct sum(oddescr.cantidad)\
-				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
+			(select distinct sum(ocom.total)\
+			from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte, orden_completa ocom\
 		where oddescr.orden_id = o.id\
-		and o.cliente_id = cl.id\
+		and ocom.orden_id = o.id\
+			and o.cliente_id = cl.id\
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
 			AND o.id = ord.id)\
@@ -1956,6 +1957,7 @@ void LibreriaFBDll::bonoCredito::llenarclaveCliente(Win::ListView lvTabla, int p
 			AND ccli.numero = '%s'\
 			AND ord.puntoVenta_id = pv.id\
 			AND pv.id = %d\
+			AND orcom.total > 0	\
 			AND cli.activo = true",folio.c_str(),puntoVenta_id,folio.c_str(),puntoVenta_id);
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
@@ -1992,10 +1994,11 @@ void LibreriaFBDll::bonoCredito::llenarFolioOrden(Win::ListView lvTabla, wstring
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT ord.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
-			(select distinct sum(oddescr.cantidad)\
-				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
+			(select distinct sum(ocom.total)\
+			from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte, orden_completa ocom\
 		where oddescr.orden_id = o.id\
-		and o.cliente_id = cl.id\
+		and ocom.orden_id = o.id\
+			and o.cliente_id = cl.id\
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
 			AND o.id = ord.id)\
@@ -2006,6 +2009,7 @@ void LibreriaFBDll::bonoCredito::llenarFolioOrden(Win::ListView lvTabla, wstring
 			AND ccli.puntoVenta_id = pv.id\
 			AND ord.puntoVenta_id = pv.id\
 			AND ord.folio = '%s'\
+			AND orcom.total > 0	\
 			AND cli.activo = true; ", folio.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
@@ -2042,10 +2046,11 @@ void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fe
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT ord.id,ord.folio,cli.nombre,ccli.numero,pv.tipo,DATE_FORMAT(ord.fecha,'%%d/%%b/%%y'),\
-			(select distinct sum(oddescr.cantidad)\
-				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
+			(select distinct sum(ocom.total)\
+			from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte, orden_completa ocom\
 		where oddescr.orden_id = o.id\
-		and o.cliente_id = cl.id\
+		and ocom.orden_id = o.id\
+			and o.cliente_id = cl.id\
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
 			AND o.id = ord.id)\
@@ -2057,6 +2062,7 @@ void LibreriaFBDll::bonoCredito::llenarFecha(Win::ListView lvTabla, Sys::Time fe
 			and ord.fecha >= '%d-%d-%d 00:00:00'\
 			and ord.fecha <= '%d-%d-%d 23:59:59'\
 			AND ord.puntoVenta_id = pv.id\
+			AND orcom.total > 0	\
 			AND cli.activo = true", fecha.wYear, fecha.wMonth, fecha.wDay, fecha.wYear, fecha.wMonth, fecha.wDay);
 
 		conn.ExecuteSelect(consulta, large, lvTabla);
@@ -2094,10 +2100,11 @@ void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT ord.id, ord.folio, cli.nombre, ccli.numero, pv.tipo, DATE_FORMAT(ord.fecha, '%%d/%%b/%%y'),\
-			(select distinct sum(oddescr.cantidad)\
-				from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte\
+			(select distinct sum(ocom.total)\
+			from orden_descripcion oddescr, orden o, cliente cl, punto_venta pvta, clave_cliente ccte, orden_completa ocom\
 		where oddescr.orden_id = o.id\
-		and o.cliente_id = cl.id\
+		and ocom.orden_id = o.id\
+			and o.cliente_id = cl.id\
 			and ccte.cliente_id = cl.id\
 			and o.puntoVenta_id = pvta.id\
 			AND o.id = ord.id)\
@@ -2108,6 +2115,7 @@ void LibreriaFBDll::bonoCredito::llenarpuntoVenta(Win::ListView lvTabla, wstring
 			AND ccli.puntoVenta_id = pv.id\
 			AND ord.puntoVenta_id = pv.id\
 			AND pv.tipo = '%s'\
+			AND orcom.total > 0	\
 			AND cli.activo = true;", puntoVenta.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvTabla);

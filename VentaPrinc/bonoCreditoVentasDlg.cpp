@@ -96,25 +96,41 @@ void bonoCreditoVentasDlg::lvCredito_ItemActivate(Win::Event& e)
 
 void bonoCreditoVentasDlg::radioClave_Click(Win::Event& e)
 {
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
+	ddPuntosVenta.Visible = false;
 	ddPuntosVenta.Visible = true;
 	LibreriaAdDll::articulo adObj;
 	LibreriaJRDll::WintemplaCLS jrdObj;;
 	jrdObj.llenarDdRutasExclusiva(ddPuntosVenta, true, 100);
 	ddPuntosVenta.SetSelectedIndex(0);
 	tbxOpcion.SetFocus();
+	tbxOpcion.SetText(L"");
 
 }
 
 void bonoCreditoVentasDlg::radioFolio_Click(Win::Event& e)
 {
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
 	ddPuntosVenta.Visible = false;
 	tbxOpcion.SetFocus();
+	tbxOpcion.SetText(L"");
 }
 
 void bonoCreditoVentasDlg::radioNombre_Click(Win::Event& e)
 {
+	lvCredito.SetRedraw(false);
+	lvCredito.Cols.DeleteAll();
+	lvCredito.Items.DeleteAll();
+	lvCredito.SetRedraw(true);
 	ddPuntosVenta.Visible = false;
 	tbxOpcion.SetFocus();
+	tbxOpcion.SetText(L"");
 }
 
 void bonoCreditoVentasDlg::btLimpiar_Click(Win::Event& e)

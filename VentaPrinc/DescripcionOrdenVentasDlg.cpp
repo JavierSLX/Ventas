@@ -255,7 +255,9 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 				//Insertar en tabla movimiento
 				int idPuntoVenta = ordenObj.sacarIDPuntoVenta(puntoVentaVP);
-				movObj.insertarMovimiento(cantidadOrden, 2, idPuntoVenta, idArticulo, 26);
+				
+				int idMovimiento = movObj.sacarIDMovimiento(L"Venta");
+				movObj.insertarMovimiento(cantidadOrden, idMovimiento, idPuntoVenta, idArticulo, 26);
 				//inserta la fecha del movimiento
 				int movimiento = movObj.sacarIDUltimoMovimiento();
 				movObj.insertarfechaMovimiento(movimiento);
@@ -319,7 +321,8 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			if (idRango == 0)
 			{
 				int IdOrdenDesc = ordenObj.sacarUltIDOrdenDesc();
-				ordenObj.insertarServicioComision(0.0, true, 2, IdOrdenDesc);
+
+				ordenObj.insertarServicioComision(0.0, true, 1, IdOrdenDesc);
 				contadorVP++;
 				serviciosSinRangoVP.push_back(idServicio);
 				serviciosSinRangoOdVP.push_back(IdOrdenDesc);

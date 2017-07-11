@@ -43,7 +43,7 @@ protected:
 		radioFolio.CreateX(NULL, L"Folio", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.25021, 0.13229, 6.24417, 0.63500, hWnd, 1001);
 		radioClaveCliente.CreateX(NULL, L"Clave del cliente", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.22375, 1.05833, 2.93688, 0.63500, hWnd, 1002);
 		radioFecha.CreateX(NULL, L"Fecha", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_AUTORADIOBUTTON | BS_LEFT | BS_VCENTER, 12.14438, 1.98438, 1.56104, 0.63500, hWnd, 1003);
-		dtboxFecha.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | DTS_RIGHTALIGN, 13.97000, 1.98438, 4.55083, 0.68792, hWnd, 1004);
+		dtboxFecha.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | DTS_RIGHTALIGN, 13.97000, 1.98438, 4.55083, 0.60854, hWnd, 1004);
 		btBuscar.CreateX(NULL, L"Buscar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 0.87313, 2.56646, 5.18583, 0.68792, hWnd, 1005);
 		lvOrden.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.42333, 4.55083, 18.20333, 8.83708, hWnd, 1006);
 		ddPuntosVenta.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 15.47813, 1.03188, 3.06917, 0.60854, hWnd, 1007);
@@ -69,9 +69,11 @@ protected:
 	void radioFolio_Click(Win::Event& e);
 	void radioClaveCliente_Click(Win::Event& e);
 	void radioFecha_Click(Win::Event& e);
+	void dtboxFecha_DatetimeChange(Win::Event& e);
 	void btBuscar_Click(Win::Event& e);
 	void lvOrden_ItemActivate(Win::Event& e);
 	void radioDepartamento_Click(Win::Event& e);
+	void ddDepartamentos_SelChange(Win::Event& e);
 	void btLimpiar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
@@ -80,9 +82,11 @@ protected:
 		if (radioFolio.IsEvent(e, BN_CLICKED)) {radioFolio_Click(e); return true;}
 		if (radioClaveCliente.IsEvent(e, BN_CLICKED)) {radioClaveCliente_Click(e); return true;}
 		if (radioFecha.IsEvent(e, BN_CLICKED)) {radioFecha_Click(e); return true;}
+		if (dtboxFecha.IsEvent(e, DTN_DATETIMECHANGE)) {dtboxFecha_DatetimeChange(e); return true;}
 		if (btBuscar.IsEvent(e, BN_CLICKED)) {btBuscar_Click(e); return true;}
 		if (lvOrden.IsEvent(e, LVN_ITEMACTIVATE)) {lvOrden_ItemActivate(e); return true;}
 		if (radioDepartamento.IsEvent(e, BN_CLICKED)) {radioDepartamento_Click(e); return true;}
+		if (ddDepartamentos.IsEvent(e, CBN_SELCHANGE)) {ddDepartamentos_SelChange(e); return true;}
 		if (btLimpiar.IsEvent(e, BN_CLICKED)) {btLimpiar_Click(e); return true;}
 		return false;
 	}

@@ -87,6 +87,7 @@ void busquedaVentasDlg::radioClaveCliente_Click(Win::Event& e)
 
 void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
 {
+	LibreriaFBDll::bonoCredito bonoObj;
 	dtboxFecha.Visible = true;
 	tbxOpcionBusqueda.SetFocus();
 	ddPuntosVenta.Visible = false;
@@ -98,6 +99,7 @@ void busquedaVentasDlg::radioFecha_Click(Win::Event& e)
 	lvOrden.SetRedraw(true);
 	tbxOpcionBusqueda.SetFocus();
 	tbxOpcionBusqueda.SetText(L"");
+	bonoObj.llenarFecha(lvOrden, dtboxFecha.GetSelectedDateTime(), 100);
 }
 
 void busquedaVentasDlg::lvOrden_ItemActivate(Win::Event& e)
@@ -123,6 +125,8 @@ void busquedaVentasDlg::radioDepartamento_Click(Win::Event& e)
 	lvOrden.Items.DeleteAll();
 	lvOrden.SetRedraw(true);
 	tbxOpcionBusqueda.SetFocus();
+	tbxOpcionBusqueda.SetText(L"");
+	bonoObj.llenarpuntoVenta(lvOrden, ddDepartamentos.Text, 100);
 
 }
 
@@ -144,5 +148,17 @@ void busquedaVentasDlg::btLimpiar_Click(Win::Event& e)
 	tbxOpcionBusqueda.SetText(L"");
 	
 
+}
+
+void busquedaVentasDlg::ddDepartamentos_SelChange(Win::Event& e)
+{
+	LibreriaFBDll::bonoCredito bonoObj;
+	bonoObj.llenarpuntoVenta(lvOrden, ddDepartamentos.Text, 100);
+}
+
+void busquedaVentasDlg::dtboxFecha_DatetimeChange(Win::Event& e)
+{
+	LibreriaFBDll::bonoCredito bonoObj;
+	bonoObj.llenarFecha(lvOrden, dtboxFecha.GetSelectedDateTime(), 100);
 }
 
