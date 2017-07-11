@@ -104,48 +104,60 @@ void ClienteVentasDlg::btActualizar_Click(Win::Event& e)
 	LibreriaJRDll::WintemplaCLS wintemplaObj;
 
 	//Checa si hubo un cambio en la ruta
-	if (ddPuntoVenta.Text != rutaVP)
+	if (claveClienteIDVP > 0)
 	{
-		//Verifica si el cliente no existe ya en esa ruta
-		int puntoVenta_id = sqlObj.sacarIDPuntoVenta(rutaVP);
-		int cliente_id = sqlObj.sacarIDCliente(tbxNombre.Text);
-		if (cliente_id > 0)
+		if (ddPuntoVenta.Text != rutaVP)
 		{
-			//Verifica si no existe el registro en el nuevo punto de venta
-			int new_puntoVenta_id = sqlObj.sacarIDPuntoVenta(ddPuntoVenta.Text);
-			int claveCliente_id = sqlObj.sacarIDClaveCliente(cliente_id, new_puntoVenta_id);
-
-			//Si existe lo cambia de estado
-			if (claveCliente_id > 0)
+			//Verifica si el cliente no existe ya en esa ruta
+			int puntoVenta_id = sqlObj.sacarIDPuntoVenta(rutaVP);
+			int cliente_id = sqlObj.sacarIDCliente(tbxNombre.Text);
+			if (cliente_id > 0)
 			{
-				sqlObj.actualizarEstadoClaveCliente(claveCliente_id, true);
+				//Verifica si no existe el registro en el nuevo punto de venta
+				int new_puntoVenta_id = sqlObj.sacarIDPuntoVenta(ddPuntoVenta.Text);
+				int claveCliente_id = sqlObj.sacarIDClaveCliente(cliente_id, new_puntoVenta_id);
+
+				//Si existe lo cambia de estado
+				if (claveCliente_id > 0)
+				{
+					sqlObj.actualizarEstadoClaveCliente(claveCliente_id, true);
+				}
+				//Si no existe inserta un nuevo registro en la bd clave_cliente
+				else
+				{
+					int n = sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1;
+					wstring numero;
+					Sys::Format(numero, L"%03d", n);
+
+					sqlObj.insertarClaveCliente(numero, cliente_id, new_puntoVenta_id);
+				}
+
+				//Cambia el estado del viejo registro
+				sqlObj.actualizarEstadoClaveCliente(sqlObj.sacarIDClaveCliente(cliente_id, puntoVenta_id), false);
 			}
-			//Si no existe inserta un nuevo registro en la bd clave_cliente
 			else
 			{
-				int n = sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1;
-				wstring numero;
-				Sys::Format(numero, L"%03d", n);
-
-				sqlObj.insertarClaveCliente(numero, cliente_id, new_puntoVenta_id);
+				btRegistrar_Click(e);
+				tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
 			}
-
-			//Cambia el estado del viejo registro
-			sqlObj.actualizarEstadoClaveCliente(sqlObj.sacarIDClaveCliente(cliente_id, puntoVenta_id), false);
 		}
+		//Actualiza los datos básicos del cliente
 		else
 		{
-			btRegistrar_Click(e);
+			if ((tbxNombre.Text != nombreVP) || (tbxDireccion.Text != direccionVP) || (tbxEmail.Text != emailVP) || (tbxTelefono.Text != telefonoVP) || (ciudadVP != ddCiudad.Text))
+			{
+				int ciudad_id = sqlObj.sacarIDCiudad(ddCiudad.Text);
+				sqlObj.actualizarCliente(sqlObj.sacarIDCliente(nombreVP), tbxNombre.Text, tbxDireccion.Text, tbxTelefono.Text, tbxEmail.Text, ciudad_id);
+			}
 		}
 	}
-	
 	//Avisa y actualiza que se hizo el registro de manera correcta
 	MessageBoxW(L"Registro hecho de manera correcta", L"Cliente", MB_OK | MB_ICONINFORMATION);
 	wintemplaObj.llenarLVClientes(lvTabla, ddPuntoVenta.Text, true, true, 200);
 
 	//Actualiza la casilla de clave
-	tbxClave.Text = ddPuntoVenta.Text + L"-" + Sys::Convert::ToString(sqlObj.sacarUltimoIDClaveCliente(ddPuntoVenta.Text) + 1);
 	limpiarCampos();
+	claveClienteIDVP = 0;
 }
 
 //Cuando la dropdownlist cambia

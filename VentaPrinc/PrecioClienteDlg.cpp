@@ -24,14 +24,11 @@ void PrecioClienteDlg::Window_Open(Win::Event& e)
 	tabTabla.Items.Add(0, L"Activos");
 	tabTabla.Items.Add(1, L"Eliminados");
 	
-	//________________________________________________________ lvTabla
-	lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Day");
-	lvTabla.Cols.Add(1, LVCFMT_RIGHT, 200, L"Activity");
-	lvTabla.Items.Add(0, L"Monday");
-	lvTabla.Items[0][1].Text = L"Math Class";
-
 	//Llena la tabla de las clave de los clientes cuando cambian
 	wintemplaObj.llevarLVClaveClientes(lvClientes, ddRuta.Text, true, 100);
+
+	//Llena la tabla de los artículos que faltan de registrar de precio cliente
+	wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, wintemplaObj.sacarTextoLV(lvClientes, 0), 200);
 }
 
 //Cuando cambia la ddlist de tipo de artículo
@@ -78,6 +75,10 @@ void PrecioClienteDlg::btRegistrar_Click(Win::Event& e)
 //Cuando se selecciona un cliente específico
 void PrecioClienteDlg::lvClientes_ItemChanged(Win::Event& e)
 {
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+
+	//Llena la tabla de los artículos que faltan de registrar de precio cliente
+	wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, wintemplaObj.sacarTextoLV(lvClientes, 0), 200);
 }
 
 //Cuando se cambia la opción en la ddlist de ruta

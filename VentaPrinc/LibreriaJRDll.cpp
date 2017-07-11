@@ -502,12 +502,61 @@ void LibreriaJRDll::WintemplaCLS::llevarLVClaveClientes(Win::ListView lvTabla, w
 		lvTabla.Cols.Add(0, LVCFMT_LEFT, 200, L"Clave");
 
 		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
-		Sys::Format(consulta, L"SELECT cc.id, CONCAT(pv.tipo, '-', cc.numero)\
+		Sys::Format(consulta, L"SELECT cc.id, cc.numero\
 		FROM clave_cliente cc, punto_venta pv\
 		WHERE cc.puntoVenta_id = pv.id\
 		AND pv.tipo = '%s'\
 		AND cc.activo = %d\
 		ORDER BY cc.numero ASC;", punto_venta.c_str(), activo);
+		conn.ExecuteSelect(consulta, size, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que llena todos los artículos faltantes de registrar un precio_cliente
+void LibreriaJRDll::WintemplaCLS::llenarLVFaltantesPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Se define los nombres de las columnas
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 150, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 150, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 150, L"Modelo");
+
+		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
+		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, mo.nombre\
+		FROM articulo a, tipo_articulo ta, modelo mo, marca ma\
+		WHERE a.id NOT IN\
+		(SELECT ar.id\
+			FROM precio_cliente pce, clave_cliente cce, articulo ar, punto_venta pvt, tipo_articulo tar, modelo md, marca mr\
+			WHERE pce.articulo_id = ar.id\
+			AND cce.id = pce.claveCliente_id\
+			AND pvt.id = cce.puntoVenta_id\
+			AND tar.id = ar.tipoArticulo_id\
+			AND md.id = ar.modelo_id\
+			AND md.marca_id = mr.id\
+			AND pvt.tipo = '%s'\
+			AND cce.numero = '%s')\
+		AND a.tipoArticulo_id = ta.id\
+		AND a.modelo_id = mo.id\
+		AND mo.marca_id = ma.id\
+		ORDER BY ta.nombre ASC;", punto_venta.c_str(), numero.c_str());
 		conn.ExecuteSelect(consulta, size, lvTabla);
 	}
 	catch (Sql::SqlException e)
@@ -1027,6 +1076,33 @@ void LibreriaJRDll::SqlCLS::actualizarEstadoClaveCliente(int claveCliente_id, bo
 		Sys::Format(consulta, L"UPDATE clave_cliente \
 		SET activo = %d \
 		WHERE id = %d", estado, claveCliente_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que actualiza los datos de un registro de la tabla cliente
+void LibreriaJRDll::SqlCLS::actualizarCliente(int cliente_id, wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE cliente \
+		SET nombre = '%s', direccion = '%s', telefono = '%s', email = '%s', ciudad_id = %d \
+		WHERE id = %d", nombre.c_str(), direccion.c_str(), telefono.c_str(), email.c_str(), ciudad_id, cliente_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{

@@ -61,6 +61,9 @@ public:
 		//Método que llena todas las claves de cliente de un determinado punto de venta
 		void llevarLVClaveClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size);
 
+		//Método que llena todos los artículos faltantes de registrar un precio_cliente
+		void llenarLVFaltantesPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size);
+
 		//Método que llena la drop down list con los tipos de punto de venta registrados
 		void llenarDdPuntoVenta(Win::DropDownList ddVenta, int size);
 
@@ -130,6 +133,9 @@ public:
 
 		//Método que actualiza el estado de un registro de la tabla clave_cliente
 		void actualizarEstadoClaveCliente(int claveCliente_id, bool estado);
+
+		//Método que actualiza los datos de un registro de la tabla cliente
+		void actualizarCliente(int cliente_id, wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id);
 
 		//Método que inserta un registro en la tabla punto_venta
 		void insertarPuntoVenta(wstring nombre);

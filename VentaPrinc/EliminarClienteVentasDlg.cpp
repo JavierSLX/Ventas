@@ -75,6 +75,9 @@ void EliminarClienteVentasDlg::btAccion_Click(Win::Event& e)
 
 		MessageBoxW(anuncio, L"Cliente", MB_OK | MB_ICONINFORMATION);
 	}
+
+	claveClienteIDVP = 0;
+	btAccion.Enabled = false;
 }
 
 //Cuando se cambia la dropdownlist
