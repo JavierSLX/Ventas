@@ -535,9 +535,9 @@ void LibreriaJRDll::WintemplaCLS::llenarLVFaltantesPrecioCliente(Win::ListView l
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 
 		//Se define los nombres de las columnas
-		lvTabla.Cols.Add(0, LVCFMT_LEFT, 120, L"Artículo");
-		lvTabla.Cols.Add(1, LVCFMT_LEFT, 120, L"Marca");
-		lvTabla.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 100, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 100, L"Modelo");
 
 		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
 		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, mo.nombre\
@@ -584,12 +584,13 @@ void LibreriaJRDll::WintemplaCLS::llenarLVPrecioCliente(Win::ListView lvTabla, w
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 
 		//Se define los nombres de las columnas
-		lvTabla.Cols.Add(0, LVCFMT_LEFT, 120, L"Artículo");
-		lvTabla.Cols.Add(1, LVCFMT_LEFT, 120, L"Marca");
-		lvTabla.Cols.Add(2, LVCFMT_LEFT, 120, L"Modelo");
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 100, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 100, L"Modelo");
+		lvTabla.Cols.Add(3, LVCFMT_LEFT, 100, L"Precio");
 
 		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
-		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, m.nombre\
+		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, m.nombre, CONCAT('$ ', ROUND(pc.precio, 2))\
 		FROM precio_cliente pc, clave_cliente cc, articulo a, punto_venta pv, tipo_articulo ta, modelo m, marca ma\
 		WHERE pc.articulo_id = a.id\
 		AND cc.id = pc.claveCliente_id\

@@ -14,7 +14,8 @@ public:
 	}
 private:
 	int articuloIDVP;
-	int claveClienteID;
+	int claveClienteIDVP;
+	wstring numeroVP;
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Button gboxFaltantes;
 	Win::DropDownList ddTipo;
@@ -29,11 +30,15 @@ private:
 	Win::ListView lvRegistrados;
 	Win::Textbox tbxClave;
 	Win::Textbox tbxNombre;
+	Win::Button btActualizar;
+	Win::Label lbPrecio;
+	Win::Label lbClave;
+	Win::Label lbCliente;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
 	{
-		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(27.64896);
+		dlgTemplate.cx=Sys::Convert::CentimetersToDlgUnitX(28.46917);
 		dlgTemplate.cy=Sys::Convert::CentimetersToDlgUnitY(11.03313);
 		dlgTemplate.style = WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE | DS_CENTER | DS_MODALFRAME;
 	}
@@ -44,18 +49,23 @@ protected:
 		ddTipo.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 0.63500, 0.74083, 5.42396, 0.60854, hWnd, 1001);
 		ddMarca.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 7.17021, 0.74083, 5.42396, 0.60854, hWnd, 1002);
 		ddModelo.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 13.54667, 0.74083, 5.42396, 0.60854, hWnd, 1003);
-		lvTabla.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.71437, 3.36021, 9.28688, 6.98500, hWnd, 1004);
-		tbxPrecio.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 21.66938, 3.12208, 4.33917, 0.60854, hWnd, 1005);
-		btRegistrar.CreateX(NULL, L"Registrar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 21.74875, 4.76250, 4.33917, 0.68792, hWnd, 1006);
-		lvClientes.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 21.61646, 6.16479, 5.84729, 4.65667, hWnd, 1007);
+		lvTabla.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.71437, 3.62479, 9.28688, 6.98500, hWnd, 1004);
+		tbxPrecio.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 22.48958, 3.12208, 4.33917, 0.60854, hWnd, 1005);
+		btRegistrar.CreateX(NULL, L"Registrar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_DEFPUSHBUTTON | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 22.48958, 4.12750, 4.33917, 0.68792, hWnd, 1006);
+		lvClientes.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 22.43667, 6.16479, 5.84729, 4.65667, hWnd, 1007);
 		ddRuta.CreateX(NULL, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_WINNORMALCASE, 19.87021, 0.74083, 5.42396, 0.60854, hWnd, 1008);
-		gboxRegistrados.CreateX(WS_EX_TRANSPARENT, L"Registrados", WS_CHILD | WS_VISIBLE | BS_GROUPBOX, 10.90083, 2.93688, 10.16000, 7.91104, hWnd, 1009);
-		lvRegistrados.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 11.29771, 3.36021, 9.28688, 6.98500, hWnd, 1010);
-		tbxClave.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 0.63500, 1.77271, 5.26521, 0.60854, hWnd, 1011);
-		tbxNombre.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 8.09625, 1.77271, 8.06979, 0.60854, hWnd, 1012);
+		gboxRegistrados.CreateX(WS_EX_TRANSPARENT, L"Registrados", WS_CHILD | WS_VISIBLE | BS_GROUPBOX, 10.90083, 2.93688, 10.90083, 7.91104, hWnd, 1009);
+		lvRegistrados.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 11.29771, 3.62479, 10.18646, 6.98500, hWnd, 1010);
+		tbxClave.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 1.50812, 1.77271, 5.26521, 0.60854, hWnd, 1011);
+		tbxNombre.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 10.29229, 1.77271, 8.06979, 0.60854, hWnd, 1012);
+		btActualizar.CreateX(NULL, L"Actualizar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 22.48958, 5.02708, 4.33917, 0.68792, hWnd, 1013);
+		lbPrecio.CreateX(NULL, L"Precio", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 22.48958, 2.40771, 2.16958, 0.60854, hWnd, 1014);
+		lbClave.CreateX(NULL, L"Clave:", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 0.44979, 1.77271, 1.03188, 0.60854, hWnd, 1015);
+		lbCliente.CreateX(NULL, L"Cliente:", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 8.99583, 1.77271, 1.24354, 0.60854, hWnd, 1016);
 		lvTabla.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		lvClientes.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		lvRegistrados.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
+		this->SetDefaultButton(btRegistrar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
 		gboxFaltantes.Font = fontArial009A;
 		ddTipo.Font = fontArial009A;
@@ -70,6 +80,10 @@ protected:
 		lvRegistrados.Font = fontArial009A;
 		tbxClave.Font = fontArial009A;
 		tbxNombre.Font = fontArial009A;
+		btActualizar.Font = fontArial009A;
+		lbPrecio.Font = fontArial009A;
+		lbClave.Font = fontArial009A;
+		lbCliente.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void ddTipo_SelChange(Win::Event& e);
@@ -78,6 +92,7 @@ protected:
 	void btRegistrar_Click(Win::Event& e);
 	void lvClientes_ItemChanged(Win::Event& e);
 	void ddRuta_SelChange(Win::Event& e);
+	void btActualizar_Click(Win::Event& e);
 	void Window_Open(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
@@ -88,6 +103,7 @@ protected:
 		if (btRegistrar.IsEvent(e, BN_CLICKED)) {btRegistrar_Click(e); return true;}
 		if (lvClientes.IsEvent(e, LVN_ITEMCHANGED)) {lvClientes_ItemChanged(e); return true;}
 		if (ddRuta.IsEvent(e, CBN_SELCHANGE)) {ddRuta_SelChange(e); return true;}
+		if (btActualizar.IsEvent(e, BN_CLICKED)) {btActualizar_Click(e); return true;}
 		return false;
 	}
 };

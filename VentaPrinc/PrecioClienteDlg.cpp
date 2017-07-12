@@ -71,10 +71,29 @@ void PrecioClienteDlg::lvTabla_ItemChanged(Win::Event& e)
 void PrecioClienteDlg::btRegistrar_Click(Win::Event& e)
 {
 	LibreriaJRDll::SqlCLS sqlObj;
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
 
 	if (articuloIDVP > 0)
 	{
+		//Verifica que no exista un espacio vacío
+		if ((tbxPrecio.GetTextLength() == 0) || (ddMarca.Items.Count == 0) || (ddModelo.Items.Count == 0))
+		{
+			MessageBoxW(L"Error. Espacio vacío", L"Error", MB_OK | MB_ICONERROR);
+			return;
+		}
 
+		//Inserta un nuevo registro al precio cliente
+		sqlObj.insertarPrecioCliente(tbxPrecio.DoubleValue, claveClienteIDVP, articuloIDVP);
+
+		//Anuncia que se registro de manera correcta el precio
+		MessageBoxW(L"Registro realizado de manera correcta", L"Precio Cliente", MB_OK | MB_ICONINFORMATION);
+
+		//Actualiza y limpia datos
+		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numeroVP, 200);
+		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numeroVP, 200);
+		tbxPrecio.Text = L"";
+		articuloIDVP = 0;
+		claveClienteIDVP = 0;
 	}
 }
 
@@ -84,20 +103,20 @@ void PrecioClienteDlg::lvClientes_ItemChanged(Win::Event& e)
 	LibreriaJRDll::WintemplaCLS wintemplaObj;
 	LibreriaJRDll::SqlCLS sqlObj;
 
-	claveClienteID = wintemplaObj.sacarIDOcultoLV(lvClientes);
-	wstring numero = wintemplaObj.sacarTextoLV(lvClientes, 0);
+	claveClienteIDVP = wintemplaObj.sacarIDOcultoLV(lvClientes);
+	numeroVP = wintemplaObj.sacarTextoLV(lvClientes, 0);
 
-	if (claveClienteID > 0)
+	if (claveClienteIDVP > 0)
 	{
 		//Llena las textbox
-		tbxNombre.Text = sqlObj.sacarNombreCliente(claveClienteID);
-		tbxClave.Text = ddRuta.Text + L"-" + numero;
+		tbxNombre.Text = sqlObj.sacarNombreCliente(claveClienteIDVP);
+		tbxClave.Text = ddRuta.Text + L"-" + numeroVP;
 
 		//Llena la tabla de los artículos que faltan de registrar de precio cliente
-		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numero, 200);
+		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numeroVP, 200);
 
 		//Llena la tabla de los registros que ya fueron realizados de precio cliente
-		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numero, 200);
+		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numeroVP, 200);
 	}
 }
 
@@ -112,5 +131,10 @@ void PrecioClienteDlg::ddRuta_SelChange(Win::Event& e)
 	//Limpia las textbox
 	tbxClave.Text = L"";
 	tbxNombre.Text = L"";
+}
+
+//Cuando se le da click al botón de Actualizar
+void PrecioClienteDlg::btActualizar_Click(Win::Event& e)
+{
 }
 
