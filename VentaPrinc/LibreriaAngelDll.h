@@ -90,14 +90,15 @@ public:
 		void LibreriaAngelDll::rangoCLS::mostrarRangoExistente(Win::ListView lvRango, int longuitud, bool activo);
 		wstring LibreriaAngelDll::rangoCLS::sacarRangoSiExiste(double minimo, double maximo, double comision);
 		void LibreriaAngelDll::rangoCLS::insertaRango(double minimo, double maximo, double comision, bool rangoActivo);
-		void LibreriaAngelDll::rangoCLS::insertaRangoArticulo(int articuloId,int rangoId,int requerimientoId);
-		void LibreriaAngelDll::rangoCLS::insertaRangoServicio(int servicioId, int rangoId, int requerimientoId);
+		void LibreriaAngelDll::rangoCLS::insertaRangoArticulo(int articuloId,int rangoId,int requerimientoId,int idColocacion);
+		void LibreriaAngelDll::rangoCLS::insertaRangoServicio(int servicioId, int rangoId, int requerimientoId,int idColocacion);
 		void LibreriaAngelDll::rangoCLS::actualizarRangoServicio(int servicioRangoId, int rangoId, int requerimientoId);
 		void LibreriaAngelDll::rangoCLS::actualizarRangoArticulo(int articuloRangoId, int rangoId, int requerimientoId);
 		void LibreriaAngelDll::rangoCLS::actualizarRango(int id, double minimo, double maximo, double comision, bool servicioActivo);
-		void LibreriaAngelDll::rangoCLS::mostrarRangoAsignado(Win::ListView lvRango, int longuitud, bool activo);
-		void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, int longuitud, bool activo);
+		void LibreriaAngelDll::rangoCLS::mostrarRangoAsignado(Win::ListView lvRango, int longuitud, bool activo,int idColocacion);
+		void LibreriaAngelDll::rangoCLS::mostrarRangoSinAsignar(Win::ListView lvRango, int longuitud, bool activo,int idColocacion);
 		void LibreriaAngelDll::rangoCLS::cambiarEstadoRango(int idRango, bool rangoActivo);
+		void LibreriaAngelDll::rangoCLS::llenarColocacion(Win::DropDownList ddColocacion, int longuitud);
 	private:
 	};
 	class reporteVentasCLS :public Win::Dialog

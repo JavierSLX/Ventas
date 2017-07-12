@@ -3,14 +3,22 @@
 
 void RangosDlg::Window_Open(Win::Event& e)
 {
+	LibreriaAngelDll::rangoCLS rangoObj;
+	LibreriaAngelDll::reportesCLS reportesObj;
+	//________________________________________________________ ddColocacion
+	rangoObj.llenarColocacion(ddColocacion, 100);
+	ddColocacion.SetSelectedIndex(0);
+	_idColocacion = reportesObj.obtenerIdOculto(ddColocacion);
+
 	//________________________________________________________ tabRangos
 	tabRangos.Items.Add(0, L"Con Rango");
 	tabRangos.Items.Add(1, L"Sin Rango");
 	//________________________________________________________ lvRangos
-	LibreriaAngelDll::rangoCLS rangoObj;
-	rangoObj.mostrarRangoAsignado(lvRangos, 400, true);
+	rangoObj.mostrarRangoAsignado(lvRangos, 400, true,_idColocacion);
 	btEditar.Visible = true;
 	btAgregar.Visible = false;
+	//________________________________________________________ ddPuntoVenta
+	
 }
 
 void RangosDlg::btAgregar_Click(Win::Event& e)
@@ -23,7 +31,7 @@ void RangosDlg::btAgregar_Click(Win::Event& e)
 	int idArticulo = textoObj.obtenerIdOculto(lvRangos);
 	if (idArticulo > 0)
 	{
-		AsignarRangoDlg asignarRangoObj(requerimiento, tipo, marca, modelo, idArticulo,1);
+		AsignarRangoDlg asignarRangoObj(requerimiento, tipo, marca, modelo, idArticulo,1,_idColocacion);
 		asignarRangoObj.BeginDialog(hWnd);
 	}
 	else
@@ -60,12 +68,12 @@ void RangosDlg::tabRangos_SelChange(Win::Event& e)
 	switch (tabRangos.GetSelectedIndex())
 	{
 	case 0:
-		rangoObj.mostrarRangoAsignado(lvRangos, 400, true);
+		rangoObj.mostrarRangoAsignado(lvRangos, 400, true,_idColocacion);
 		btEditar.Visible = true;
 		btAgregar.Visible = false;
 		break;
 	case 1:
-		rangoObj.mostrarRangoSinAsignar(lvRangos, 200, true);
+		rangoObj.mostrarRangoSinAsignar(lvRangos, 200, true,_idColocacion);
 		btEditar.Visible = false;
 		btAgregar.Visible = true;
 		break;
@@ -80,12 +88,12 @@ void RangosDlg::Window_Activate(Win::Event& e)
 	switch (tabRangos.GetSelectedIndex())
 	{
 	case 0:
-		rangoObj.mostrarRangoAsignado(lvRangos, 400, true);
+		rangoObj.mostrarRangoAsignado(lvRangos, 400, true,_idColocacion);
 		btEditar.Visible = true;
 		btAgregar.Visible = false;
 		break;
 	case 1:
-		rangoObj.mostrarRangoSinAsignar(lvRangos, 200, true);
+		rangoObj.mostrarRangoSinAsignar(lvRangos, 200, true,_idColocacion);
 		btEditar.Visible = false;
 		btAgregar.Visible = true;
 		break;
@@ -96,5 +104,25 @@ void RangosDlg::btCrearRango_Click(Win::Event& e)
 {
 	RangoDlg crearRangoObj;
 	crearRangoObj.BeginDialog(hWnd);
+}
+
+void RangosDlg::ddColocacion_SelChange(Win::Event& e)
+{
+	LibreriaAngelDll::rangoCLS rangoObj;
+	LibreriaAngelDll::reportesCLS reportesObj;
+	_idColocacion = reportesObj.obtenerIdOculto(ddColocacion);
+	switch (tabRangos.GetSelectedIndex())
+	{
+	case 0:
+		rangoObj.mostrarRangoAsignado(lvRangos, 400, true,_idColocacion);
+		btEditar.Visible = true;
+		btAgregar.Visible = false;
+		break;
+	case 1:
+		rangoObj.mostrarRangoSinAsignar(lvRangos, 200, true, _idColocacion);
+		btEditar.Visible = false;
+		btAgregar.Visible = true;
+		break;
+	}
 }
 

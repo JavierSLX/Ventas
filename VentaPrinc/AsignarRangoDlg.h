@@ -5,7 +5,7 @@
 class AsignarRangoDlg: public Win::Dialog
 {
 public:
-	AsignarRangoDlg(wstring requerimiento,wstring tipo,wstring marca,wstring modelo,int idArticulo,int opcion)
+	AsignarRangoDlg(wstring requerimiento,wstring tipo,wstring marca,wstring modelo,int idArticulo,int opcion,int idColocacion)
 	{
 		this->requerimientoVP = requerimiento;
 		this->tipoVP = tipo;
@@ -13,6 +13,7 @@ public:
 		this->modeloVP = modelo;
 		this->idArticuloVP = idArticulo;
 		this->opcionVP = opcion;
+		this->idColocacionVP = idColocacion;
 	}
 	AsignarRangoDlg(wstring requerimiento, wstring tipo, wstring marca, wstring modelo,wstring minimo,wstring maximo,wstring comision, int idRango, int opcion)
 	{
@@ -44,6 +45,7 @@ private:
 	wstring maximoVP;
 	wstring comisionVP;
 	int idRangoVP;
+	int idColocacionVP;
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Label lbRequerimiento;
 	Win::Textbox tbxRequerimiento;
