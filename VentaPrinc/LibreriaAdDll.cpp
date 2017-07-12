@@ -2285,17 +2285,18 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 	lvDetalles.Cols.Add(1, LVCFMT_CENTER, 100, L"Tipo");
 	lvDetalles.Cols.Add(2, LVCFMT_CENTER, 100, L"Marca");
 	lvDetalles.Cols.Add(3, LVCFMT_CENTER, 100, L"Modelo");
-	lvDetalles.Cols.Add(5, LVCFMT_CENTER, 100, L"Modelo");
-	lvDetalles.Cols.Add(6, LVCFMT_CENTER, 100, L"Cantidad");
-	lvDetalles.Cols.Add(7, LVCFMT_CENTER, 100, L"P. Sugerido");
-	lvDetalles.Cols.Add(8, LVCFMT_CENTER, 100, L"P. Final");
-	lvDetalles.Cols.Add(9, LVCFMT_CENTER, 100, L"Total");
-	lvDetalles.Cols.Add(10, LVCFMT_CENTER, 100, L"Fecha");
+	lvDetalles.Cols.Add(4, LVCFMT_CENTER, 100, L"Color");
+	lvDetalles.Cols.Add(5, LVCFMT_CENTER, 100, L"Cantidad");
+	lvDetalles.Cols.Add(6, LVCFMT_CENTER, 100, L"P. Sugerido");
+	lvDetalles.Cols.Add(7, LVCFMT_CENTER, 100, L"P. Final");
+	lvDetalles.Cols.Add(8, LVCFMT_CENTER, 100, L"Total");
+	lvDetalles.Cols.Add(9, LVCFMT_CENTER, 100, L"Fecha");
+
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT DISTINCT od.id, r.tipo, sv.nombre\
-			, 'NA', 'NA',, 'NA' od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad * od.precio_final, o.fecha\
+			, 'NA', 'NA', 'NA', od.cantidad, od.precio_sugerido, od.precio_final, od.cantidad * od.precio_final, o.fecha\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
 			servicio_requerimiento sr, servicio_venta sv\
 			WHERE od.orden_id = o.id\
@@ -2307,9 +2308,10 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 			AND sr.servicioVenta_id = sv.id\
 			AND sv.id = od.tipoVentaId\
 			AND o.folio = '%s'\
+			AND od.cantidad > 0\
 			UNION\
 			SELECT DISTINCT od.id, r.tipo, ta.nombre, ma.nombre, mo.nombre, \
-			co.nombre,od.cantidad, od.precio_sugerido, od.precio_final,od.cantidad * od.precio_final, o.fecha\
+			col.nombre, od.cantidad, od.precio_sugerido, od.precio_final,od.cantidad * od.precio_final, o.fecha\
 			FROM orden o, orden_descripcion od, cliente c, clave_cliente cc, punto_venta pv, requerimiento r, \
 			cantidad_requerimiento cr, cantidad can, articulo a, modelo mo, marca ma, tipo_articulo ta, color col\
 			WHERE od.orden_id = o.id\
@@ -2324,8 +2326,9 @@ void LibreriaAdDll::ordenNueva::llenarLVDetallesOrden(Win::ListView lvDetalles, 
 			AND a.modelo_id = mo.id\
 			AND mo.marca_id = ma.id\
 			AND a.tipoArticulo_id = ta.id\
-			AND a.id = od.tipoVentaId\
-			AND o.folio = '%s'; ", folio.c_str(),folio.c_str());
+			AND can.id = od.tipoVentaId\
+			AND od.cantidad > 0\
+			AND o.folio = '%s'; ", folio.c_str(), folio.c_str());
 
 		conn.ExecuteSelect(consulta, large, lvDetalles);
 	}

@@ -74,6 +74,7 @@ private:
 	Win::Button btTerminar;
 	Win::Button btEliminar;
 	Win::Label lb8;
+	Win::Label lb9;
 protected:
 	Win::Gdi::Font fontArial009A;
 	void GetDialogTemplate(DLGTEMPLATE& dlgTemplate)
@@ -108,6 +109,7 @@ protected:
 		btTerminar.CreateX(NULL, L"Terminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 26.59062, 9.39271, 3.96875, 0.68792, hWnd, 1020);
 		btEliminar.CreateX(NULL, L"Eliminar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 26.67000, 10.55688, 3.88937, 0.68792, hWnd, 1021);
 		lb8.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 0.92604, 12.14438, 3.33375, 0.60854, hWnd, 1022);
+		lb9.CreateX(NULL, NULL, WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 4.94771, 12.09146, 3.30729, 0.60854, hWnd, 1023);
 		lvTabla.SetExtStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES, LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 		this->SetDefaultButton(btAgregar);
 		fontArial009A.CreateX(L"Arial", 0.317500, false, false, false, false);
@@ -134,6 +136,7 @@ protected:
 		btTerminar.Font = fontArial009A;
 		btEliminar.Font = fontArial009A;
 		lb8.Font = fontArial009A;
+		lb9.Font = fontArial009A;
 	}
 	//_________________________________________________
 	void radioArticulo_Click(Win::Event& e);

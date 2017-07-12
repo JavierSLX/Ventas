@@ -217,6 +217,10 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 	LibreriaAdDll::ordenNueva ordenObj;
 	LibreriaAdDll::articulo articuloObj;
 	cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+
+	int idCantidadExistente = movObj.sacarIDCantidad(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
+		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+
 	if (this->tbxCantidad.GetTextLength() < 1) {
 		this->tbxCantidad.ShowBalloonTip(L"Cantidad", L"Ingrese una cantidad", TTI_ERROR);
 		return;
@@ -235,13 +239,11 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 			else
 			{
 				//inserta en la tabla cantidad requerimienti
-				ordenObj.insertarCantidadRequerimiento(movObj.sacarIDCantidad(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
-					//insertar en orden descripcion
-					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP)), ordenObj.sacarIDRequerimiento(L"Articulo"));
+				ordenObj.insertarCantidadRequerimiento(idCantidadExistente, ordenObj.sacarIDRequerimiento(L"Articulo"));
+				//insertar en orden descripcion
 				int cantidadOrden = Sys::Convert::ToInt(tbxCantidad.Text);
 				int orden_id = ordenObj.sacarUltIDOrden();
-				ordenObj.insertOrdenDescripcion(ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
-					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP), tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
+				ordenObj.insertOrdenDescripcion(idCantidadExistente, tbxCantidad.IntValue, tbxPrecio.DoubleValue, tbxFinal.DoubleValue, orden_id, ordenObj.sacarIDRequerimiento(L"Articulo"));
 				MessageBoxW(L"Se agregó correctamente", L"Articulo", MB_OK | MB_ICONINFORMATION);
 				ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 
@@ -255,9 +257,9 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				TotalPrecioArticulosVP += Total;
 				
 				//Descontar cantidad de inventario
-				int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ddColor.Text), articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+				
 				int cantidadActualizar = cantidadExistenteVP - cantidadOrden;
-				articuloObj.updateCantidad(idCantidad, cantidadActualizar);
+				articuloObj.updateCantidad(idCantidadExistente, cantidadActualizar);
 
 				int idArticulo = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 					articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
@@ -597,13 +599,22 @@ void DescripcionOrdenVentasDlg::btEliminar_Click(Win::Event& e)
 	LibreriaAdDll::articulo  articuloObj;
 	
 	
-	int idArticulo = ordenObj.sacarIDTipoVenta(idDetalles);
+	int idCantidadEnDetalllesOrden = ordenObj.sacarIDTipoVenta(idDetalles);
+	int articulo_id = ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
+		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP);
 	lb8.SetText(requerimientoVP);
 	if (requerimientoVP == L"Articulo")
 	{
 		//actualiza la cantidad del inventario
-		int idCantidad = articuloObj.sacarIDCantidad(articuloObj.sacarIDcolor(ColorVP), articuloObj.sacarIDPuntoVenta(puntoVentaVP), idArticulo);
-		int cantidadActualizar = cantidadExistenteVP + Sys::Convert::ToInt(CantidadVP);
+		int idcolor = articuloObj.sacarIDcolor(ColorVP);
+		int idPuntoVenta = articuloObj.sacarIDPuntoVenta(puntoVentaVP);
+		int idCantidad = articuloObj.sacarIDCantidad(idcolor, idPuntoVenta, articulo_id);
+		int cantidadOrdenDescripcionArticulo = Sys::Convert::ToInt(CantidadVP);
+		lb8.SetText(Sys::Convert::ToString(cantidadOrdenDescripcionArticulo));
+		lb9.SetText(Sys::Convert::ToString(cantidadOrdenDescripcionArticulo));
+		cantidadExistenteVP = movObj.sacarCantidadDepartamento(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text), articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
+		int cantidadActualizar = cantidadExistenteVP + cantidadOrdenDescripcionArticulo;
+
 		articuloObj.updateCantidad(idCantidad, cantidadActualizar);
 
 		//actualiza la cantidad de la tabla orden descripcion
@@ -617,6 +628,7 @@ void DescripcionOrdenVentasDlg::btEliminar_Click(Win::Event& e)
 		//actualiza el total comision de la orden
 		ordenObj.updateTotalArticuloComision(ordenObj.sacarUltIDOrden(), updateTotalArticuloComision);
 		MessageBoxW(L"Se elimino Registro", L"Eliminar", MB_OK | MB_ICONERROR);
+		ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 	}
 	else if (TipoArticuloVP == L"Servicio")
 	{
@@ -627,6 +639,7 @@ void DescripcionOrdenVentasDlg::btEliminar_Click(Win::Event& e)
 		double updateTotalServicioComision = comisionTotalServicio - comisionservicio;
 		ordenObj.updateTotalServicioComision(ordenObj.sacarUltIDOrden(), updateTotalServicioComision);
 		MessageBoxW(L"Se elimino Registro", L"Eliminar", MB_OK | MB_ICONERROR);
+		ordenObj.llenarLVDetallesOrden(lvTabla, 100, true, folioVP);
 	}
 }
 
