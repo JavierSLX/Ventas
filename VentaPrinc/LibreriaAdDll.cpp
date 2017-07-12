@@ -2487,7 +2487,7 @@ int LibreriaAdDll::ordenNueva::sacarIDUsuario(int pv, wstring nombre)
 	conn.CloseSession();
 	return marca_id;
 }
-int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo)
+int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo, int pv)
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -2497,12 +2497,14 @@ int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo)
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"SELECT ran.id\
-			FROM rango ran, articulo art, articulo_rango ar\
+			FROM rango ran, articulo art, articulo_rango ar, punto_venta pv\
 			WHERE ar.rango_id = ran.id\
 			AND ar.articulo_id = art.id\
+			AND ar.puntoVenta_id = pv.id\
+			AND pv.id = %d\
 			AND art.id = %d\
 			AND minimo <= %d\
-			AND %d <= maximo", articulo, pFinal, pFinal);
+			AND %d <= maximo", pv,articulo, pFinal, pFinal);
 		ma = conn.GetInt(consulta);
 	}
 	catch (Sql::SqlException e)

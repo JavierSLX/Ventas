@@ -220,7 +220,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 	int idCantidadExistente = movObj.sacarIDCantidad(ddColor.Text, articuloObj.sacarIDPuntoVenta(puntoVentaVP), ordenObj.sacarIDArticulo(ddTipo.Text, articuloObj.sacarIDModelo(ddModelo.Text),
 		articuloObj.sacarIDMarca(ddMarca.Text), puntoVentaVP));
-
+	int pv_id = ordenObj.sacarIDPuntoVenta(puntoVentaVP);
 	if (this->tbxCantidad.GetTextLength() < 1) {
 		this->tbxCantidad.ShowBalloonTip(L"Cantidad", L"Ingrese una cantidad", TTI_ERROR);
 		return;
@@ -272,7 +272,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 
 				//insertar comisiones
 				
-					int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idArticulo);
+					int idRango = ordenObj.sacarIDrango(Sys::Convert::ToInt(tbxFinal.Text), idArticulo, pv_id);
 					/*lb9.SetText(Sys::Convert::ToString(idRango));*/
 					
 					//verifica si existe comision para ese articulo
@@ -557,7 +557,8 @@ void DescripcionOrdenVentasDlg::Window_Activate(Win::Event& e)
 		int rangoVectorContador = articulosSinRangoVP.size();
 		for (int i = 0; i < rangoVectorContador; i++)
 		{
-			int idRango = ordenObj.sacarIDrango(precioArticuloSinRangoVP[i], articulosSinRangoVP[i]);
+			int pv_id = ordenObj.sacarIDPuntoVenta(puntoVentaVP);
+			int idRango = ordenObj.sacarIDrango(precioArticuloSinRangoVP[i], articulosSinRangoVP[i], pv_id);
 			//Hacer la operacion para calcular total del articulo-comision
 			//si hay comision ...
 			double comision = ordenObj.sacarComision(idRango);
