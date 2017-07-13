@@ -61,6 +61,12 @@ public:
 		//Método que llena todas las claves de cliente de un determinado punto de venta
 		void llevarLVClaveClientes(Win::ListView lvTabla, wstring punto_venta, bool activo, int size);
 
+		//Método que llena todos los artículos faltantes de registrar un precio_cliente
+		void llenarLVFaltantesPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size);
+
+		//Método que llena los artículos registrados de precio_cliente
+		void llenarLVPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size);
+
 		//Método que llena la drop down list con los tipos de punto de venta registrados
 		void llenarDdPuntoVenta(Win::DropDownList ddVenta, int size);
 
@@ -69,6 +75,12 @@ public:
 
 		//Método que llena la drop down list con los tipos de artículos registrados en la base de datos
 		void llenarDdTipoArticulo(Win::DropDownList ddTipo, int size);
+
+		//Método que llena las marcas de un determinado tipo de articulo
+		void llenarDdMarca(Win::DropDownList ddMarca, wstring tipoArticulo, int size);
+
+		//Método que llena las marcas de un determinado tipo de articulo
+		void llenarDdModelo(Win::DropDownList ddModelo, wstring marca, int size);
 
 		//Método que llena la drop down list con las ciudades registradas en la base de datos
 		void llenarDdCiudad(Win::DropDownList ddCiudad, bool activo, int size);
@@ -110,14 +122,26 @@ public:
 		//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
 		int sacarIDClaveCliente(int cliente_id, int puntoVenta_id);
 
+		//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
+		int sacarIDClaveCliente(wstring numero, int puntoVenta_id);
+
+		//Saca el id de un registro de la tabla precio_cliente, en caso de no existir regresa un 0
+		int sacarIDPrecioCliente(int claveCliente_id, int articulo_id);
+
 		//Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 		int sacarUltimoIDClaveCliente(wstring punto_venta);
+
+		//Saca el precio de un articulo determinado de la tabla precio_cliente
+		double sacarPrecioArticuloCliente(int claveCliente_id, int articulo_id);
 
 		//Saca el tipo de un registro de la tabla colocacion
 		wstring sacarTipoColocacion(wstring punto_venta);
 
 		//Saca el email de un cliente determinado dado por su clave_cliente
 		wstring sacarEmailCliente(int claveCliente_id);
+
+		//Saca el nombre de un cliente determinado por su clave_cliente
+		wstring sacarNombreCliente(int claveCliente_id);
 
 		//Método que actualiza un registro de la tabla punto_venta dado por su id
 		void actualizarPuntoVenta(int categoria_id, wstring nombre);
@@ -130,6 +154,12 @@ public:
 
 		//Método que actualiza el estado de un registro de la tabla clave_cliente
 		void actualizarEstadoClaveCliente(int claveCliente_id, bool estado);
+
+		//Método que actualiza los datos de un registro de la tabla cliente
+		void actualizarCliente(int cliente_id, wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id);
+
+		//Método que actualiza los datos de un registro de la tabla precio_cliente
+		void actualizarPrecioCliente(int precioCliente_id, double precio);
 
 		//Método que inserta un registro en la tabla punto_venta
 		void insertarPuntoVenta(wstring nombre);
@@ -148,6 +178,9 @@ public:
 
 		//Método que inserta un registro en la tabla clave_cliente
 		void insertarClaveCliente(wstring numero, int cliente_id, int puntoVenta_id);
+
+		//Método que inserta un registro en la tabla precio_cliente
+		void insertarPrecioCliente(double precio, int claveCliente, int articulo_id);
 	};
 
 	//Clase que contiene todo lo referente a color

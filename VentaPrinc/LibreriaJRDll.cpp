@@ -502,12 +502,105 @@ void LibreriaJRDll::WintemplaCLS::llevarLVClaveClientes(Win::ListView lvTabla, w
 		lvTabla.Cols.Add(0, LVCFMT_LEFT, 200, L"Clave");
 
 		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
-		Sys::Format(consulta, L"SELECT cc.id, CONCAT(pv.tipo, '-', cc.numero)\
+		Sys::Format(consulta, L"SELECT cc.id, cc.numero\
 		FROM clave_cliente cc, punto_venta pv\
 		WHERE cc.puntoVenta_id = pv.id\
 		AND pv.tipo = '%s'\
 		AND cc.activo = %d\
 		ORDER BY cc.numero ASC;", punto_venta.c_str(), activo);
+		conn.ExecuteSelect(consulta, size, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que llena todos los artículos faltantes de registrar un precio_cliente
+void LibreriaJRDll::WintemplaCLS::llenarLVFaltantesPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Se define los nombres de las columnas
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 100, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 100, L"Modelo");
+
+		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
+		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, mo.nombre\
+		FROM articulo a, tipo_articulo ta, modelo mo, marca ma\
+		WHERE a.id NOT IN\
+		(SELECT ar.id\
+			FROM precio_cliente pce, clave_cliente cce, articulo ar, punto_venta pvt, tipo_articulo tar, modelo md, marca mr\
+			WHERE pce.articulo_id = ar.id\
+			AND cce.id = pce.claveCliente_id\
+			AND pvt.id = cce.puntoVenta_id\
+			AND tar.id = ar.tipoArticulo_id\
+			AND md.id = ar.modelo_id\
+			AND md.marca_id = mr.id\
+			AND pvt.tipo = '%s'\
+			AND cce.numero = '%s')\
+		AND a.tipoArticulo_id = ta.id\
+		AND a.modelo_id = mo.id\
+		AND mo.marca_id = ma.id\
+		ORDER BY ta.nombre ASC;", punto_venta.c_str(), numero.c_str());
+		conn.ExecuteSelect(consulta, size, lvTabla);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que llena los artículos registrados de precio_cliente
+void LibreriaJRDll::WintemplaCLS::llenarLVPrecioCliente(Win::ListView lvTabla, wstring punto_venta, wstring numero, int size)
+{
+	Sql::SqlConnection conn;
+
+	wstring consulta;
+
+	lvTabla.SetRedraw(false);
+	lvTabla.Cols.DeleteAll();
+	lvTabla.Items.DeleteAll();
+	lvTabla.SetRedraw(true);
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Se define los nombres de las columnas
+		lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Artículo");
+		lvTabla.Cols.Add(1, LVCFMT_LEFT, 100, L"Marca");
+		lvTabla.Cols.Add(2, LVCFMT_LEFT, 100, L"Modelo");
+		lvTabla.Cols.Add(3, LVCFMT_LEFT, 100, L"Precio");
+
+		//Ejecuta la consulta en la listview (Solo muestra los disponibles)
+		Sys::Format(consulta, L"SELECT a.id, ta.nombre, ma.nombre, m.nombre, CONCAT('$ ', ROUND(pc.precio, 2))\
+		FROM precio_cliente pc, clave_cliente cc, articulo a, punto_venta pv, tipo_articulo ta, modelo m, marca ma\
+		WHERE pc.articulo_id = a.id\
+		AND cc.id = pc.claveCliente_id\
+		AND pv.id = cc.puntoVenta_id\
+		AND ta.id = a.tipoArticulo_id\
+		AND m.id = a.modelo_id\
+		AND m.marca_id = ma.id\
+		AND pv.tipo = '%s'\
+		AND cc.numero = '%s'\
+		ORDER BY ta.nombre ASC;", punto_venta.c_str(), numero.c_str());
 		conn.ExecuteSelect(consulta, size, lvTabla);
 	}
 	catch (Sql::SqlException e)
@@ -604,6 +697,70 @@ void LibreriaJRDll::WintemplaCLS::llenarDdTipoArticulo(Win::DropDownList ddTipo,
 	}
 
 	ddTipo.SetSelectedIndex(0);
+	conn.CloseSession();
+}
+
+//Método que llena las marcas de un determinado tipo de articulo
+void LibreriaJRDll::WintemplaCLS::llenarDdMarca(Win::DropDownList ddMarca, wstring tipoArticulo, int size)
+{
+	Sql::SqlConnection conn;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddMarca.DeleteAllItems();
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT DISTINCT m.id, m.nombre\
+		FROM tipo_articulo ta, articulo a, marca m, modelo mo\
+		WHERE ta.id = a.tipoArticulo_id\
+		AND a.modelo_id = mo.id\
+		AND mo.marca_id = m.id\
+		AND ta.nombre = '%s'\
+		ORDER BY m.nombre ASC;", tipoArticulo.c_str());
+
+		conn.ExecuteSelect(consulta, size, ddMarca);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	ddMarca.SetSelectedIndex(0);
+	conn.CloseSession();
+}
+
+//Método que llena las marcas de un determinado tipo de articulo
+void LibreriaJRDll::WintemplaCLS::llenarDdModelo(Win::DropDownList ddModelo, wstring marca, int size)
+{
+	Sql::SqlConnection conn;
+	wstring consulta;
+
+	//Borra todos los posibles elementos que puedan ya existir
+	ddModelo.DeleteAllItems();
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+
+		//Ejecuta la consulta en la drop down list (Solo muestra las salidas)
+		Sys::Format(consulta, L"SELECT m.id, m.nombre\
+		FROM modelo m, marca ma\
+		WHERE m.marca_id = ma.id\
+		AND ma.nombre = '%s'\
+		ORDER BY ma.nombre ASC;", marca.c_str());
+
+		conn.ExecuteSelect(consulta, size, ddModelo);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	ddModelo.SetSelectedIndex(0);
 	conn.CloseSession();
 }
 
@@ -855,6 +1012,58 @@ int LibreriaJRDll::SqlCLS::sacarIDClaveCliente(int cliente_id, int puntoVenta_id
 	return estandar_id;
 }
 
+//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDClaveCliente(wstring numero, int puntoVenta_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM clave_cliente\
+		WHERE numero = '%s'\
+		AND puntoVenta_id = %d;", numero.c_str(), puntoVenta_id);
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
+//Saca el id de un registro de la tabla precio_cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDPrecioCliente(int claveCliente_id, int articulo_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM precio_cliente\
+		WHERE claveCliente_id = %d\
+		AND articulo_id = %d;", claveCliente_id, articulo_id);
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
 //Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 {
@@ -880,6 +1089,32 @@ int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 
 	conn.CloseSession();
 	return Sys::Convert::ToInt(clave);
+}
+
+//Saca el precio de un articulo determinado de la tabla precio_cliente
+double LibreriaJRDll::SqlCLS::sacarPrecioArticuloCliente(int claveCliente_id, int articulo_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double valor;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT precio\
+		FROM precio_cliente\
+		WHERE claveCliente_id = %d\
+		AND articulo_id = %d;", claveCliente_id, articulo_id);
+		valor = conn.GetDouble(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		valor = 0;
+	}
+
+	conn.CloseSession();
+	return valor;
 }
 
 //Saca el tipo de un registro de la tabla colocacion
@@ -931,6 +1166,31 @@ wstring LibreriaJRDll::SqlCLS::sacarEmailCliente(int claveCliente_id)
 
 	conn.CloseSession();
 	return colocacion;
+}
+
+//Saca el nombre de un cliente determinado por su clave_cliente
+wstring LibreriaJRDll::SqlCLS::sacarNombreCliente(int claveCliente_id)
+{
+	wstring cadena;
+	wstring consulta;
+	Sql::SqlConnection conn;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT c.nombre\
+		FROM cliente c, clave_cliente cc\
+		WHERE cc.cliente_id = c.id\
+		AND cc.id = %d;", claveCliente_id);
+		conn.GetString(consulta, cadena, 200);
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+	return cadena;
 }
 
 //Método que actualiza un registro de la tabla punto_venta dado por su id
@@ -1027,6 +1287,60 @@ void LibreriaJRDll::SqlCLS::actualizarEstadoClaveCliente(int claveCliente_id, bo
 		Sys::Format(consulta, L"UPDATE clave_cliente \
 		SET activo = %d \
 		WHERE id = %d", estado, claveCliente_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que actualiza los datos de un registro de la tabla cliente
+void LibreriaJRDll::SqlCLS::actualizarCliente(int cliente_id, wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE cliente \
+		SET nombre = '%s', direccion = '%s', telefono = '%s', email = '%s', ciudad_id = %d \
+		WHERE id = %d", nombre.c_str(), direccion.c_str(), telefono.c_str(), email.c_str(), ciudad_id, cliente_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que actualiza los datos de un registro de la tabla precio_cliente
+void LibreriaJRDll::SqlCLS::actualizarPrecioCliente(int precioCliente_id, double precio)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE precio_cliente \
+		SET precio = %lf \
+		WHERE id = %d", precio, precioCliente_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{
@@ -1184,6 +1498,32 @@ void LibreriaJRDll::SqlCLS::insertarClaveCliente(wstring numero, int cliente_id,
 		conn.OpenSession(hWnd, CONNECTION_STRING);
 		Sys::Format(consulta, L"INSERT INTO clave_cliente (numero, activo, cliente_id, puntoVenta_id) \
 		VALUES('%s', true, %d, %d)", numero.c_str(), cliente_id, puntoVenta_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of inserted rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que inserta un registro en la tabla precio_cliente
+void LibreriaJRDll::SqlCLS::insertarPrecioCliente(double precio, int claveCliente, int articulo_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"INSERT INTO precio_cliente (precio, claveCliente_id, articulo_id) \
+		VALUES(%lf, %d, %d)", precio, claveCliente, articulo_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{

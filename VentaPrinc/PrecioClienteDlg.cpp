@@ -20,18 +20,15 @@ void PrecioClienteDlg::Window_Open(Win::Event& e)
 	wintemplaObj.llenarDdRutasExclusiva(ddRuta, true, 100);
 	ddRuta.SetSelectedIndex(0);
 	
-	//________________________________________________________ tabTabla
-	tabTabla.Items.Add(0, L"Activos");
-	tabTabla.Items.Add(1, L"Eliminados");
-	
-	//________________________________________________________ lvTabla
-	lvTabla.Cols.Add(0, LVCFMT_LEFT, 100, L"Day");
-	lvTabla.Cols.Add(1, LVCFMT_RIGHT, 200, L"Activity");
-	lvTabla.Items.Add(0, L"Monday");
-	lvTabla.Items[0][1].Text = L"Math Class";
-
 	//Llena la tabla de las clave de los clientes cuando cambian
 	wintemplaObj.llevarLVClaveClientes(lvClientes, ddRuta.Text, true, 100);
+
+	//Deshabilita algunos controles
+	ddTipo.Enabled = false;
+	ddMarca.Enabled = false;
+	ddModelo.Enabled = false;
+	btActualizar.Enabled = false;
+	btRegistrar.Enabled = false;
 }
 
 //Cuando cambia la ddlist de tipo de artículo
@@ -55,29 +52,83 @@ void PrecioClienteDlg::ddMarca_SelChange(Win::Event& e)
 	ddModelo.SetSelectedIndex(0);
 }
 
-//Cuando cambia la ddlist de Modelo
-void PrecioClienteDlg::ddModelo_SelChange(Win::Event& e)
-{
-}
-
-//Cuando cambia la tab
-void PrecioClienteDlg::tabTabla_SelChange(Win::Event& e)
-{
-}
-
 //Cuando se selecciona un elemento de la tabla
 void PrecioClienteDlg::lvTabla_ItemChanged(Win::Event& e)
 {
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	articuloIDVP = wintemplaObj.sacarIDOcultoLV(lvTabla);
+
+	if (articuloIDVP > 0)
+	{
+		//Predefine las ddlist
+		wstring tipoArticulo = wintemplaObj.sacarTextoLV(lvTabla, 0);
+		ddTipo.SetSelected(tipoArticulo);
+
+		wstring marca = wintemplaObj.sacarTextoLV(lvTabla, 1);
+		wintemplaObj.llenarDdMarca(ddMarca, tipoArticulo, 100);
+		ddMarca.SetSelected(marca);
+
+		wstring modelo = wintemplaObj.sacarTextoLV(lvTabla, 2);
+		wintemplaObj.llenarDdModelo(ddModelo, marca, 100);
+		ddModelo.SetSelected(modelo);
+	}
+
+	//Habilia y deshabilita un botón
+	btActualizar.Enabled = false;
+	btRegistrar.Enabled = true;
 }
 
 //Cuando se le da click al botón Registrar
 void PrecioClienteDlg::btRegistrar_Click(Win::Event& e)
 {
+	LibreriaJRDll::SqlCLS sqlObj;
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+
+	if (articuloIDVP > 0)
+	{
+		//Verifica que no exista un espacio vacío
+		if ((tbxPrecio.GetTextLength() == 0) || (ddMarca.Items.Count == 0) || (ddModelo.Items.Count == 0))
+		{
+			MessageBoxW(L"Error. Espacio vacío", L"Error", MB_OK | MB_ICONERROR);
+			return;
+		}
+
+		//Inserta un nuevo registro al precio cliente
+		sqlObj.insertarPrecioCliente(tbxPrecio.DoubleValue, claveClienteIDVP, articuloIDVP);
+
+		//Anuncia que se registro de manera correcta el precio
+		MessageBoxW(L"Registro realizado de manera correcta", L"Precio Cliente", MB_OK | MB_ICONINFORMATION);
+
+		//Actualiza y limpia datos
+		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numeroVP, 200);
+		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numeroVP, 200);
+		tbxPrecio.Text = L"";
+		articuloIDVP = 0;
+		btRegistrar.Enabled = false;
+	}
 }
 
 //Cuando se selecciona un cliente específico
 void PrecioClienteDlg::lvClientes_ItemChanged(Win::Event& e)
 {
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	LibreriaJRDll::SqlCLS sqlObj;
+
+	claveClienteIDVP = wintemplaObj.sacarIDOcultoLV(lvClientes);
+	numeroVP = wintemplaObj.sacarTextoLV(lvClientes, 0);
+
+	if (claveClienteIDVP > 0)
+	{
+		//Llena las textbox
+		tbxNombre.Text = sqlObj.sacarNombreCliente(claveClienteIDVP);
+		tbxClave.Text = ddRuta.Text + L"-" + numeroVP;
+
+		//Llena la tabla de los artículos que faltan de registrar de precio cliente
+		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numeroVP, 200);
+
+		//Llena la tabla de los registros que ya fueron realizados de precio cliente
+		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numeroVP, 200);
+	}
 }
 
 //Cuando se cambia la opción en la ddlist de ruta
@@ -87,5 +138,65 @@ void PrecioClienteDlg::ddRuta_SelChange(Win::Event& e)
 
 	//Llena la tabla de las clave de los clientes cuando cambian
 	wintemplaObj.llevarLVClaveClientes(lvClientes, ddRuta.Text, true, 100);
+
+	//Limpia las textbox
+	tbxClave.Text = L"";
+	tbxNombre.Text = L"";
+
+	//Deshabilita los botones
+	btActualizar.Enabled = false;
+	btRegistrar.Enabled = false;
 }
+
+//Cuando se le da clic sobre un elemento que se quiere editar
+void PrecioClienteDlg::lvRegistrados_ItemChanged(Win::Event& e)
+{
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+	LibreriaJRDll::SqlCLS sqlObj;
+	articuloIDVP = wintemplaObj.sacarIDOcultoLV(lvRegistrados);
+
+	if (articuloIDVP > 0)
+	{
+		int claveCliente_id = sqlObj.sacarIDClaveCliente(numeroVP, sqlObj.sacarIDPuntoVenta(ddRuta.Text));
+		precioVP = sqlObj.sacarPrecioArticuloCliente(claveCliente_id, articuloIDVP);
+		tbxPrecio.DoubleValue = precioVP;
+	}
+
+	//Deshabilita los botones
+	btActualizar.Enabled = true;
+	btRegistrar.Enabled = false;
+}
+
+//Cuando se le da click al botón de Actualizar
+void PrecioClienteDlg::btActualizar_Click(Win::Event& e)
+{
+	LibreriaJRDll::SqlCLS sqlObj;
+	LibreriaJRDll::WintemplaCLS wintemplaObj;
+
+	if (articuloIDVP > 0 && precioVP != tbxPrecio.DoubleValue)
+	{
+		//Verifica que no exista un espacio vacío
+		if ((tbxPrecio.GetTextLength() == 0))
+		{
+			MessageBoxW(L"Error. Espacio vacío", L"Error", MB_OK | MB_ICONERROR);
+			return;
+		}
+
+		//Actualiza el precio cliente
+		int precioCliente_id = sqlObj.sacarIDPrecioCliente(claveClienteIDVP, articuloIDVP);
+		sqlObj.actualizarPrecioCliente(precioCliente_id, tbxPrecio.DoubleValue);
+
+		//Anuncia que se registro de manera correcta el precio
+		MessageBoxW(L"Registro actualizado de manera correcta", L"Precio Cliente", MB_OK | MB_ICONINFORMATION);
+
+		//Actualiza y limpia datos
+		wintemplaObj.llenarLVFaltantesPrecioCliente(lvTabla, ddRuta.Text, numeroVP, 200);
+		wintemplaObj.llenarLVPrecioCliente(lvRegistrados, ddRuta.Text, numeroVP, 200);
+		tbxPrecio.Text = L"";
+		articuloIDVP = 0;
+		btActualizar.Enabled = false;
+	}
+}
+
+
 
