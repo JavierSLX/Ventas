@@ -46,13 +46,13 @@ void AsignarRangoDlg::btAsignar_Click(Win::Event& e)
 	{
 		if (requerimientoVP == L"Artículo")
 		{
-			rangoObj.insertaRangoArticulo(idArticuloVP, _idRango, 1);
+			rangoObj.insertaRangoArticulo(idArticuloVP, _idRango, 1,idColocacionVP);
 			this->MessageBoxW(L"Se agrego correctamente", L"Rango", MB_OK);
 			Close();
 		}
 		else
 		{
-			rangoObj.insertaRangoServicio(idArticuloVP, _idRango, 2);
+			rangoObj.insertaRangoServicio(idArticuloVP, _idRango, 2,idColocacionVP);
 			this->MessageBoxW(L"Se agrego correctamente", L"Rango", MB_OK);
 			Close();
 		}

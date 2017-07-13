@@ -5,7 +5,7 @@
 class AsignarRangoDlg: public Win::Dialog
 {
 public:
-	AsignarRangoDlg(wstring requerimiento,wstring tipo,wstring marca,wstring modelo,int idArticulo,int opcion)
+	AsignarRangoDlg(wstring requerimiento,wstring tipo,wstring marca,wstring modelo,int idArticulo,int opcion,int idColocacion)
 	{
 		this->requerimientoVP = requerimiento;
 		this->tipoVP = tipo;
@@ -13,6 +13,7 @@ public:
 		this->modeloVP = modelo;
 		this->idArticuloVP = idArticulo;
 		this->opcionVP = opcion;
+		this->idColocacionVP = idColocacion;
 	}
 	AsignarRangoDlg(wstring requerimiento, wstring tipo, wstring marca, wstring modelo,wstring minimo,wstring maximo,wstring comision, int idRango, int opcion)
 	{
@@ -44,6 +45,7 @@ private:
 	wstring maximoVP;
 	wstring comisionVP;
 	int idRangoVP;
+	int idColocacionVP;
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Label lbRequerimiento;
 	Win::Textbox tbxRequerimiento;
@@ -79,11 +81,11 @@ protected:
 		lbModelo.CreateX(NULL, L"Modelo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 0.21167, 2.48708, 2.35479, 0.60854, hWnd, 1004);
 		tbxModelo.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 2.67229, 2.54000, 4.89479, 0.60854, hWnd, 1005);
 		lbMinimo.CreateX(NULL, L"Mínimo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 8.49313, 0.44979, 2.35479, 0.60854, hWnd, 1006);
-		tbxMinimo.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 10.87438, 0.44979, 4.89479, 0.60854, hWnd, 1007);
+		tbxMinimo.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 10.87438, 0.44979, 4.89479, 0.60854, hWnd, 1007);
 		lbMaximo.CreateX(NULL, L"Máximo", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 8.49313, 1.40229, 2.35479, 0.60854, hWnd, 1008);
-		tbxMaximo.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 10.87438, 1.40229, 4.89479, 0.60854, hWnd, 1009);
+		tbxMaximo.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 10.87438, 1.40229, 4.89479, 0.60854, hWnd, 1009);
 		lbComision.CreateX(NULL, L"Comisión", WS_CHILD | WS_VISIBLE | SS_LEFT | SS_WINNORMAL, 8.49313, 2.48708, 2.35479, 0.60854, hWnd, 1010);
-		tbxComision.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_LEFT | ES_WINNORMALCASE, 10.87438, 2.48708, 4.89479, 0.60854, hWnd, 1011);
+		tbxComision.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY | ES_LEFT | ES_WINNORMALCASE, 10.87438, 2.48708, 4.89479, 0.60854, hWnd, 1011);
 		lvRangos.CreateX(WS_EX_CLIENTEDGE, NULL, WS_CHILD | WS_TABSTOP | WS_VISIBLE | LVS_REPORT, 0.47625, 4.31271, 15.21354, 10.31875, hWnd, 1012);
 		btAsignar.CreateX(NULL, L"Asignar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 4.31271, 3.41313, 3.20146, 0.68792, hWnd, 1013);
 		btEditar.CreateX(NULL, L"Editar", WS_CHILD | WS_TABSTOP | WS_VISIBLE | BS_PUSHBUTTON | BS_CENTER | BS_VCENTER, 9.02229, 3.41313, 3.20146, 0.68792, hWnd, 1014);
