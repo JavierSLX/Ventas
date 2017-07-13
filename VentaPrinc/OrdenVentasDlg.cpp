@@ -72,8 +72,18 @@ void OrdenVentasDlg::btAceptar_Click(Win::Event& e)
 	/*MessageBoxW(L"Registro Exitoso", L"", MB_OK | MB_ICONINFORMATION);*/
 	//ventana.BeginDialog(hWnd);
 
+	wstring puntoVentaNuevaVentana = ddPuntoVenta.Text;
+	if (puntoVenta == L"R0")
+	{
+		puntoVentaNuevaVentana = L"Oficina";
+	}
+	else
+	{
+		puntoVentaNuevaVentana = ddPuntoVenta.Text;
+	}
+
 	//Esta ventana es para probar de nuevo todo el proceso de detalles
-	DescripcionOrdenVentasDlg dlg(ddPuntoVenta.Text, tbxFolio.Text, ddCliente.Text);
+	DescripcionOrdenVentasDlg dlg(puntoVentaNuevaVentana, tbxFolio.Text, ddCliente.Text);
 	this->EndDialog(IDOK);
 	dlg.BeginDialog(hWnd);
 }

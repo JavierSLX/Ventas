@@ -131,7 +131,7 @@ public:
 			void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id);
 			/*void  LibreriaAdDll::ordenNueva::llenarDDNombreR(Win::DropDownList ddNombre, int large, int pv_id);*/
 			int LibreriaAdDll::ordenNueva::sacarIDUsuario(int pv, wstring nombre);
-			int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo);
+			int LibreriaAdDll::ordenNueva::sacarIDrango(int pFinal, int articulo, int pv);
 			double LibreriaAdDll::ordenNueva::sacarComision(int id);
 			void LibreriaAdDll::ordenNueva::insertarArticuloComision(double total, bool exito, int rango, int orden);
 			int LibreriaAdDll::ordenNueva::sacarIDrangoServicio(int pFinal, int servicio);
@@ -146,6 +146,14 @@ public:
 			void LibreriaAdDll::ordenNueva::actualizarServicioComision(double total, bool exito, int rango, int orden);
 			void LibreriaAdDll::ordenNueva::actualizarTotalServicioComision(int orden);
 			void LibreriaAdDll::ordenNueva::actualizarTotalArticuloComision(int orden);
+			int LibreriaAdDll::ordenNueva::sacarIDTipoVenta(int ordenDesc);
+			double LibreriaAdDll::ordenNueva::sacarTotalComision(int ordenDesc);
+			double LibreriaAdDll::ordenNueva::sacarComisionArticulo(int id);
+			void LibreriaAdDll::ordenNueva::updateTotalArticuloComision(int id, double total);
+			double LibreriaAdDll::ordenNueva::sacarComisionServicio(int id);
+			double LibreriaAdDll::ordenNueva::sacarTotalComisionServicio(int ordenDesc);
+			void LibreriaAdDll::ordenNueva::updateTotalServicioComision(int id, double totalOrden);
+			int LibreriaAdDll::ordenNueva::sacarIDColocacion(int pv);
 			
 	};
 private:
