@@ -196,3 +196,11 @@ void VentaPrinc::Cmd_Graficaventas(Win::Event& e)
 	graficoDlg.BeginDialog(hWnd);
 }
 
+void VentaPrinc::Cmd_Rangoregistrar(Win::Event& e)
+{
+}
+
+void VentaPrinc::Cmd_Delrango(Win::Event& e)
+{
+}
+

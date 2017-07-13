@@ -74,6 +74,8 @@ protected:
 	void Cmd_Delservicio(Win::Event& e);
 	void Cmd_Reporteventa(Win::Event& e);
 	void Cmd_Graficaventas(Win::Event& e);
+	void Cmd_Rangoregistrar(Win::Event& e);
+	void Cmd_Delrango(Win::Event& e);
 	//_________________________________________________
 	bool EventHandler(Win::Event& e)
 	{
@@ -104,6 +106,8 @@ protected:
 		if (this->IsEvent(e, IDM_DELSERVICIO)) {Cmd_Delservicio(e); return true;}
 		if (this->IsEvent(e, IDM_REPORTEVENTA)) {Cmd_Reporteventa(e); return true;}
 		if (this->IsEvent(e, IDM_GRAFICAVENTAS)) {Cmd_Graficaventas(e); return true;}
+		if (this->IsEvent(e, IDM_RANGOREGISTRAR)) {Cmd_Rangoregistrar(e); return true;}
+		if (this->IsEvent(e, IDM_DELRANGO)) {Cmd_Delrango(e); return true;}
 		return false;
 	}
 };
