@@ -11,7 +11,7 @@ void PrecioClienteDlg::Window_Open(Win::Event& e)
 	articuloObj.llenarDDarticulo(ddTipo, 100, true);
 	ddTipo.SetSelectedIndex(0);
 
-	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text, idPvVP);
 	ddMarca.SetSelectedIndex(0);
 	
 	ordenObj.llenarDDModelo(ddModelo, ddMarca.Text, 100, true);
@@ -36,7 +36,7 @@ void PrecioClienteDlg::ddTipo_SelChange(Win::Event& e)
 {
 	LibreriaAdDll::ordenNueva ordenObj;
 
-	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text, idPvVP);
 	ddMarca.SetSelectedIndex(0);
 
 	ordenObj.llenarDDModelo(ddModelo, ddMarca.Text, 100, true);

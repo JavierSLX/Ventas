@@ -1916,7 +1916,7 @@ void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, in
 
 	conn.CloseSession();
 }
-void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int large, bool activo, wstring tipo) 
+void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int large, bool activo, wstring tipo, int pv) 
 {
 	wstring consulta;
 	Sql::SqlConnection conn;
@@ -1925,14 +1925,16 @@ void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int la
 	try
 	{
 		conn.OpenSession(hWnd, CONNECTION_STRING);
-		Sys::Format(consulta, L"SELECT ma.nombre\
-								FROM marca ma, tipo_articulo ta, modelo mo, articulo ar\
-								WHERE ar.tipoArticulo_id = ta.id\
-								AND ar.modelo_id = mo.id\
-								AND mo.marca_id = ma.id\
-								AND ma.activo = %d\
-								AND ta.nombre = '%s'\
-								ORDER BY ma.nombre ASC;", activo, tipo.c_str());
+		Sys::Format(consulta, L"SELECT distinct ma.nombre\
+							FROM marca ma, tipo_articulo ta, modelo mo, articulo ar, punto_venta pv, cantidad can\
+							WHERE ar.tipoArticulo_id = ta.id\
+							AND ar.modelo_id = mo.id\
+							AND mo.marca_id = ma.id\
+							AND can.puntoVenta_id = pv.id\
+							AND ma.activo = %d\
+							AND pv.id = %d\
+							AND ta.nombre = '%s'\
+							ORDER BY ma.nombre ASC; ", activo, pv, tipo.c_str());
 
 		conn.ExecuteSelect(consulta, large, ddMarca);
 	}

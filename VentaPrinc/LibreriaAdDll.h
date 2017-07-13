@@ -107,7 +107,7 @@ public:
 		int LibreriaAdDll::ordenNueva::sacarIDServicio(wstring Servicio);
 		double LibreriaAdDll::ordenNueva::sacarPrecio(int servicio_id);
 		void LibreriaAdDll::ordenNueva::llenarDescripcionOrden(Win::ListView lvOrden, int large, wstring folio);
-		void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int large, bool activo, wstring tipo);
+		void  LibreriaAdDll::ordenNueva::llenarDDMarca(Win::DropDownList ddMarca, int large, bool activo, wstring tipo, int pv);
 		int LibreriaAdDll::ordenNueva::sacarIDArticulo(wstring tipo, int modelo, int marca, wstring pv);
 			void  LibreriaAdDll::ordenNueva::llenarDDcolor(Win::DropDownList ddcolor, int large, int articulo_id, wstring pv);
 			void  LibreriaAdDll::ordenNueva::llenarDDTipoArticulo(Win::DropDownList ddTipoArticulo, int large, bool activo, wstring pv);
