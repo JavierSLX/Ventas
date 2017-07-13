@@ -1012,6 +1012,58 @@ int LibreriaJRDll::SqlCLS::sacarIDClaveCliente(int cliente_id, int puntoVenta_id
 	return estandar_id;
 }
 
+//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDClaveCliente(wstring numero, int puntoVenta_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM clave_cliente\
+		WHERE numero = '%s'\
+		AND puntoVenta_id = %d;", numero.c_str(), puntoVenta_id);
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
+//Saca el id de un registro de la tabla precio_cliente, en caso de no existir regresa un 0
+int LibreriaJRDll::SqlCLS::sacarIDPrecioCliente(int claveCliente_id, int articulo_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int estandar_id = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT id \
+		FROM precio_cliente\
+		WHERE claveCliente_id = %d\
+		AND articulo_id = %d;", claveCliente_id, articulo_id);
+		estandar_id = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		estandar_id = 0;
+	}
+
+	conn.CloseSession();
+
+	return estandar_id;
+}
+
 //Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 {
@@ -1037,6 +1089,32 @@ int LibreriaJRDll::SqlCLS::sacarUltimoIDClaveCliente(wstring punto_venta)
 
 	conn.CloseSession();
 	return Sys::Convert::ToInt(clave);
+}
+
+//Saca el precio de un articulo determinado de la tabla precio_cliente
+double LibreriaJRDll::SqlCLS::sacarPrecioArticuloCliente(int claveCliente_id, int articulo_id)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	double valor;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT precio\
+		FROM precio_cliente\
+		WHERE claveCliente_id = %d\
+		AND articulo_id = %d;", claveCliente_id, articulo_id);
+		valor = conn.GetDouble(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		//this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+		valor = 0;
+	}
+
+	conn.CloseSession();
+	return valor;
 }
 
 //Saca el tipo de un registro de la tabla colocacion
@@ -1236,6 +1314,33 @@ void LibreriaJRDll::SqlCLS::actualizarCliente(int cliente_id, wstring nombre, ws
 		Sys::Format(consulta, L"UPDATE cliente \
 		SET nombre = '%s', direccion = '%s', telefono = '%s', email = '%s', ciudad_id = %d \
 		WHERE id = %d", nombre.c_str(), direccion.c_str(), telefono.c_str(), email.c_str(), ciudad_id, cliente_id);
+		rows = conn.ExecuteNonQuery(consulta);
+		if (rows != 1)
+		{
+			this->MessageBox(Sys::Convert::ToString(rows), L"Error: number of updated rows", MB_OK | MB_ICONERROR);
+		}
+	}
+	catch (Sql::SqlException e)
+	{
+		this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);
+	}
+
+	conn.CloseSession();
+}
+
+//Método que actualiza los datos de un registro de la tabla precio_cliente
+void LibreriaJRDll::SqlCLS::actualizarPrecioCliente(int precioCliente_id, double precio)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int rows = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"UPDATE precio_cliente \
+		SET precio = %lf \
+		WHERE id = %d", precio, precioCliente_id);
 		rows = conn.ExecuteNonQuery(consulta);
 		if (rows != 1)
 		{

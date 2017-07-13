@@ -122,8 +122,17 @@ public:
 		//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
 		int sacarIDClaveCliente(int cliente_id, int puntoVenta_id);
 
+		//Saca el id de un registro de la tabla clave_cliente, en caso de no existir regresa un 0
+		int sacarIDClaveCliente(wstring numero, int puntoVenta_id);
+
+		//Saca el id de un registro de la tabla precio_cliente, en caso de no existir regresa un 0
+		int sacarIDPrecioCliente(int claveCliente_id, int articulo_id);
+
 		//Saca el id del último registro de la tabla clave_cliente, en caso de no existir regresa un 0
 		int sacarUltimoIDClaveCliente(wstring punto_venta);
+
+		//Saca el precio de un articulo determinado de la tabla precio_cliente
+		double sacarPrecioArticuloCliente(int claveCliente_id, int articulo_id);
 
 		//Saca el tipo de un registro de la tabla colocacion
 		wstring sacarTipoColocacion(wstring punto_venta);
@@ -148,6 +157,9 @@ public:
 
 		//Método que actualiza los datos de un registro de la tabla cliente
 		void actualizarCliente(int cliente_id, wstring nombre, wstring direccion, wstring telefono, wstring email, int ciudad_id);
+
+		//Método que actualiza los datos de un registro de la tabla precio_cliente
+		void actualizarPrecioCliente(int precioCliente_id, double precio);
 
 		//Método que inserta un registro en la tabla punto_venta
 		void insertarPuntoVenta(wstring nombre);
