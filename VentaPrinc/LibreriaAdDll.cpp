@@ -3035,3 +3035,29 @@ void LibreriaAdDll::ordenNueva::updateTotalServicioComision(int id, double total
 
 	conn.CloseSession();
 }
+
+
+int LibreriaAdDll::ordenNueva::sacarIDColocacion( int pv)
+{
+	wstring consulta;
+	Sql::SqlConnection conn;
+	int ma = 0;
+
+	try
+	{
+		conn.OpenSession(hWnd, CONNECTION_STRING);
+		Sys::Format(consulta, L"SELECT co.id\
+			FROM punto_venta pv, colocacion co, puntoVenta_colocacion pvc\
+			WHERE pvc.puntoVenta_id = pv.id\
+			AND pvc.colocacion_id = co.id\
+			AND pv.id = %d", pv);
+		ma = conn.GetInt(consulta);
+	}
+	catch (Sql::SqlException e)
+	{
+		/*	this->MessageBox(e.GetDescription(), L"Error", MB_OK | MB_ICONERROR);*/
+	}
+
+	conn.CloseSession();
+	return ma;
+}

@@ -153,6 +153,7 @@ public:
 			double LibreriaAdDll::ordenNueva::sacarComisionServicio(int id);
 			double LibreriaAdDll::ordenNueva::sacarTotalComisionServicio(int ordenDesc);
 			void LibreriaAdDll::ordenNueva::updateTotalServicioComision(int id, double totalOrden);
+			int LibreriaAdDll::ordenNueva::sacarIDColocacion(int pv);
 			
 	};
 private:
