@@ -48,6 +48,7 @@ private:
 	int idArtUPVP;
 	int idColorVP;
 	int idPuntoVentaVP;
+	int idPvVP;
 	int cantidadVP;
 	int idDetalles;
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE

@@ -17,6 +17,7 @@ private:
 	int claveClienteIDVP;
 	wstring numeroVP;
 	double precioVP;
+	int idPvVP;
 	//______ Wintempla GUI manager section begin: DO NOT EDIT AFTER THIS LINE
 	Win::Button gboxFaltantes;
 	Win::DropDownList ddTipo;

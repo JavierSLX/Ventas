@@ -23,9 +23,9 @@ void DescripcionOrdenVentasDlg::Window_Open(Win::Event& e)
 	LibreriaAdDll::ordenNueva ordenObj;
 	ordenObj.llenarDDTipoArticulo(ddTipo, 100, true, puntoVentaVP);
 	ddTipo.SetSelectedIndex(0);
-
+	idPvVP = ordenObj.sacarIDPuntoVenta(puntoVentaVP);
 	//Llena la ddlist de marca
-	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text, idPvVP);
 	ddMarca.SetSelectedIndex(0);
 
 	//Llena la ddlist de modelo
@@ -73,7 +73,7 @@ void DescripcionOrdenVentasDlg::radioArticulo_Click(Win::Event& e)
 	ddTipo.SetSelectedIndex(0);
 
 	//Llena la ddlist de marca
-	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text, idPvVP);
 	ddMarca.SetSelectedIndex(0);
 
 	//Llena la ddlist de modelo
@@ -129,7 +129,7 @@ void DescripcionOrdenVentasDlg::ddTipo_SelChange(Win::Event& e)
 	{
 	
 	//Llena la ddlist de marca
-	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+	ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text, idPvVP);
 	ddMarca.SetSelectedIndex(0);
 
 	//Llena la ddlist de modelo
@@ -313,7 +313,7 @@ void DescripcionOrdenVentasDlg::btAgregar_Click(Win::Event& e)
 				ddTipo.SetSelectedIndex(0);
 
 				//Llena la ddlist de marca
-				ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text);
+				ordenObj.llenarDDMarca(ddMarca, 100, true, ddTipo.Text, idPvVP);
 				ddMarca.SetSelectedIndex(0);
 
 				//Llena la ddlist de modelo
@@ -495,7 +495,7 @@ void DescripcionOrdenVentasDlg::lvTabla_ItemChanged(Win::Event& e)
 
 		ddTipo.SetSelected(TipoArticuloVP);
 		/*Llena la ddlist de marca*/
-		ordenObj.llenarDDMarca(ddMarca, 100, true,TipoArticuloVP);
+		ordenObj.llenarDDMarca(ddMarca, 100, true,TipoArticuloVP, idPvVP);
 		ddMarca.SetSelected(MarcaVP);
 
 		//Llena la ddlist de modelo
